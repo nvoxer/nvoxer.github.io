@@ -46,10 +46,12 @@ footer, main, aside, nav, div {
 
   aside.derecha {
     max-width: 250px;
+    height: 100%;
   }
   
   aside.derecha img {
   width: 100%;
+
   }
 
   main {
@@ -160,4 +162,9 @@ footer, main, aside, nav, div {
 
 .save_walter_boton {
   max-width: 40%;
+}
+
+#formEncuesta {
+  font-family: 'Courier New', monospace;
+  font-size: 17px;
 }

@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/static/css/style.css">
+  <script src="/static/js/scripts.js"></script>
   <title>Bienvenidos - nanoweb.com.ar</title>
 </head>
 <body>
@@ -50,6 +51,19 @@
         <li><a href="software/EQ.TXT">CD Equaliser Version 1.0.0.0</a></li><br>
         <li><a href="software/FORGOTIT.TXT">FORGOTIT 1.82</a></li><br>
     </ul>
+
+    <div id="formEncuesta">
+    <h5>Encuesta: ¿Cuál es tu navegador favorito?</h5>
+      <input type="radio" name="navegador" value="Netscape"> Netscape<br>
+      <input type="radio" name="navegador" value="Internet Explorer"> Internet Explorer<br>
+      <input type="radio" name="navegador" value="Opera"> Opera<br>
+      <input type="radio" name="navegador" value="Otro"> Otro<br><br>
+      <button onclick="votar()">Votar</button>
+    </div>
+    <div id="mensajegracias" style="display:none; margin-top: 10px;">
+    ¡Gracias por votar!
+    </div>
+
     </aside>
 
     <main>
@@ -95,7 +109,7 @@
   <footer>
     <img style="height: 60px;" src="/static/gifs/ad-sinspect.gif" alt="site approved">
     <img class="adsfooter" src="/static/gifs/banner_4_theres_got_to_be_a_better_way.gif" alt="ads"> 
-    <p>&copy; 1998 - nanoweb.com.ar</p>
+    <p>&copy; 1998 - nanoweb.com.ar <img src="static/gifs/banderaargentinaanimed.gif" alt="bandera argentina"></p>
   </footer>
 
 </body>
