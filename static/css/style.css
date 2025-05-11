@@ -1,11 +1,11 @@
 body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     background-color: #e0e0e0db;
     background-image: url("/static/gifs/spacebackground.gif");
     color: black;
-    margin: 1;
-    padding: 1;
+    margin-left: 10%;
+    margin-right: 10%;
   }
 
 footer, main, aside, nav, section, div {
@@ -45,17 +45,17 @@ footer, main, aside, nav, section, div {
   }
 
   aside.derecha {
-    max-width: 10%;
+    max-width: 250px;
   }
   
   aside.derecha img {
   width: 100%;
-
   }
 
   main {
     width: 80%;
   }
+
   main img {
   display: block;
   margin: 10px auto;
@@ -97,6 +97,7 @@ footer, main, aside, nav, section, div {
   }
 
   .buscar {
+
     border: 2px outset #fff;
     background-color: #e0e0e0db;
     font-family: 'Courier New', monospace;
@@ -104,13 +105,15 @@ footer, main, aside, nav, section, div {
   
   .input-buscar {
     width: 50%;
+    height: 30px;
     border: 2px inset #999;
     background-color: #fff;
     font-family: 'Courier New', monospace;
   }
   
   .boton-buscar {
-    border: 2px outset #ccc;
+    height: 33px;
+    border: 2px outset #bcbcbc;
     background-color: #C0C0C0;
     font-family: 'Courier New', monospace;
     cursor: pointer;
@@ -123,6 +126,7 @@ footer, main, aside, nav, section, div {
   background-color: #e0e0e0;
   font-family: 'Courier New', monospace;
   color: black;
+  margin: 20px auto;
 }
 
 .formcontacto input,
