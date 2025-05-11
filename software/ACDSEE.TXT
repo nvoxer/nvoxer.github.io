@@ -1,0 +1,70 @@
+       			     ACDSEE VERSION 1.31
+        		     ~~~~~~~~~~~~~~~~~~~	
+
+        	Congratulations on obtaining ACDSee, the fastest, 
+        	easiest-to-use Windows image viewer available!
+
+
+FEATURES OVERVIEW
+~~~~~~~~~~~~~~~~~
+* attractive, effective and easy-to-use interface, including toolbars, 
+  status bars and on-line help
+* support for most BMP, GIF, JPEG, PCX, Photo-CD, PNG, TGA and TIFF files
+* rapid JPEG decoding
+* fast, full-colour image previews
+* file system browser front end lets you quickly browse through your 
+  images and other files
+* image display during decoding process
+* selectable dithering modes for high quality output
+* fast scrolling and zooming, even during decoding process
+* innovative system for deleting, renaming, copying and moving files
+* support for document launching, editing and printing via file associations 
+* powerful file association editor
+* facility for viewing & editing 4DOS descriptions
+* drag-and-drop support for single and multiple files
+* automatic or manual slideshow with optional read-ahead decompression
+* always-on-top and full-screen viewing window options
+* shrink image to fit  window or screen option
+* batch image printing
+* optional single-instance mode makes ACDSee the perfect viewer for use as
+  a helper application
+* set the desktop wallpaper
+
+DISTRIBUTION
+~~~~~~~~~~~~
+This shareware software may be freely distributed, provided that:
+
+(1) Such distribution includes only the original archive supplied by 
+    ACD Systems, Ltd. You may not alter, delete or add any files in 
+    the distribution archive.
+(2) The distrubution does not include a registration number.  
+    In particular, you may not distrubute a registered version of ACDSee.
+(3) No money is charged to the person receiving the software, beyond 
+    reasonable cost of packaging and other overhead.
+
+
+INSTALLATION
+~~~~~~~~~~~~
+See install.txt file.
+
+
+RUNNING
+~~~~~~~
+You can start ACDSee from the Program Manager by double-clicking on its icon. 
+You will immediately be presented with the Image Browser dialog where you can 
+browse your directories for images to look at.
+
+If you have made a File Manager association between image files and ACDSee, 
+you can also start ACDSee from the File Manager by just double clicking on 
+an image file. 
+
+You can supply one or more image files as the command-line arguments to 
+ACDSee.  You can even use wildcards.  e.g., acdsee.exe *.jpg would start 
+ACDSee and have it slideshow all the files in the current directory.
+
+In addition, you may specify a startup directory on the command line.  
+The directory name must end in a "\", or be one of ".", "..", r "<drive>:".  
+ACDSee will start the Image Browser in the specified directory.
+
+
+       	See the file ACDSEE.HLP for more details.

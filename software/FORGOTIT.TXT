@@ -1,0 +1,149 @@
+FORGOTIT.EXE is a small Windows 95 desktop utility which is used in the same way
+the original trademark "Post It".  It offers up to four sets of notepads, each with
+up to ten pages
+
+Forgot-It is useful for keeping notes and reminders on your Windows 95 desktop,
+rather than on hard to find little pieces of paper.
+
+Forgot-It is shareware.  The price is U.S.$15
+
+---------------------------------------------------------------------
+
+To install Forgot-It, simply unzip FORGOTIT.ZIP in a directory.
+Then right-click on INSTALUS.INF and select Install....
+
+You can also uninstall Forgot-It in the standard way...
+(ControlPanel/Application/Remove)
+
+Thanxs to Yadla (j-f.legrosse@ac-nancy-metz.fr) for the installation scripts !
+
+---------------------------------------------------------------------
+
+A little yellow icon is placed on the Taskbar when Forgot-It is launched.
+Subsequent notepads are added to the taskbar as similar icons, but using 
+green, blue and red icons.  The pads can be used for different subjects or
+by different users.
+
+Click the LEFT mouse button on the yellow Forgot-It Taskbar icon to open the
+Forgot-It window.
+Clicking the RIGHT mouse button on the Forgot-It Taskbar icon will open
+a configuration menu.
+
+
+---------------------------------------------------------------------
+
+The following Shortcut Keys will function in the open Forgot-It window :
+
+ESC : Minimize the Forgot-It Window to the Task bar icon
+F2  : Save NOW the contents of Forgot-It. (Default is saved when closing Forgot-It)
+Alt-F4 or Alt-X : Exit Forgot-It
+Ctrl-A : Select All
+Alt-F  : Select default Font.
+Alt-L  : load an external file, and put it at the cursor.
+Alt-S  : save the note to an external file
+Ctrl-D : Date in short format
+Alt-D  : Date in long format
+Ctrl-T : Time
+F1 : Help
+F2 : Save now!
+
+---------------------------------------------------------------------
+
+When open, each Forgot-It window can cycle through 10 different pages.
+Click on the left and right arrows next to the page number to cycle
+through the pages.  You can also click on the page number to pull down
+menu of pages
+
+You can open up to 4 different Forgot-It windows.  Right click on the task bar
+icon, then select 'New' to open each additional Forgot-it window.
+
+---------------------------------------------------------------------
+
+Forgot-It will allow you to set alarms. To set an alarm, insert, in the note,
+the DATE that you want the alarm to activate, as follows:
+
+@01/12/96 (European format)
+or
+@12.01.96 (U.S.A. format)
+
+The note will appear with an alert box when the day is reached. (The examples
+above will generate an alarm on December 1, 1996.)
+Then Forgot-It will replace the '@' symbol with the '#' symbol indicating
+that the date for the alarm has passed.
+
+When the alarm occurs, an alert box is displayed, with the text following the alarm.
+i.e @01/12/96 Essai d'alarme (Using the European date format)
+
+To set a specific time for the alarm, you must follow the alarm date immediately by
+the alarm time as -HH:MM (hours and minutes in 24 hour clock format).  For example 
+'-13:01' will make alarm occur at 13hours 01 mins...
+
+Example :
+@12.01.96-14:30 will alarm on the First December 96, at 14h30 (2:30pm)
+
+
+---------------------------------------------------------------------
+
+If you don't want the Forgot-It icon to appear on the Taskbar when the
+Forgot-It Window is open, you can remove it.
+To do this, edit POSTIT.INI (in the Windows directory), and add the
+following line in the [Post-It] section:
+
+ToolWindow=1
+
+When you restart Forgot-It, the Forgot-It Icon will not appear in the Taskbar,
+and the menu bar on the open Forgot-It window will be a little smaller.
+
+----------------------------------------------------------------------
+
+About color selection :
+
+Windows doesn't enable all colors for the Edit-Windows...Only non-dithered colors
+can be used for Edit-Windows whether you are in 16colors or 256colors mode.
+If you select a bad color for Forgot-It, you will get 2 background colors in the
+edit window: one where text appears, and another where there is only background...
+(Difficult to explain : Try by yourself...  Right click on the taskbar icon then select
+'Colors') 
+
+You can only select one color scheme for the notepads.  You can't select 
+different colors for each of the notepads, if you use more than one.  However, Each is
+color-coded by its task bar icon color and a corresponding colored square at the top
+left of its window.
+
+----------------------------------------------------------------------
+
+Please send comments, suggestions, and questions about Forgot-It to me
+via e-mail at:
+
+MathieuM@mail.dotcom.fr
+or
+100071.2243@compuserve.com
+
+
+----------------------------------------------------------------------------
+
+
+TO REGISTER Forgot-IT
+
+To register Forgot-It for Windows 95, at the price of U.S.$15, you have
+2 possibilities:
+
+On CompuServe, GO SWREG, ID # 9571
+
+Or mail:  (Cash only. please avoid checks...50% of the money is taken by
+my bank when converting US$ into French money...)
+Send payment to this address:
+Mathieu-MARCIACQ
+10 rue Exelmans
+78140 VELIZY
+FRANCE
+
+
+After you register you will receive all updates and revisions to Forgot-It.
+
+_______________________________________________________________________________ _
+
+
+ This shareware application can be found in the WINSHARE
+ Forum on CompuServe, an official distribution and support
+ online resource for future updates. Search for FORGOTIT

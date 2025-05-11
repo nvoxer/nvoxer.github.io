@@ -1,0 +1,145 @@
+CD Equaliser Version 1.0.0.0
+
+Copyright (C) 1996 by Silent Software.
+All rights reserved.
+
+16-Jun-96
+======================================
+
+To best view this release note select Edit | Wordwrap from Notepad.
+If using Wordpad, select View | Options, Text and then Wrap To Window.
+
+CONTENTS
+--------
+
+1. INTRODUCTION
+2. HEALTH WARNING
+3. INSTALLATION
+4. UNINSTALLING
+5. FILES INSTALLED
+6. RELEASE HISTORY AND CHANGES
+7. LEGAL LIMITATIONS
+8. ACKNOWLEDGEMENTS
+9. FURTHER INFORMATION
+
+------------------------------
+
+1. INTRODUCTION
+
+Thankyou for choosing CD Equaliser. I'll try and explain what CD Equaliser is, but it's not easy, since CDEq is unlike anything else I've seen for the PC. Basically, CDEq "listens" to what the music is doing on the audio CD in your CD-ROM drive, and changes the picture on the CDEq window appropriately, either by altering the colour, the image itself, or both. The result is some very interesting shapes that alter in time with the music.
+
+You can choose the image that will be drawn in the CDEq window. (This is not an image in the sense of a bitmap, but a routine provided by a CDEq image library - "Image" was the best description). You can also change how CDEq listens to the music, and change some general options, such as automatic image changing, and what happens if the screen saver kicks in.
+
+CDEq uses "image libraries" (EQL files), which can be provided by other programmers. The image library that ships with CDEq, called CDImage.eql, comes with the following images:
+
+* Lines - Simple image which just animates lines. Suitable for any form of music.
+* Spiral - Rotating, scaling, moving shapes. Suitable for Pink Floyd, Mike Oldfield, etc.
+* Lightshow - Tacky implementation of a gig's lighting. Great for most music.
+* Curves - Twisty lines which work well with atmospheric music.
+* Kaleidoscope - Symettrical lines. Great for most music.
+* Speed King - Undescribable. Great for faster music.
+* Rotate - Produces a sort of speaker cone effect. Good for all sorts of music.
+
+See (4) FILES INSTALLED for a list of files installed when you install CD Equaliser.
+See (8) FURTHER INFORMATION for more information on about CD Equaliser.
+
+2. HEALTH WARNING
+
+A word of warning. CDEq makes the screen flash, flicker, and generally do things that will make your brain dribble out of your ears. If you find yourself with eye-strain, a headache, or feelings of dizziness, then stop CDEq for 15 minutes, and do something else. Just leave your computer. In fact, switch it off. Go and talk to your wife, or walk the dog, or spring clean the house. Just give CDEq a rest. It'll still be there tomorrow.
+
+Another little bijou warning-ette as it were; although CDEq looks one hell of a lot better with the lights out (some would say with the monitor switched off...), this is likely to cause eye-strain, tiredness, headaches, etc, a LOT quicker.
+
+If you suffer from epilepsy, I advise you NOT to use CDEq. Please take this warning seriously.
+
+3. INSTALLATION
+
+To install CD Equaliser, perform the following actions:-
+
+a. Locate the directory containing the CD Equaliser installation files.
+b. Double click the "Setup" application.
+c. Follow the instructions given.
+
+Installation should take about 2 minutes. You will require 200Kb of hard disk space.
+
+Some files may not copy if they are already in use. Since this is the first version of CD Equaliser, this will not happen, so there was no point me telling you this.
+
+4. UNINSTALLING
+
+To remove CD Equaliser from your system (i.e. uninstall it), perform the following actions:-
+
+a. Click the Start Menu button.
+b. Select "Settings", and then "Control Panel".
+c. Select "Add/Remove Programs".
+d. In the list box at the bottom of the dialog box, locate "CD Equaliser".
+e. Select"Add/Remove".
+f. Follow the instructions given.
+
+Please note that the Setup program is not removed during uninstallation. This is because you are using it to uninstall CD Equaliser. When you restart Windows, the setup files will be automatically removed from your hard disk.
+
+5. FILES INSTALLED
+
+By default, the following files are installed to C:\PROGRAM FILES\CD EQUALISER. (This folder can be changed during installation).
+
+Filename		 Size
+SETUP.EXE		 71Kb
+SETUP.INF		  1Kb
+CDEQ.EXE		 55Kb
+CDIMAGE.EQL		 52Kb
+CDEQ.HLP		 15Kb
+README.TXT		  7Kb
+
+By default, shortcuts are made in a CD Equaliser program group, and on the Desktop. This can be changed during installation.
+
+6. RELEASE HISTORY AND CHANGES
+
+16-Jun-96: v1.0.0.0
+---------
+Initial version
+
+7. LEGAL LIMITATIONS
+
+CD Equaliser is copyright (C) 1996 by Silent Software. All rights reserved.
+
+CD Equaliser is supplied as is. The author disclaims all warranties, expressed or implied, including, without limitation, the warranties of merchantability and of fitness for any purpose.  The author assumes no liability for damages, direct or consequential, which may result from the use of CD Equaliser.
+
+CD Equaliser is a "freeware program" and is provided at no charge to the user.  You are allowed to distribute it to your friends. Do not alter CD Equaliser or any of the supporting files. Do not separate the files included with this release. Do not give away the files as a package, or a subset of the files, as part of another system.
+
+Shareware vendors and CD-Rom manufacturers are freely allowed to distribute this product and ask a nominal charge for the distribution. Vendors are also advised to contact the author before distribution to ensure that they are distributing the most recent version of CD Equaliser.
+
+Magazine cover disks can only contain CD Equaliser, or any of its supporting files, after permission has been granted by the author. Contact information is given in section 8.
+
+WARNING: Steve Harris and Silent Software take no repsonsibility for the physical health of any living creature that uses CD Equaliser. We advise that those who suffer from epilepsy do NOT use CD Equaliser. Other users are advised to read the warning in (2).
+
+8. ACKNOWLEDGEMENTS
+
+Thanks to the following people for help with CD Equaliser...
+
+* Tink: The original idea.
+* Steve Dishley: Ported a 16 bit prototype over to 32 bit.
+* Ian Farrer: Calling the alpha version "dull", and beta testing.
+* Xavier Bergarde, Johnathan Blackwell, and Andrew Gibson: Beta testing.
+* The people who offered to beta test, but who's e-mail addresses weren't recognised by my ISP.
+* Anyone I've forgotten.
+
+9. FURTHER INFORMATION
+
+If you require further information on how to use the program, or what it does, see the CD Equaliser Help file (CDEQ.HLP), installed by default to C:\Program Files\CD Equaliser, although this location can be changed during installation.
+
+Those who are interested in writing their own image libraries for use with CDEq, should watch out for the CDEq Developer's Kit. This will be released shortly after CDEq, and contains information on how to create image libraries, along with sample code to get you started.
+
+If you would like to contact the author, I can be e-mailed at:
+
+sharris@netcentral.co.uk
+
+At the time of writing (16-Jun-96), I can only guarantee this address until the end of August 96.
+
+Any comments about CD Equaliser, bugs (argh!), or whatever - I'll be happy to hear from you.
+
+Finally, thanks for installing CD Equaliser - I hope you find it fun, and a means to add to your enjoyment whilst using Windows 95.
+
+	Steve Harris
+	Sandbach, Cheshire, England
+	16th June 1996.
+
+	E-mail:	sharris@netcentral.co.uk
+	WWW:	http://www.netcentral.co.uk/~sharris

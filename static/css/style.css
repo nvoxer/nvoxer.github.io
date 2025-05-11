@@ -1,0 +1,148 @@
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 1.4rem;
+    background-color: #e0e0e0db;
+    background-image: url("/static/gifs/spacebackground.gif");
+    color: black;
+    margin: 1;
+    padding: 1;
+  }
+
+footer, main, aside, nav, section, div {
+    border: 2px outset #fff;
+    background-color: #e0e0e0db;
+    padding: 10px;
+    margin: 10px;
+    
+  }
+
+  header {
+    background-color: #00008000;
+    color: rgb(16, 222, 122);
+    text-align: center;
+  }
+
+  .publicidadheader{
+    border: 0;
+    background-color: #e0e0e000;
+    padding: 3px;
+    margin: 3px;
+  }
+
+  nav a {
+    color: rgb(0, 0, 0);
+    margin: 0 10px;
+    font-weight: bold;
+  }
+
+  #containerPrincipal {
+    display: flex;
+  }
+
+  aside.izquierda {
+    width: 30%;
+    max-width: 250px;
+  }
+
+  aside.derecha {
+    max-width: 10%;
+  }
+  
+  aside.derecha img {
+  width: 100%;
+
+  }
+
+  main {
+    width: 80%;
+  }
+  main img {
+  display: block;
+  margin: 10px auto;
+  }
+
+  footer {
+    text-align: center;
+    background-color: #000080;
+    color: white;
+  }
+
+  div.box {
+    font-size: large;
+    font-weight: 50;
+    background-color: #e0e0e0db;
+    border: 2px inset #c1c1c1;
+    margin: 10px 0;
+    padding: 10px;
+  }
+
+   div.box img{
+    border-radius: 7px;
+    max-width: 20%;
+  }
+
+   div.box iframe{
+    display: block;
+    margin: 10px auto;
+  }
+
+  section {
+    max-width: fit-content;
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  section img {
+    width: 100%;
+  }
+
+  .buscar {
+    border: 2px outset #fff;
+    background-color: #e0e0e0db;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .input-buscar {
+    width: 50%;
+    border: 2px inset #999;
+    background-color: #fff;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .boton-buscar {
+    border: 2px outset #ccc;
+    background-color: #C0C0C0;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+  }
+  
+  .formcontacto {
+  width: 300px;
+  padding: 15px;
+  border: 2px outset #c0c0c0;
+  background-color: #e0e0e0;
+  font-family: 'Courier New', monospace;
+  color: black;
+}
+
+.formcontacto input,
+.formcontacto textarea {
+  width: 100%;
+  background-color: #fff;
+  border: 2px inset #ccc;
+  padding: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: black;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.formcontacto button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #dcdcdc;
+  border: 2px outset #c0c0c0;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+}
