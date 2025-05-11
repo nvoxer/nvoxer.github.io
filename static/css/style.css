@@ -53,7 +53,7 @@ footer, main, aside, nav, section, div {
   }
 
   main {
-    width: 80%;
+   width: 80%;
   }
 
   main img {
@@ -93,7 +93,7 @@ footer, main, aside, nav, section, div {
   }
 
   section img {
-    width: 100%;
+    width: 80%;
   }
 
   .buscar {
@@ -149,4 +149,12 @@ footer, main, aside, nav, section, div {
   border: 2px outset #c0c0c0;
   font-family: 'Courier New', monospace;
   cursor: pointer;
+}
+
+.save_walter_banner {
+  max-width: 100%;
+}
+
+.save_walter_boton {
+  max-width: 40%;
 }
