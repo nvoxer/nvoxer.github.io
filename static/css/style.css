@@ -23,14 +23,20 @@ footer, main, aside, nav, div {
   }
 
   .publicidadheader{
+
     border: 0;
     background-color: #e0e0e000;
     padding: 3px;
     margin: 3px;
   }
 
+  .publicidadheader img {
+    max-width: 300px;
+    height: 50px;
+  }
+
   nav a {
-    color: rgb(0, 0, 0);
+    color: rgb(3, 86, 46);
     margin: 0 10px;
     font-weight: bold;
   }
@@ -40,8 +46,7 @@ footer, main, aside, nav, div {
   }
 
   aside.izquierda {
-    width: 30%;
-    max-width: 250px;
+    max-width: 240px;
   }
 
   aside.derecha {
@@ -165,6 +170,7 @@ footer, main, aside, nav, div {
 }
 
 #formEncuesta {
+  overflow: scroll;
   font-family: 'Courier New', monospace;
-  font-size: 17px;
+  font-size: 16px;
 }
