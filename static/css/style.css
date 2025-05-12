@@ -170,7 +170,15 @@ footer, main, aside, nav, div {
 }
 
 #formEncuesta {
-  overflow: scroll;
   font-family: 'Courier New', monospace;
   font-size: 16px;
+}
+
+.containermusica {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+}
+
+.containermusica audio {
+  max-width: 100%;
 }
