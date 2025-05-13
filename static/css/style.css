@@ -1,6 +1,13 @@
+@font-face {
+  font-family: 'ComicNeue';
+  src: url('/static/fonts/ComicNeue-Regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    font-size: 1.3rem;
+    font-family: 'ComicNeue', cursive;
+    font-size: 1.2rem;
     background-color: #e0e0e0db;
     background-image: url("/static/gifs/spacebackground.gif");
     color: black;
