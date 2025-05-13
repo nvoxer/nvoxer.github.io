@@ -8,11 +8,19 @@ body {
     margin-right: 10%;
   }
 
-footer, main, aside, nav, div {
+  header h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: wrap;
+  }
+
+  footer, main, aside, nav, div {
     border: 2px outset #fff;
     background-color: #e0e0e0db;
     padding: 10px;
-    margin: 10px;
+    margin: 0px;
     
   }
 
@@ -46,10 +54,13 @@ footer, main, aside, nav, div {
   }
 
   aside.izquierda {
+    font-style: italic;
+    width: 100%;
     max-width: 240px;
   }
 
   aside.derecha {
+    
     max-width: 250px;
     height: 100%;
   }
@@ -60,7 +71,8 @@ footer, main, aside, nav, div {
   }
 
   main {
-   width: 80%;
+  margin: 0;
+  width: 100%;
   }
 
   main img {
@@ -69,10 +81,28 @@ footer, main, aside, nav, div {
   max-width: 100%;
   }
 
+  .publicidadmain {
+    background-color: rgba(255, 255, 255, 0);
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .publicidadmain img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 5px auto;
+  }
+
   footer {
     text-align: center;
     background-color: #000080;
     color: white;
+  }
+
+  footer img {
+    max-width: 100%;
   }
 
   div.box {
@@ -130,7 +160,6 @@ footer, main, aside, nav, div {
   }
   
   .formcontacto {
-  width: 300px;
   padding: 15px;
   border: 2px outset #c0c0c0;
   background-color: #e0e0e0;
@@ -149,6 +178,7 @@ footer, main, aside, nav, div {
   font-size: 14px;
   color: black;
   box-sizing: border-box;
+  resize: none;
   max-width: 100%;
 }
 
@@ -187,4 +217,53 @@ footer, main, aside, nav, div {
   max-width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.asidechico {
+  display: none;
+}
+
+/* querys */
+
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 15px;
+  }
+
+  body{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  aside.izquierda {
+    display: none;
+  }
+
+  .publicidadheader img{
+    max-height: 50px;
+  }
+
+  .asidechico {
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 0.6rem;
+    padding: 7px;
+    text-align: center;
+    width: 30px;
+  }
+
+  aside.derecha{
+    margin: 0;
+    font-size: 4px;
+    max-width: 60px;
+  }
+
+  .asidechico img{
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 100%;
+  }
+
 }
