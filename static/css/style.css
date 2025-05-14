@@ -267,10 +267,7 @@ body {
   }
 
   aside.derecha{
-    padding: 3px;
-    margin-left: 1px;
-    font-size: 4px;
-    max-width: 60px;
+    display: none;
   }
 
   .asidechico img{
@@ -278,6 +275,10 @@ body {
     margin: 0 auto;
     padding: 0;
     max-width: 100%;
+  }
+
+  div.box img{
+    max-width: 70%;
   }
 
 }
