@@ -21,7 +21,6 @@ body {
     background-color: #e0e0e0db;
     padding: 10px;
     margin: 0px;
-    
   }
 
   header {
@@ -67,7 +66,7 @@ body {
   }
   
   aside.derecha img {
-  width: 100%;
+    width: 100%;
 
   }
 
@@ -77,14 +76,14 @@ body {
   }
 
   main {
-  margin: 0;
-  width: 100%;
+    margin: 0;
+    width: 100%;
   }
 
   main img {
-  display: block;
-  margin: 10px auto;
-  max-width: 100%;
+    display: block;
+    margin: 10px auto;
+    max-width: 100%;
   }
 
   .publicidadmain {
@@ -196,68 +195,67 @@ body {
   }
   
   .formcontacto {
-  padding: 15px;
-  border: 2px outset #c0c0c0;
-  background-color: #e0e0e0;
-  font-family: 'Courier New', monospace;
-  color: black;
-  margin: 20px auto;
-}
+    padding: 15px;
+    border: 2px outset #c0c0c0;
+    background-color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    color: black;
+    margin: 20px auto;
+  }
 
-.formcontacto input,
-.formcontacto textarea {
-  width: 100%;
-  background-color: #fff;
-  border: 2px inset #ccc;
-  padding: 4px;
-  font-family: 'Courier New', monospace;
-  font-size: 14px;
-  color: black;
-  box-sizing: border-box;
-  resize: none;
-  max-width: 100%;
-}
+  .formcontacto input, .formcontacto textarea {
+    width: 100%;
+    background-color: #fff;
+    border: 2px inset #ccc;
+    padding: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: black;
+    box-sizing: border-box;
+    resize: none;
+    max-width: 100%;
+  }
 
-.formcontacto button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #dcdcdc;
-  border: 2px outset #c0c0c0;
-  font-family: 'Courier New', monospace;
-  cursor: pointer;
-}
+  .formcontacto button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #dcdcdc;
+    border: 2px outset #c0c0c0;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+  }
 
-.save_walter_banner {
-  max-width: 100%;
-}
+  .save_walter_banner {
+    max-width: 100%;
+  }
 
-.save_walter_boton {
-  max-width: 40%;
-}
+  .save_walter_boton {
+    max-width: 40%;
+  }
 
-#formEncuesta {
-  font-family: 'Courier New', monospace;
-  font-size: 16px;
-}
+  #formEncuesta {
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+  }
 
-.containermusica {
-  font-family: 'Courier New', monospace;
-  font-size: 16px;
-}
+  .containermusica {
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+  }
 
-.containermusica audio {
-  max-width: 100%;
-}
+  .containermusica audio {
+    max-width: 100%;
+  }
 
-.containermusica img {
-  max-width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+  .containermusica img {
+    max-width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 
-.asidechico {
-  display: none;
-}
+  .asidechico {
+    display: none;
+  }
 
 /* querys */
 
@@ -291,19 +289,19 @@ body {
     max-height: 50px;
   }
 
- .asidechico {
-  font-family: 'Courier New', Courier, monospace;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 7px;
-  margin-bottom: 2px;
-  padding: 5px;
-  text-align: center;
-  height: auto;
-  overflow: hidden;
-}
+  .asidechico {
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    margin-bottom: 2px;
+    padding: 5px;
+    text-align: center;
+    height: auto;
+    overflow: hidden;
+  }
 
   .asidechico a {
 
