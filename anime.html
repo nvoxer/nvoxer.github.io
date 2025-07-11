@@ -7,6 +7,7 @@
   <link rel="icon" href="static/gifs/favicon.gif" type="image/x-icon">
   <link rel="stylesheet" href="/static/css/style.css">
   <script src="/static/js/scripts.js"></script>
+  <script src="/static/js/anime.js"></script>
   <title>Bienvenidos - nanoweb.com.ar</title>
 </head>
 <body>
@@ -90,40 +91,29 @@
         <p>Publicidad</p>
         <img style="width: 70%; max-width: 300px;" src="/static/gifs/yugioh_online.gif">
       </div>
+      <h2>Anime</h2> 
 
-      <h2>Anime</h2>
-      <h4>Últimos agregados:</h4>
+      <div class="botonfavoritos">
+        <button id="verFavoritos" onclick="verFavoritos()">Mostrar / Ocultar favoritos</button><span class="flecha">🔻</span>
+      </div>
+      
+      <div id="verFavoritosContainer" class="verFavoritosContaineroculto">
+      
+      </div>
 
-      <div class="animecontainer">
-        <div class="box">
-          <p style="text-align: center;"> The Apothecary Diaries Episodio 42</p>
-          <img src="/static/img/apothecary.png">
-          <a href="https://www3.animeflv.net/ver/kusuriya-no-hitorigoto-42" target="_blank">Ver</a>
-        </div>
+      <h4>Top animes:</h4>
+      <div id="paginacion" style="text-align: center; margin: 20px 0;">
+        <button id="prevPage">⬅️ Anterior</button>
+        <span id="paginaActual">1</span>
+        <button id="nextPage">Siguiente ➡️</button>
+      </div>
+      <div id="animecontainer" class="animecontainer">
 
-        <div class="box">
-          <p style="text-align: center;"> Re:ZERO -Starting Life in Another World- Season 3</p>
-          <img src="/static/img/4050.jpg">
-          <a href="https://www3.animeflv.net/anime/rezero-kara-hajimeru-isekai-seikatsu-3rd-season" target="_blank">Ver</a>
-        </div>
-
-        <div class="box">
-          <p style="text-align: center;"> Frieren: Beyond Journey's End</p>
-          <img src="/static/img/frieren.jpg">
-          <a href="https://www3.animeflv.net/anime/sousou-no-frieren" target="_blank">Ver</a>
-        </div>
-
-        <div class="box">
-          <p style="text-align: center;"> Death Note</p>
-          <img src="/static/img/death.jpg">
-          <a href="https://www3.animeflv.net/anime/death-note" target="_blank">Ver</a>
-        </div>
-
-        <div class="box">
-          <p style="text-align: center;"> Call of the Night</p>
-          <img src="/static/img/call.jpg">
-          <a href="https://www3.animeflv.net/anime/yofukashi-no-uta" target="_blank">Ver</a>
-        </div>
+      </div>
+      <div id="paginacion2" style="text-align: center; margin: 20px 0;">
+        <button id="prevPage2">⬅️ Anterior</button>
+        <span id="paginaActual2">1</span>
+        <button id="nextPage2">Siguiente ➡️</button>
       </div>
 
       <br>

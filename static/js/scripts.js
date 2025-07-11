@@ -6,3 +6,4 @@ function votar() {
   document.getElementById("formEncuesta").style.display = "none";
   document.getElementById("mensajegracias").style.display = "block";
 }
+

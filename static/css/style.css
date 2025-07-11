@@ -113,7 +113,7 @@ body {
     border: 2px inset #c1c1c1;
     margin: 10px 0;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
   }
 
    div.box iframe{
@@ -135,7 +135,7 @@ body {
   .animecontainer img{
     width: 100%;
     max-width: 250px;
-    border-radius: 10px;
+    border-radius: 2px;
   }
 
   .animecontainer .box {
@@ -148,6 +148,66 @@ body {
     padding-bottom: 5px;
     overflow-x: auto;    
     overflow-y: hidden;
+  }
+
+  .verFavoritosContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: stretch;
+
+  }
+  .verFavoritosContaineroculto {
+    display: none;
+  }
+
+  .boxfav {
+  width: 120px;
+  min-height: 120px;
+  background-color: #e0e0e0;
+  border: 2px inset #aaa;
+  border-radius: 2px;
+  padding: 5px;
+  font-size: 0.7rem;
+  font-weight: 100;
+  text-align: center;
+  overflow:hidden;
+  text-wrap: nowrap;
+  }
+
+ .boxfav img {
+  width: 100px;
+  height: 120px;
+ }
+
+  .boxfav img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 5px #00008066;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .anime-img {
+    transition: all 0.2s ease-in-out;
+    border-radius: 2px;
+  }
+
+  .anime-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 5px #00008066;
+  }
+
+
+  .botonfavoritos {
+    border: 0;
+    background-color: #ffffff00;
+  }
+
+  .marcar-visto {
+    border: 0;
+    margin: 10px 0;
+    padding: 10px;
   }
 
   footer {
