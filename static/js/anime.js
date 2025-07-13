@@ -24,11 +24,9 @@ async function obtenerTopAnimes() {
         <p>🏆 <strong>Ranking:</strong> ${anime.rank}</p>
         <p>⭐ <strong>Puntuación:</strong> ${anime.score}</p>
         <p>🎬 <strong>Episodios:</strong> ${anime.episodes ?? "-"}</p>
-        <button 
-          onclick="agregarAFavoritos(${anime.mal_id}, '${anime.title}', '${anime.images.jpg.image_url}', '${anime.url}')" 
+        <button onclick="agregarAFavoritos(${anime.mal_id}, '${anime.title}', '${anime.images.jpg.image_url}', '${anime.url}')" 
           id="fav${anime.mal_id}"
-          ${estaFavorito ? "disabled" : ""}
-        >
+          ${estaFavorito ? "disabled" : ""}>
           ${estaFavorito ? "✅ Guardado" : "⭐ Agregar a favoritos"}
         </button>
       `;
@@ -50,11 +48,12 @@ function cambiarPagina(contador) {
   if (pagina < 1) pagina = 1;
   obtenerTopAnimes(pagina);
 }
+let favoritosVisibles = false;
 
 function agregarAFavoritos(id, titulo, imagen, url) {
   const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 
-  //ver si ya esta agregado a fav
+  //ver si ya esta existe en fav
   const yaExiste = favoritos.some(fav => fav.id === id);
   if (yaExiste) return; //no hace nada si ya esta
 
@@ -66,14 +65,14 @@ function agregarAFavoritos(id, titulo, imagen, url) {
     botonAgregar.textContent = "✅ Guardado";
     botonAgregar.disabled = true;
   }
+  if (favoritosVisibles) {
+    verFavoritos(); 
+  }
 }
 
 
-let favoritosVisibles = false;
-
 function verFavoritos() {
   const contenedor = document.getElementById("verFavoritosContainer");
-
   //visibilidad de contenedor
   if (contenedor.classList.contains("verFavoritosContaineroculto")) {
     contenedor.classList.remove("verFavoritosContaineroculto");

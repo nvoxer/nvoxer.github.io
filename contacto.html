@@ -7,6 +7,7 @@
   <link rel="icon" href="static/gifs/favicon.gif" type="image/x-icon">
   <link rel="stylesheet" href="/static/css/style.css">
   <script src="/static/js/scripts.js"></script>
+  <script src="/static/js/formValidations.js"></script>
   <title>Bienvenidos - nanoweb.com.ar</title>
 </head>
 <body>
@@ -88,21 +89,25 @@
 
       <h2>Contacto:</h2>
       <p class="textocontacto">
-        Envianos cualquier petición de información o consulta y te contactaremos a la mayor brevedad posible.
+        Envianos cualquier petición de información o consulta y te contactaremos a la brevedad.
       </p>
-        <form class="formcontacto" action="https://formspree.io/f/xdkglozw" method="POST">
+
+        <form class="formcontacto" action="https://formspree.io/f/xdkglozw" method="POST" onsubmit="return validateForm();">
           <img src="static/gifs/buzon.gif" alt="mail">
+        
           <label for="nombre">Nombre:</label><br>
-          <input type="text" id="nombre" name="nombre" required><br><br>
+          <input type="text" id="nombre" name="nombre"><br>
+          <div id="error-nombre" class="error-msg"></div><br>
         
           <label for="email">Email:</label><br>
-          <input type="email" id="email" name="email" required><br><br>
+          <input type="email" id="email" name="email"><br>
+          <div id="error-email" class="error-msg"></div><br>
         
           <label for="mensaje">Mensaje:</label><br>
-          <textarea id="mensaje" name="mensaje" rows="5" required></textarea><br><br>
+          <textarea id="mensaje" name="mensaje" rows="5"></textarea><br>
+          <div id="error-mensaje" class="error-msg"></div><br>
         
           <button type="submit">Enviar</button>
-          
         </form>
 
     </main>
