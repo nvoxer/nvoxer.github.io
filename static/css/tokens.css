@@ -1,0 +1,78 @@
+/* ─────────────────────────────────────────────
+   MARGO — Design Tokens
+   Fuente: docs/design-system.md
+───────────────────────────────────────────── */
+:root {
+  /* Color — marca */
+  --color-brand:             #135D52;
+  --color-brand-dark:        #0d3e36;
+
+  /* Color — texto */
+  --color-text-primary:      #1a1714;
+  --color-text-secondary:    #6b6560;
+  --color-text-tertiary:     #a8a09a;
+
+  /* Color — superficie */
+  --color-bg:                #f9f7f4;
+  --color-surface:           #ffffff;
+  --color-surface-alt:       #ece8e2;
+  --color-img-placeholder:   #e0dbd5;
+  --color-thumb-placeholder: #d6d0c8;
+
+  /* Color — bordes */
+  --color-border:            rgba(26, 23, 20, 0.10);
+  --color-border-strong:     rgba(26, 23, 20, 0.18);
+
+  /* Acabados de producto */
+  --swatch-blanco:    #F0EDE8;
+  --swatch-negro:     #2A2724;
+  --swatch-laton:     #B89A5A;
+  --swatch-verde:     #135D52;
+  --swatch-terracota: #C1694F;
+  --swatch-cemento:   #8E8880;
+
+  /* Tipografía */
+  --font-family: 'Host Grotesk', sans-serif;
+
+  /* Bordes */
+  --border-thin:   0.5px solid var(--color-border);
+  --border-medium: 0.5px solid var(--color-border-strong);
+  --radius-sm:     6px;
+  --radius-full:   50%;
+
+  /* Layout */
+  --nav-height:              60px;
+  --layout-max-width:        1100px;
+  --layout-padding-x:        40px;
+  --layout-padding-x-mobile: 20px;
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  10px;
+  --space-4:  12px;
+  --space-5:  14px;
+  --space-6:  16px;
+  --space-7:  18px;
+  --space-8:  20px;
+  --space-9:  24px;
+  --space-10: 32px;
+  --space-11: 36px;
+  --space-12: 40px;
+  --space-13: 48px;
+  --space-14: 52px;
+  --space-15: 56px;
+  --space-16: 64px;
+  --space-17: 80px;
+
+  /* Motion */
+  --transition-fast:   0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow:   0.3s ease;
+  --transition-image:  0.6s ease;
+
+  /* Componentes */
+  --swatch-size:         36px;
+  --thumb-width:         72px;
+  --arrow-size:          40px;
+}
