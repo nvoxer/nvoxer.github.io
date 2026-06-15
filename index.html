@@ -1,46 +1,998 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>margo — catálogo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="static/css/tokens.css">
-  <link rel="stylesheet" href="static/css/base.css">
-  <link rel="stylesheet" href="static/css/components.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>margo — catálogo</title>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --g: #135D52; --t1: #1a1714; --t2: #6b6560; --t3: #a8a09a;
+    --bg: #f9f7f4; --white: #ffffff; --border: rgba(26,23,20,0.10);
+  }
+  body { font-family:'Host Grotesk',sans-serif; background:var(--bg); color:var(--t1); -webkit-font-smoothing:antialiased; min-height:100vh; }
+
+  nav { background:var(--white); border-bottom:0.5px solid var(--border); height:60px; display:flex; align-items:center; justify-content:center; position:sticky; top:0; z-index:100; }
+  .logo { display:flex; align-items:center; gap:10px; cursor:pointer; }
+  .logomark { width:32px; height:32px; background:var(--g); border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .logomark span { color:#fff; font-size:9.5px; font-weight:600; letter-spacing:-.3px; line-height:1.15; text-align:center; pointer-events:none; }
+  .brandname { font-size:16px; font-weight:500; letter-spacing:-.2px; color:var(--t1); }
+  .logo-svg { display: block; height: 40px; /* o el tamaño que necesites */ width: auto;}
+
+  .view { display:none; }
+  .view.active { display:block; }
+
+  /* CATALOG */
+  .catalog-wrap { max-width:1100px; margin:0 auto; padding:0 40px; }
+  .page-header { padding:52px 0 36px; border-bottom:0.5px solid var(--border); background:var(--white); }
+  .page-eyebrow { font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--t3); margin-bottom:10px; }
+  .page-title { font-size:40px; font-weight:300; letter-spacing:-1px; line-height:1; }
+  .page-title em { font-style:italic; color:var(--t3); }
+  .catalog { padding:48px 0 80px; }
+  .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--border); }
+  .card { background:var(--white); cursor:pointer; overflow:hidden; }
+  .card-img { aspect-ratio:3/4; overflow:hidden; background:#e0dbd5; }
+  .card-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease; }
+  .card:hover .card-img img { transform:scale(1.04); }
+  .card-body { padding:14px 18px 18px; border-top:0.5px solid var(--border); display:flex; justify-content:space-between; align-items:baseline; }
+  .card-name { font-size:14px; font-weight:400; color:var(--t1); }
+  .card-price { font-size:13px; font-weight:300; color:var(--t2); }
+  footer { border-top:0.5px solid var(--border); padding:20px 40px; max-width:1100px; margin:0 auto; background:var(--white); display:flex; justify-content:space-between; align-items:center; }
+  .foot-copy { font-size:11px; color:var(--t3); }
+  .foot-mail { font-size:11px; color:var(--t3); }
+  .foot-mail a { color:var(--g); text-decoration:none; }
+
+  /* PRODUCT */
+  a { color: inherit;}
+  .product-wrap { display:grid; grid-template-columns:1fr 1fr; min-height:calc(100vh - 60px); align-items:start; }
+
+  .product-left { position:sticky; top:60px; height:calc(100vh - 60px); background:#eeebe5; overflow:hidden; display:flex; flex-direction:column; }
+
+  .gallery-area { flex:1; position:relative; overflow:hidden; }
+  .gallery-photo { position:absolute; inset:0; opacity:1; transition:opacity .35s ease; background:#e0dbd5; }
+  .gallery-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+  .gallery-photo.hidden { opacity:0; pointer-events:none; }
+
+  /* SVG overlay */
+  .svg-overlay {
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; transition:opacity .4s ease; pointer-events:none;
+    background:#eeebe5;
+  }
+  .svg-overlay.visible { opacity:1; pointer-events:auto; }
+
+
+  /* view toggle */
+  .view-toggle { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); display:flex; gap:1px; z-index:5; }
+  .toggle-btn {
+    font-family:inherit; font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
+    padding:7px 16px; border:none; cursor:pointer;
+    background:rgba(255,255,255,0.85); color:var(--t2);
+    transition:background .15s, color .15s; backdrop-filter:blur(4px);
+  }
+  .toggle-btn.active { background:var(--t1); color:#fff; }
+
+  /* light toggle button */
+  .light-toggle {
+    position:absolute; top:16px; right:16px; z-index:6;
+    width:36px; height:36px; border-radius:50%;
+    border:0.5px solid rgba(255,255,255,0.5);
+    background:rgba(255,255,255,0.7); color:var(--t2);
+    cursor:pointer; transition:all .35s; backdrop-filter:blur(4px);
+    display:none; align-items:center; justify-content:center;
+    padding:0;
+  }
+  .light-toggle svg { display:block; transition:color .35s; }
+  .light-toggle.on { background:rgba(255,220,80,0.25); border-color:rgba(220,170,40,0.5); color:#b8860b; }
+  .light-toggle.show { display:flex; }
+
+  /* Dark bg when lit */
+  .svg-overlay { transition:opacity .4s ease, background .6s ease; }
+  .svg-overlay.lit { background: radial-gradient(ellipse at 50% 52%, #3d2e00 0%, #1e1600 50%, #0d0d0d 100%) !important; }
+
+  .gallery-arrow {
+    position:absolute; top:50%; transform:translateY(-50%);
+    background:rgba(255,255,255,0.82); border:none;
+    width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:16px; color:var(--t1);
+    opacity:0; transition:opacity .2s; z-index:4; backdrop-filter:blur(4px);
+  }
+  .gallery-area:hover .gallery-arrow { opacity:1; }
+  .gallery-arrow.prev { left:14px; }
+  .gallery-arrow.next { right:14px; }
+
+  .gallery-thumbs { display:flex; gap:1px; background:var(--border); height:82px; flex-shrink:0; }
+  .thumb { flex:1; overflow:hidden; cursor:pointer; opacity:.45; transition:opacity .2s; background:#d6d0c8; }
+  .thumb.active { opacity:1; }
+  .thumb:hover { opacity:.8; }
+  .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* RIGHT panel */
+  .product-panel { position:sticky; top:60px; height:calc(100vh - 60px); overflow-y:auto; background:var(--white); border-left:0.5px solid var(--border); padding:40px 36px 36px; display:flex; flex-direction:column; }
+  .product-panel::-webkit-scrollbar { width:3px; }
+  .product-panel::-webkit-scrollbar-thumb { background:var(--border); }
+
+  .back-btn { display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--t3); cursor:pointer; margin-bottom:28px; border:none; background:none; padding:0; font-family:inherit; transition:color .2s; }
+  .back-btn:hover { color:var(--t1); }
+  .back-btn::before { content:'←'; font-size:14px; }
+
+  /* SVG above name */
+  .p-svg-top { margin-bottom:16px; line-height:0; }
+
+  .p-eyebrow { font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--t3); margin-bottom:6px; }
+  .p-name { font-size:28px; font-weight:300; letter-spacing:-.6px; line-height:1.05; margin-bottom:6px; }
+  .p-desc { font-size:13px; font-weight:300; color:var(--t2); line-height:1.75; margin-bottom:20px; }
+
+  .p-price-row { display:flex; align-items:baseline; gap:10px; padding:14px 0; border-top:0.5px solid var(--border); border-bottom:0.5px solid var(--border); margin-bottom:24px; }
+  .p-price { font-size:22px; font-weight:300; color:var(--t1); transition:color .2s; }
+  .p-price-note { font-size:11px; color:var(--t3); }
+
+  .config-section { margin-bottom:20px; }
+  .config-label { font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--t3); margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .config-label-text { flex-shrink:0; }
+  .config-label-right { display:flex; align-items:center; gap:6px; }
+  .config-selected { font-size:12px; font-weight:400; letter-spacing:0; text-transform:none; color:var(--t1); }
+  .config-extra { font-size:11px; font-weight:500; color:var(--g); letter-spacing:0; text-transform:none; }
+
+  .swatches { display:flex; gap:8px; flex-wrap:wrap; }
+  .swatch { width:30px; height:30px; border-radius:50%; cursor:pointer; border:2px solid transparent; transition:transform .15s; }
+  .swatch:hover { transform:scale(1.1); }
+  .swatch.active { box-shadow:0 0 0 2px var(--white), 0 0 0 3.5px var(--t1); }
+  .swatch.disabled {
+  opacity: 0.5;
+  position: relative;
+  overflow: hidden;
+}
+.swatch.disabled::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom right,
+    transparent calc(50% - 1px),
+    red calc(50% - 1px),
+    red calc(50% + 1px),
+    transparent calc(50% + 1px)
+  );
+}
+
+  .pills { display:flex; gap:6px; flex-wrap:wrap; }
+  .pill { padding:7px 14px; border:0.5px solid var(--border); font-family:inherit; font-size:12px; font-weight:400; color:var(--t2); background:transparent; cursor:pointer; transition:all .15s; }
+  .pill:hover { border-color:var(--t2); color:var(--t1); }
+  .pill.active { background:var(--t1); color:var(--white); border-color:var(--t1); }
+  .pill.disabled { opacity: 0.4; cursor: not-allowed; position: relative; overflow: hidden; }
+  .pill.disabled::after { content:''; position:absolute; inset:0; background: linear-gradient(to bottom right, transparent calc(50% - 1px), red calc(50% - 1px), red calc(50% + 1px), transparent calc(50% + 1px)); }
+
+  .config-divider { height:0.5px; background:var(--border); margin:4px 0 20px; }
+
+  .price-breakdown { margin-top:auto; padding-top:18px; border-top:0.5px solid var(--border); }
+  .breakdown-row { display:flex; justify-content:space-between; font-size:12px; color:var(--t3); padding:4px 0; }
+  .breakdown-row.total { font-size:14px; font-weight:500; color:var(--t1); border-top:0.5px solid var(--border); margin-top:6px; padding-top:10px; }
+  .cta-btn { display:block; width:100%; padding:15px; background:var(--g); color:#fff; border:none; font-family:inherit; font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; margin-top:14px; transition:background .2s; }
+  .cta-btn:hover { background:#0d3e36; }
+  .copy-confirm { font-size:11px; color:var(--g); letter-spacing:.06em; text-align:center; margin-top:8px; opacity:0; transition:opacity .3s; min-height:16px; }
+
+  @media (max-width:900px) {
+    .catalog-wrap { padding-left:20px; padding-right:20px; }
+    .grid { grid-template-columns:repeat(2,1fr); }
+    .page-title { font-size:28px; }
+    .product-wrap { grid-template-columns:1fr; }
+    .product-left { position:relative; top:0; height:150vw; }
+    .product-panel { position:relative; top:0; height:auto; }
+  }
+  @media (max-width:560px) { .grid { grid-template-columns:1fr; } }
+</style>
 </head>
 <body>
 
-  <nav class="nav">
-    <a class="nav-logo" href="index.html">
-      <div class="nav-logomark"><span>mar<br>go</span></div>
-      <span class="nav-brandname">margo</span>
-    </a>
-  </nav>
+<nav>
+  <div class="logo" id="logoLink">
+    <img src="logo-margo.svg" alt="Margo" class="logo-svg">
+  </div>
+</nav>
 
-  <div class="catalog-header">
-    <div class="page-wrap">
-      <div class="catalog-header-inner">
-        <p class="eyebrow">Luminarias &amp; objetos</p>
-        <h1 class="catalog-title">Catálogo</h1>
+<!-- CATALOG -->
+<div class="view active" id="viewCatalog">
+  <div style="background:var(--white);border-bottom:0.5px solid var(--border);">
+    <div class="catalog-wrap">
+      <div class="page-header">
+        <h1 class="page-title">Catálogo</h1>
       </div>
     </div>
   </div>
-
-  <div class="catalog-body">
-    <div class="page-wrap">
-      <div class="product-grid" id="product-grid"></div>
+  <div class="catalog">
+    <div class="catalog-wrap">
+      <div class="grid" id="grid"></div>
     </div>
   </div>
+  <footer>
+    <span class="foot-copy">© 2025 margo</span>
+    <span class="foot-mail">Consultas: <a href="mailto:hola@margo.com.ar">hola@margo.com.ar</a></span>
+  </footer>
+</div>
 
-  <div class="footer-wrap">
-    <footer class="footer">
-      <span class="footer-copy">© 2026 margo</span>
-      <span class="footer-mail">Consultas: <a href="mailto:hola@margo.com.ar">hola@margo.com.ar</a></span>
-    </footer>
+<!-- PRODUCT -->
+<div class="view" id="viewProduct">
+  <div class="product-wrap">
+
+    <div class="product-left">
+      <div class="gallery-area" id="galleryArea">
+        <div class="svg-overlay" id="svgOverlay">
+          <div id="lampSvgWrap"></div>
+        </div>
+        <button class="light-toggle" id="lightToggle" title="Encender / Apagar">
+          <svg id="lightIcon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 4h.01"/><path d="M20 12h.01"/><path d="M12 20h.01"/><path d="M4 12h.01"/><path d="M17.657 6.343h.01"/><path d="M17.657 17.657h.01"/><path d="M6.343 17.657h.01"/><path d="M6.343 6.343h.01"/></svg>
+        </button>
+        <div class="view-toggle">
+          <button class="toggle-btn active" id="btnPhotos" hidden>Fotos</button>
+          <button class="toggle-btn" id="btnDibujo" hidden>Dibujo</button>
+        </div>
+        <button class="gallery-arrow prev" id="arrowPrev">&#8592;</button>
+        <button class="gallery-arrow next" id="arrowNext">&#8594;</button>
+      </div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+
+    <div class="product-panel">
+      <button class="back-btn" id="backBtn">Catálogo</button>
+      <!-- SVG above name -->
+      <div class="p-svg-top" id="pSvgTop"></div>
+      <h1 class="p-name" id="pName"></h1>
+      <p class="p-desc" id="pDesc"></p>
+
+      <div class="p-price-row">
+        <span class="p-price" id="pPrice"></span>
+        <span class="p-price-note" hidden>precio final según configuración</span>
+      </div>
+
+      <div class="config-section">
+        <div class="config-label">
+          <span class="config-label-text">Color de pantalla</span>
+          <span class="config-label-right">
+            <span class="config-selected" id="labelPantalla"></span>
+            <span class="config-extra" id="extraPantalla"></span>
+          </span>
+        </div>
+        <div class="swatches" id="swatchesPantalla"></div>
+      </div>
+      <div class="config-divider"></div>
+
+      <div class="config-section">
+        <div class="config-label">
+          <span class="config-label-text">Color de base</span>
+          <span class="config-label-right">
+            <span class="config-selected" id="labelBase"></span>
+            <span class="config-extra" id="extraBase"></span>
+          </span>
+        </div>
+        <div class="swatches" id="swatchesBase"></div>
+      </div>
+      <div class="config-divider"></div>
+
+      <div class="config-section">
+        <div class="config-label">
+          <span class="config-label-text">Incluir lámpara</span>
+          <span class="config-label-right">
+            <span class="config-selected" id="labelLampara"></span>
+            <span class="config-extra" id="extraLampara"></span>
+          </span>
+        </div>
+        <div class="pills" id="pillsLampara"></div>
+      </div>
+      <div class="config-divider"></div>
+
+      <div class="config-section">
+        <div class="config-label">
+          <span class="config-label-text">Color de cable</span>
+          <span class="config-label-right">
+            <span class="config-selected" id="labelCable"></span>
+            <span class="config-extra" id="extraCable"></span>
+          </span>
+        </div>
+        <div class="swatches" id="swatchesCable"></div>
+      </div>
+
+      <div class="price-breakdown">
+        <div id="breakdownRows"></div>
+        <div class="breakdown-row total">
+          <span>Total</span>
+          <span id="totalPrice"></span>
+        </div>
+        <p style="font-size:11px; color:var(--t3); text-align:center; margin-bottom:8px; letter-spacing:0.04em;">Usá el botón para copiar el pedido y envialo por WhatsApp o a <a href="mailto:pedidos@margo.com.ar">pedidos@margo.com.ar</a></p>
+        <button class="cta-btn" id="copyBtn">Copiar pedido</button>
+        <p class="copy-confirm" id="copyConfirm">✓ Copiado al portapapeles</p>
+      </div>
+    </div>
+
   </div>
+</div>
 
-  <script src="data/products.js"></script>
-  <script src="static/js/catalog.js"></script>
+<script>
+// ── DATA ─────────────────────────────────────────────
+// Mix a color toward warm white when lit
+function blendWithLight(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  const t = 0.45;
+  const nr = Math.round(r + (255 - r)*t);
+  const ng = Math.round(g + (245 - g)*t);
+  const nb = Math.round(b + (200 - b)*t);
+  return `rgb(${nr},${ng},${nb})`;
+}
+
+const PRODUCTS = [
+  {
+    name: 'LA-01',
+    desc: 'Pantalla acanalada de inspiración clásica sobre base de acabado mate. La textura vertical de sus estrías distribuye la luz en patrones cálidos y rítmicos, transformando cualquier ambiente en un espacio con carácter propio.',
+    price: 25000,
+    imgs: [ 'img/flut01.jpg',
+            'img/flut02.jpg',
+            'img/flut03.jpg',
+            'img/flut04.jpg',
+            'img/flut05.jpg',
+            'img/flut06.jpg',],
+
+    // índices habilitados de cada opción (0-based)
+    // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
+    enabledPantalla: [0, 1],
+    // OPT_BASE: 0=Blanco, 1=Beige, 2=Marrón, 3=Azul oscuro, 4=Verde, 5=Negro, 6=Madera
+    enabledBase:     [0, 1, 2, 3, 4, 5],
+    // OPT_LAMPARA: 0=No, 1=Sí, 2=Smart
+    enabledLampara:  [0, 1, 2],
+    // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
+    enabledCable:    [0, 1],
+
+    svg: (sc, bsc, lit, W, H) => {
+      const shadeColor = lit ? blendWithLight(sc) : sc;
+      return `<svg width="${W}" height="${H}" viewBox="0 0 60 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+  ${lit ? `<defs><radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff8dc" stop-opacity="0.9"/><stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/></radialGradient></defs>` : ''}
+  <path d="M0 102.413C0 96.2877 4.96557 91.3221 11.0909 91.3221H48.4882C54.6136 91.3221 59.5791 96.2877 59.5791 102.413V111.182H0V102.413Z" fill="${bsc}"/>
+  <path d="M11.0908 91.8221H48.4883C54.3374 91.8221 59.0791 96.5638 59.0791 102.413V110.681H0.5V102.413C0.500046 96.5638 5.24169 91.8222 11.0908 91.8221Z" stroke="black" stroke-opacity="0.2"/>
+  <path d="M0 0H59.5791V89.3687H0V0Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M0 0H59.5791V89.3687H0V0Z" fill="url(#glow)" opacity="0.7"/>` : ''}
+  <path d="M59.0791 0.5V88.8691H0.5V0.5H59.0791Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.2'}"/>
+  <path d="M50.6387 0.5V88.8691H8.94043V0.5H50.6387Z" stroke="black" stroke-opacity="${lit ? '0.07' : '0.13'}"/>
+  <path d="M55.6033 0.5V88.8691H3.97534V0.5H55.6033Z" stroke="black" stroke-opacity="${lit ? '0.05' : '0.1'}"/>
+  <path d="M45.1772 0.5V88.8691H14.4019V0.5H45.1772Z" stroke="black" stroke-opacity="${lit ? '0.05' : '0.1'}"/>
+  <path d="M39.219 0.5V88.8691H20.3596V0.5H39.219Z" stroke="black" stroke-opacity="${lit ? '0.04' : '0.08'}"/>
+  <path d="M32.7654 0.5V88.8691H26.8142V0.5H32.7654Z" stroke="black" stroke-opacity="${lit ? '0.04' : '0.08'}"/>
+  <path d="M10.7439 92.2174C10.7439 90.2396 12.3473 88.6362 14.3252 88.6362H45.6612C47.639 88.6362 49.2424 90.2396 49.2424 92.2174H10.7439Z" fill="${bsc}"/>
+  <path d="M14.325 89.1362H45.6609C47.1922 89.1362 48.4619 90.2535 48.7009 91.7172H11.2849C11.5239 90.2535 12.7937 89.1363 14.325 89.1362Z" stroke="black" stroke-opacity="0.2"/>
+</svg>`;
+    },
+  },
+
+  {
+    name: 'LA-02',
+    desc: 'Lampara de mesa. ',
+    price: 32000,
+    imgs: [ 'img/hon02.jpg',
+            'img/hon03.jpg',
+            'img/hon05.jpg',
+            'img/hon06.jpg',],
+
+    // índices habilitados de cada opción (0-based)
+    // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
+    enabledPantalla: [0, 1],
+    // OPT_BASE: 0=Blanco, 1=Beige, 2=Marrón, 3=Azul oscuro, 4=Verde, 5=Negro, 6=Madera
+    enabledBase:     [0, 1, 2, 3, 4, 5],
+    // OPT_LAMPARA: 0=No, 1=Sí, 2=Smart
+    enabledLampara:  [0, 1, 2],
+    // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
+    enabledCable:    [0, 1],
+
+svg: (sc, bsc, lit, W, H) => {
+  const shadeColor = lit ? blendWithLight(sc) : sc;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 134 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+  ${lit ? `<defs>
+    <radialGradient id="glow" cx="50%" cy="60%" r="55%">
+      <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>` : ''}
+  <!-- Base -->
+  <path d="M101 115C101 119.971 96.9706 124 92 124L41 124C36.0294 124 32 119.971 32 115L32 91L101 91L101 115Z" fill="${bsc}"/>
+  <path d="M92 123.465L41 123.465C36.3249 123.465 32.5352 119.675 32.5352 115L32.5352 91.5352L100.465 91.5352L100.465 115C100.465 119.675 96.6751 123.465 92 123.465Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
+  <!-- Pantalla -->
+  <path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="url(#glow)"/>` : ''}
+  <path d="M49.7773 0.535156H84.2227C90.1858 0.535284 95.782 3.41515 99.248 8.26758L130.025 51.3564C132.262 54.4881 133.465 58.2403 133.465 62.0889V73C133.465 83.1979 125.198 91.4648 115 91.4648H19C8.80206 91.4648 0.535157 83.1979 0.535156 73V62.0889C0.535156 58.2403 1.73771 54.4881 3.97461 51.3564L34.752 8.26758C38.218 3.41516 43.8142 0.535284 49.7773 0.535156Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.4'}" stroke-width="1.07"/>
+</svg>`;
+},
+  },
+
+  {
+    name: 'LA-03',
+    desc: 'Calabaza',
+    price: 30000,
+    imgs: [ 'img/cal02.jpg',
+            'img/cal03.jpg',
+            'img/cal04.jpg',
+            'img/cal05.jpg',
+            'img/cal07.jpg'],
+
+    // índices habilitados de cada opción (0-based)
+    // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
+    enabledPantalla: [0, 1],
+    // OPT_BASE: 0=Blanco, 1=Beige, 2=Marrón, 3=Azul oscuro, 4=Verde, 5=Negro, 6=Madera
+    enabledBase:     [0, 1, 2, 3, 4, 5],
+    // OPT_LAMPARA: 0=No, 1=Sí, 2=Smart
+    enabledLampara:  [0, 1, 2],
+    // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
+    enabledCable:    [0, 1],
+
+svg: (sc, bsc, lit, W, H) => {
+  const shadeColor = lit ? blendWithLight(sc) : sc;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 124 162" fill="none" xmlns="http://www.w3.org/2000/svg">
+  ${lit ? `<defs>
+    <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>` : ''}
+  <!-- Base -->
+  <path d="M37.6667 125H86.3333L97 162H27L37.6667 125Z" fill="${bsc}"/>
+  <path d="M85.957 125.5L96.335 161.5H27.665L38.043 125.5H85.957Z" stroke="black" stroke-opacity="0.36"/>
+  <!-- Pantalla -->
+  <mask id="mask0_10_11" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="124" height="125">
+    <rect width="124" height="125" rx="32" fill="${shadeColor}"/>
+    <rect x="0.5" y="0.5" width="123" height="124" rx="31.5" stroke="black" stroke-opacity="0.36"/>
+  </mask>
+  <g mask="url(#mask0_10_11)">
+    <rect width="124" height="125" rx="32" fill="${shadeColor}"/>
+    ${lit ? `<rect width="124" height="125" rx="32" fill="url(#glow)"/>` : ''}
+    <line x1="134" y1="6.5" x2="-10" y2="6.50001" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="12.5" x2="-10" y2="12.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="18.5" x2="-10" y2="18.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="24.5" x2="-10" y2="24.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="30.5" x2="-10" y2="30.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="36.5" x2="-10" y2="36.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="42.5" x2="-10" y2="42.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="48.5" x2="-10" y2="48.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="54.5" x2="-10" y2="54.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="60.5" x2="-10" y2="60.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="66.5" x2="-10" y2="66.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="72.5" x2="-10" y2="72.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="78.5" x2="-10" y2="78.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="84.5" x2="-10" y2="84.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="90.5" x2="-10" y2="90.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="96.5" x2="-10" y2="96.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="102.5" x2="-10" y2="102.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="108.5" x2="-10" y2="108.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="114.5" x2="-10" y2="114.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+    <line x1="134" y1="120.5" x2="-10" y2="120.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+  </g>
+  <rect x="0.5" y="0.5" width="123" height="124" rx="31.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+</svg>`;
+},
+  },  
+
+
+  {
+    name: 'LA-04',
+    desc: 'Skirt',
+    price: 34000,
+    imgs: [ 'img/skirt01.jpg', 'img/skirt02.jpg'],
+
+    // índices habilitados de cada opción (0-based)
+    // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
+    enabledPantalla: [0, 1],
+    // OPT_BASE: 0=Blanco, 1=Beige, 2=Marrón, 3=Azul oscuro, 4=Verde, 5=Negro, 6=Madera
+    enabledBase:     [0, 1, 2, 3, 4, 5],
+    // OPT_LAMPARA: 0=No, 1=Sí, 2=Smart
+    enabledLampara:  [0, 1, 2],
+    // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
+    enabledCable:    [0, 1],
+
+svg: (sc, bsc, lit, W, H) => {
+  const shadeColor = lit ? blendWithLight(sc) : sc;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 150 171" fill="none" xmlns="http://www.w3.org/2000/svg">
+  ${lit ? `<defs>
+    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>` : ''}
+  <!-- Base -->
+  <path d="M49.7687 73.008C50.1954 68.727 50.4088 66.5865 51.8374 65.2933C53.266 64 55.4171 64 59.7193 64H90.2806C94.5829 64 96.734 64 98.1626 65.2933C99.5912 66.5865 99.8046 68.727 100.231 73.008L108.904 160.008C109.416 165.143 109.672 167.711 108.184 169.356C106.695 171 104.114 171 98.9535 171H51.0465C45.8856 171 43.3051 171 41.8165 169.356C40.3279 167.711 40.5838 165.143 41.0958 160.008L49.7687 73.008Z" fill="${bsc}"/>
+  <path d="M59.7197 64.5H90.2803C92.4448 64.5 94.0206 64.5006 95.2354 64.6572C96.436 64.812 97.2177 65.1123 97.8271 65.6641C98.4365 66.2157 98.8129 66.9635 99.0859 68.1426C99.3622 69.3358 99.5187 70.9038 99.7334 73.0576L108.406 160.058C108.664 162.64 108.851 164.525 108.795 165.972C108.739 167.404 108.445 168.321 107.812 169.021C107.18 169.719 106.296 170.101 104.877 170.299C103.443 170.498 101.548 170.5 98.9531 170.5H51.0469C48.4516 170.5 46.5568 170.498 45.123 170.299C43.704 170.101 42.8204 169.719 42.1875 169.021C41.5545 168.321 41.261 167.404 41.2051 165.972C41.1487 164.525 41.3363 162.64 41.5938 160.058L50.2666 73.0576C50.4813 70.9038 50.6378 69.3358 50.9141 68.1426C51.1871 66.9635 51.5635 66.2157 52.1729 65.6641C52.7823 65.1123 53.564 64.812 54.7646 64.6572C55.9794 64.5006 57.5552 64.5 59.7197 64.5Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+  <!-- Pantalla -->
+  <path d="M43.5 6.52058e-06L106.5 0L150 121H0L43.5 6.52058e-06Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M43.5 6.52058e-06L106.5 0L150 121H0L43.5 6.52058e-06Z" fill="url(#glow)"/>` : ''}
+  <path d="M106.148 0.5L149.289 120.5H0.710938L43.8516 0.5H106.148Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <path d="M101.089 0.5L137.327 120.5H12.6729L48.9111 0.5H101.089Z" stroke="black" stroke-opacity="${lit ? '0.08' : '0.36'}"/>
+  <path d="M95.1836 0.5L123.369 120.5H26.6309L54.8164 0.5H95.1836Z" stroke="black" stroke-opacity="${lit ? '0.08' : '0.36'}"/>
+  <path d="M87.167 0.5L104.423 120.5H45.5771L62.833 0.5H87.167Z" stroke="black" stroke-opacity="${lit ? '0.06' : '0.36'}"/>
+  <path d="M78.7227 0.5L84.4756 120.5H65.5244L71.2773 0.5H78.7227Z" stroke="black" stroke-opacity="${lit ? '0.06' : '0.36'}"/>
+</svg>`;
+},
+  },  
+  
+  {
+    name: 'LA-05',
+    desc: 'Tokyo',
+    price: 45000,
+    imgs: [ 'img/pon01.jpg',
+            'img/pon03.jpg',
+            'img/pon06.jpg',
+          ],
+
+    // índices habilitados de cada opción (0-based)
+    // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
+    enabledPantalla: [0],
+    // OPT_BASE: 0=Blanco, 1=Beige, 2=Marrón, 3=Azul oscuro, 4=Verde, 5=Negro, 6=Madera
+    enabledBase:     [0, 2, 3, 4, 5],
+    // OPT_LAMPARA: 0=No, 1=Sí, 2=Smart
+    enabledLampara:  [0, 1, 2],
+    // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
+    enabledCable:    [0, 1],
+
+svg: (sc, bsc, lit, W, H) => {
+  const shadeColor = lit ? blendWithLight(sc) : sc;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 100 145" fill="none" xmlns="http://www.w3.org/2000/svg">
+  ${lit ? `<defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>` : ''}
+  <!-- Marco exterior — base -->
+  <rect width="100" height="130" rx="5" fill="${bsc}"/>
+  <rect x="0.5" y="0.5" width="99" height="129" rx="4.5" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+  <!-- Panel interior — pantalla -->
+  <rect x="9" y="9" width="82" height="112" fill="${shadeColor}"/>
+  ${lit ? `<rect x="9" y="9" width="82" height="112" fill="url(#glow)"/>` : ''}
+  <rect x="9.5" y="9.5" width="81" height="111" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <!-- Barras verticales — base -->
+  <rect x="32" y="9" width="4" height="112" fill="${bsc}"/>
+  <rect x="32.5" y="9.5" width="3" height="111" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <rect x="63" y="9" width="4" height="112" fill="${bsc}"/>
+  <rect x="63.5" y="9.5" width="3" height="111" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <!-- Barras horizontales — base -->
+  <rect x="91" y="44" width="4" height="82" transform="rotate(90 91 44)" fill="${bsc}"/>
+  <rect x="90.5" y="44.5" width="3" height="81" transform="rotate(90 90.5 44.5)" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <rect x="91" y="83" width="4" height="82" transform="rotate(90 91 83)" fill="${bsc}"/>
+  <rect x="90.5" y="83.5" width="3" height="81" transform="rotate(90 90.5 83.5)" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <!-- Pie — base -->
+  <rect x="9" y="129" width="82" height="16" fill="${bsc}"/>
+  <rect x="9.5" y="129.5" width="81" height="15" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+</svg>`;
+},
+  },  
+
+  {
+    name: 'LA-06',
+    desc: 'Puff',
+    price: 32000,
+    imgs: [ 'img/puf01.jpg',
+            'img/puf02.jpg',
+            'img/puf03.jpg',
+          ],
+
+    // índices habilitados de cada opción (0-based)
+    // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
+    enabledPantalla: [0, 1],
+    // OPT_BASE: 0=Blanco, 1=Beige, 2=Marrón, 3=Azul oscuro, 4=Verde, 5=Negro, 6=Madera
+    enabledBase:     [0, 1, 2, 3, 4, 5],
+    // OPT_LAMPARA: 0=No, 1=Sí, 2=Smart
+    enabledLampara:  [0, 1, 2],
+    // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
+    enabledCable:    [0, 1],
+
+svg: (sc, bsc, lit, W, H) => {
+  const shadeColor = lit ? blendWithLight(sc) : sc;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 132 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+  ${lit ? `<defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>` : ''}
+  <!-- Base -->
+  <path d="M101 144C101 147.314 98.3137 150 95 150L39 150C35.134 150 32 146.866 32 143L32 124L101 124L101 144Z" fill="${bsc}"/>
+  <path d="M95 149.465L39 149.465C35.4295 149.465 32.5352 146.571 32.5352 143L32.5352 124.535L100.465 124.535L100.465 144C100.465 147.018 98.0182 149.465 95 149.465Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.4'}" stroke-width="1.07"/>
+  <!-- Segmento 1 -->
+  <path d="M7.04 0H124.96C129.528 13.6273 129.528 28.3727 124.96 42H7.04C2.4716 28.3727 2.4716 13.6273 7.04 0Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M7.04 0H124.96C129.528 13.6273 129.528 28.3727 124.96 42H7.04C2.4716 28.3727 2.4716 13.6273 7.04 0Z" fill="url(#glow)"/>` : ''}
+  <path d="M124.597 0.5C128.98 13.8156 128.98 28.1844 124.597 41.5H7.40332C3.02024 28.1844 3.02024 13.8156 7.40332 0.5H124.597Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <!-- Segmento 2 -->
+  <path d="M7.04 41H124.96C129.528 54.6273 129.528 69.3727 124.96 83H7.04C2.4716 69.3727 2.4716 54.6273 7.04 41Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M7.04 41H124.96C129.528 54.6273 129.528 69.3727 124.96 83H7.04C2.4716 69.3727 2.4716 54.6273 7.04 41Z" fill="url(#glow)"/>` : ''}
+  <path d="M124.597 41.5C128.98 54.8156 128.98 69.1844 124.597 82.5H7.40332C3.02024 69.1844 3.02024 54.8156 7.40332 41.5H124.597Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <!-- Segmento 3 -->
+  <path d="M7.04 82H124.96C129.528 95.6273 129.528 110.373 124.96 124H7.04C2.4716 110.373 2.4716 95.6273 7.04 82Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M7.04 82H124.96C129.528 95.6273 129.528 110.373 124.96 124H7.04C2.4716 110.373 2.4716 95.6273 7.04 82Z" fill="url(#glow)"/>` : ''}
+  <path d="M124.597 82.5C128.98 95.8156 128.98 110.184 124.597 123.5H7.40332C3.02024 110.184 3.02024 95.8156 7.40332 82.5H124.597Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <!-- Líneas verticales -->
+  <line x1="46.5" y1="1" x2="46.5" y2="124" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <line x1="86.5" y1="1" x2="86.5" y2="124" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+</svg>`;
+},
+  },  
+
+
+  {
+    name: 'LA-07',
+    desc: 'Lampara colgante con varillas de madera natural barnizada',
+    price: 60000,
+    imgs: [ 'img/jau02.jpg',
+            'img/jau01.jpg',
+            'img/jau03.jpg',
+            'img/jau04.jpg',
+          ],
+
+    // índices habilitados de cada opción (0-based)
+    // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
+    enabledPantalla: [0,],
+    // OPT_BASE: 0=Blanco, 1=Beige, 2=Marrón, 3=Azul oscuro, 4=Verde, 5=Negro, 6=Madera
+    enabledBase:     [0, 1, 2, 3, 4, 5],
+    // OPT_LAMPARA: 0=No, 1=Sí, 2=Smart
+    enabledLampara:  [0, 1, 2],
+    // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
+    enabledCable:    [0, 1],
+
+svg: (sc, bsc, lit, W, H) => {
+  const shadeColor = lit ? blendWithLight(sc) : sc;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 134 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+  ${lit ? `<defs>
+    <radialGradient id="glow" cx="50%" cy="60%" r="55%">
+      <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>` : ''}
+  <!-- Base -->
+  <path d="M101 115C101 119.971 96.9706 124 92 124L41 124C36.0294 124 32 119.971 32 115L32 91L101 91L101 115Z" fill="${bsc}"/>
+  <path d="M92 123.465L41 123.465C36.3249 123.465 32.5352 119.675 32.5352 115L32.5352 91.5352L100.465 91.5352L100.465 115C100.465 119.675 96.6751 123.465 92 123.465Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
+  <!-- Pantalla -->
+  <path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="url(#glow)"/>` : ''}
+  <path d="M49.7773 0.535156H84.2227C90.1858 0.535284 95.782 3.41515 99.248 8.26758L130.025 51.3564C132.262 54.4881 133.465 58.2403 133.465 62.0889V73C133.465 83.1979 125.198 91.4648 115 91.4648H19C8.80206 91.4648 0.535157 83.1979 0.535156 73V62.0889C0.535156 58.2403 1.73771 54.4881 3.97461 51.3564L34.752 8.26758C38.218 3.41516 43.8142 0.535284 49.7773 0.535156Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.4'}" stroke-width="1.07"/>
+</svg>`;
+},
+  },  
+
+  {
+    name: 'LA-08',
+    desc: 'Toggle',
+    price: 28000,
+    imgs: [ 'img/togle02.jpg',
+            'img/togle01.jpg',
+          ],
+
+    // índices habilitados de cada opción (0-based)
+    // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
+    enabledPantalla: [1],
+    // OPT_BASE: 0=Blanco, 1=Beige, 2=Marrón, 3=Azul oscuro, 4=Verde, 5=Negro, 6=Madera
+    enabledBase:     [0, 1, 2, 3, 4, 5],
+    // OPT_LAMPARA: 0=No, 1=Sí, 2=Smart
+    enabledLampara:  [0, 1, 2],
+    // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
+    enabledCable:    [0, 1],
+
+svg: (sc, bsc, lit, W, H) => {
+  const shadeColor = lit ? blendWithLight(sc) : sc;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 134 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+  ${lit ? `<defs>
+    <radialGradient id="glow" cx="50%" cy="60%" r="55%">
+      <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>` : ''}
+  <!-- Base -->
+  <path d="M101 115C101 119.971 96.9706 124 92 124L41 124C36.0294 124 32 119.971 32 115L32 91L101 91L101 115Z" fill="${bsc}"/>
+  <path d="M92 123.465L41 123.465C36.3249 123.465 32.5352 119.675 32.5352 115L32.5352 91.5352L100.465 91.5352L100.465 115C100.465 119.675 96.6751 123.465 92 123.465Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
+  <!-- Pantalla -->
+  <path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="url(#glow)"/>` : ''}
+  <path d="M49.7773 0.535156H84.2227C90.1858 0.535284 95.782 3.41515 99.248 8.26758L130.025 51.3564C132.262 54.4881 133.465 58.2403 133.465 62.0889V73C133.465 83.1979 125.198 91.4648 115 91.4648H19C8.80206 91.4648 0.535157 83.1979 0.535156 73V62.0889C0.535156 58.2403 1.73771 54.4881 3.97461 51.3564L34.752 8.26758C38.218 3.41516 43.8142 0.535284 49.7773 0.535156Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.4'}" stroke-width="1.07"/>
+</svg>`;
+},
+  },  
+
+
+
+
+];
+
+// Placeholders para el resto de cards del catálogo (borrar cuando haya productos reales)
+
+
+const OPT_PANTALLA = [
+  { name:'Blanco',     hex:'#F5F2ED', extra:0 },
+  { name:'Traslúcido', hex:'#D6E8E4', extra:0, opacity:0.55 },
+];
+const OPT_BASE = [
+  { name:'Marrón',      hex:'#814631', extra:0 },
+  { name:'Blanco',      hex:'#F5F2ED', extra:0 },
+  { name:'Beige',       hex:'#E8DDD0', extra:0 },
+  { name:'Azul oscuro', hex:'#1E3552', extra:0 },
+  { name:'Verde',       hex:'#135D52', extra:0 },
+  { name:'Negro',       hex:'#1a1714', extra:0 },
+  { name:'Madera',      hex:'#B8845A', extra:5000, disabled: true },
+];
+const OPT_LAMPARA = [
+  { name:'No', extra:0, disabled: true },
+  { name:'Sí',         extra:0 },
+  { name:'Smart',      extra:18000, disabled: true },
+];
+const OPT_CABLE = [
+  { name:'Blanco', hex:'#F0EDE8', extra:0 },
+  { name:'Negro',  hex:'#2A2724', extra:0 },
+  { name:'Textil', hex:'#8B7355', extra:3000, disabled: true },
+];
+
+let state = { productIdx:0, pantalla:0, base:0, lampara:0, cable:0 };
+let showingSVG = false;
+let lampOn = false;
+let currentThumb = 0;
+let currentImgs = [];
+
+function fmt(n) { return '$ ' + n.toLocaleString('es-AR'); }
+function calcTotal() {
+  const p = PRODUCTS[state.productIdx];
+  if (!p) return 0;
+  return p.price
+    + OPT_PANTALLA[state.pantalla].extra
+    + OPT_BASE[state.base].extra
+    + OPT_LAMPARA[state.lampara].extra
+    + OPT_CABLE[state.cable].extra;
+}
+function basePrice() {
+  const p = PRODUCTS[state.productIdx];
+  return p ? p.price : 0;
+}
+
+// ── SVG ──────────────────────────────────────────────
+function buildLampSVG(small, lit) {
+  const product = PRODUCTS[state.productIdx];
+  if (!product || !product.svg) return '';
+  const sc  = OPT_PANTALLA[state.pantalla].hex;
+  const bsc = OPT_BASE[state.base].hex;
+  const W   = small ? 54  : 260;
+  const H   = small ? 64  : 299;
+  return product.svg(sc, bsc, lit, W, H);
+}
+
+
+
+function refreshSVG() {
+  document.getElementById('lampSvgWrap').innerHTML  = buildLampSVG(false, lampOn);
+  document.getElementById('pSvgTop').innerHTML      = buildLampSVG(true,  lampOn);
+}
+
+// ── LIGHT TOGGLE ─────────────────────────────────────
+const lightToggleBtn = document.getElementById('lightToggle');
+const ICON_ON  = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`;
+const ICON_OFF = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 4h.01"/><path d="M20 12h.01"/><path d="M12 20h.01"/><path d="M4 12h.01"/><path d="M17.657 6.343h.01"/><path d="M17.657 17.657h.01"/><path d="M6.343 17.657h.01"/><path d="M6.343 6.343h.01"/></svg>`;
+
+lightToggleBtn.addEventListener('click', () => {
+  lampOn = !lampOn;
+  lightToggleBtn.innerHTML = lampOn ? ICON_ON : ICON_OFF;
+  lightToggleBtn.classList.toggle('on', lampOn);
+  document.getElementById('svgOverlay').classList.toggle('lit', lampOn);
+  refreshSVG();
+});
+
+// ── VIEW TOGGLE ───────────────────────────────────────
+function showPhotos() {
+  showingSVG = false;
+  document.getElementById('svgOverlay').classList.remove('visible');
+  document.getElementById('btnPhotos').classList.add('active');
+  document.getElementById('btnDibujo').classList.remove('active');
+  lightToggleBtn.classList.remove('show');
+}
+function showDibujo() {
+  showingSVG = true;
+  document.getElementById('svgOverlay').classList.add('visible');
+  document.getElementById('btnDibujo').classList.add('active');
+  document.getElementById('btnPhotos').classList.remove('active');
+  lightToggleBtn.classList.add('show');
+}
+
+document.getElementById('btnPhotos').addEventListener('click', showPhotos);
+document.getElementById('btnDibujo').addEventListener('click', showDibujo);
+
+// ── GALLERY ───────────────────────────────────────────
+function imgSrc(src, size) {
+  if (src.startsWith('photo-')) return `https://images.unsplash.com/${src}?w=${size}&q=80&fit=crop&crop=center`;
+  return src; // local file
+}
+
+function buildGallery(imgs) {
+  currentImgs = imgs;
+  currentThumb = 0;
+  const area = document.getElementById('galleryArea');
+  area.querySelectorAll('.gallery-photo').forEach(el => el.remove());
+  imgs.forEach((src, i) => {
+    const div = document.createElement('div');
+    div.className = 'gallery-photo' + (i > 0 ? ' hidden' : '');
+    div.innerHTML = `<img src="${imgSrc(src, 1200)}" loading="lazy" onerror="this.style.display='none'">`;
+    area.insertBefore(div, area.querySelector('.svg-overlay'));
+  });
+  const thumbsEl = document.getElementById('galleryThumbs');
+  thumbsEl.innerHTML = '';
+  imgs.forEach((src, i) => {
+    const th = document.createElement('div');
+    th.className = 'thumb' + (i===0?' active':'');
+    th.innerHTML = `<img src="${imgSrc(src, 300)}" loading="lazy">`;
+    th.addEventListener('click', () => { setPhoto(i); showPhotos(); });
+    thumbsEl.appendChild(th);
+  });
+}
+
+function setPhoto(idx) {
+  currentThumb = (idx + currentImgs.length) % currentImgs.length;
+  document.querySelectorAll('.gallery-photo').forEach((p,i) => p.classList.toggle('hidden', i!==currentThumb));
+  document.querySelectorAll('.thumb').forEach((t,i) => t.classList.toggle('active', i===currentThumb));
+}
+
+document.getElementById('arrowPrev').addEventListener('click', () => { setPhoto(currentThumb-1); showPhotos(); });
+document.getElementById('arrowNext').addEventListener('click', () => { setPhoto(currentThumb+1); showPhotos(); });
+
+// ── PRICES ────────────────────────────────────────────
+function updatePrices() {
+  const total = calcTotal();
+  document.getElementById('pPrice').textContent = fmt(total);
+  document.getElementById('totalPrice').textContent = fmt(total);
+
+  [
+    { id:'extraPantalla', extra: OPT_PANTALLA[state.pantalla].extra },
+    { id:'extraBase',     extra: OPT_BASE[state.base].extra },
+    { id:'extraLampara',  extra: OPT_LAMPARA[state.lampara].extra },
+    { id:'extraCable',    extra: OPT_CABLE[state.cable].extra },
+  ].forEach(({id, extra}) => {
+    document.getElementById(id).textContent = extra ? '+'+fmt(extra) : '';
+  });
+
+  const rows = [{ label:'Base', val: fmt(basePrice()) }];
+  if (OPT_PANTALLA[state.pantalla].extra) rows.push({ label:'Pantalla traslúcida', val:'+'+fmt(OPT_PANTALLA[state.pantalla].extra) });
+  if (OPT_BASE[state.base].extra)         rows.push({ label:'Base '+OPT_BASE[state.base].name, val:'+'+fmt(OPT_BASE[state.base].extra) });
+  if (OPT_LAMPARA[state.lampara].extra)   rows.push({ label:'Lámpara '+OPT_LAMPARA[state.lampara].name, val:'+'+fmt(OPT_LAMPARA[state.lampara].extra) });
+  if (OPT_CABLE[state.cable].extra)       rows.push({ label:'Cable textil', val:'+'+fmt(OPT_CABLE[state.cable].extra) });
+  document.getElementById('breakdownRows').innerHTML = rows.map(r =>
+    `<div class="breakdown-row"><span>${r.label}</span><span>${r.val}</span></div>`
+  ).join('');
+}
+
+// ── SWATCHES & PILLS ─────────────────────────────────
+function buildSwatches(cid, options, key, labelId, onChangeCb, enabledArr) {
+  const container = document.getElementById(cid);
+  const label = document.getElementById(labelId);
+  function render() {
+    container.innerHTML = '';
+    label.textContent = options[state[key]].name;
+    options.forEach((opt, idx) => {
+      const isDisabled = opt.disabled || (enabledArr && !enabledArr.includes(idx));
+      const sw = document.createElement('div');
+      sw.className = 'swatch' + (idx===state[key]?' active':'') + (isDisabled?' disabled':'');
+      if (isDisabled) sw.style.pointerEvents = 'none';
+      sw.style.background = opt.hex;
+      sw.title = opt.name;
+      if (opt.hex === '#F5F2ED' || opt.hex === '#F0EDE8')
+        sw.style.boxShadow = sw.classList.contains('active')
+          ? '0 0 0 2px #fff, 0 0 0 3.5px #1a1714'
+          : 'inset 0 0 0 1px rgba(0,0,0,0.12)';
+      sw.addEventListener('click', () => {
+        state[key] = idx; render(); updatePrices();
+        if (onChangeCb) { onChangeCb(); /* showDibujo(); */ }
+      });
+      container.appendChild(sw);
+    });
+  }
+  render();
+}
+
+function buildPills(cid, options, key, labelId, enabledArr) {
+  const container = document.getElementById(cid);
+  const label = document.getElementById(labelId);
+  function render() {
+    container.innerHTML = '';
+    label.textContent = options[state[key]].name;
+    options.forEach((opt, idx) => {
+      const isDisabled = opt.disabled || (enabledArr && !enabledArr.includes(idx));
+      const pill = document.createElement('button');
+      pill.className = 'pill' + (idx===state[key]?' active':'');
+      pill.textContent = opt.name;
+      if (isDisabled) { pill.disabled = true; pill.classList.add('disabled'); }
+      else pill.addEventListener('click', () => { state[key]=idx; render(); updatePrices(); });
+      container.appendChild(pill);
+    });
+  }
+  render();
+}
+
+// ── CATALOG ───────────────────────────────────────────
+const grid = document.getElementById('grid');
+
+// Real products
+PRODUCTS.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-img"><img src="${imgSrc(p.imgs[0], 600)}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="card-body">
+      <span class="card-name">${p.name}</span>
+      <span class="card-price">${fmt(p.price)}</span>
+    </div>`;
+  card.addEventListener('click', () => openProduct(i));
+  grid.appendChild(card);
+});
+
+
+
+// ── OPEN PRODUCT ──────────────────────────────────────
+function openProduct(i) {
+  const product = PRODUCTS[i];
+  if (!product) return;
+  state = { productIdx:i, pantalla:0, base:0, lampara:0, cable:0 };
+  lampOn = false;
+  showingSVG = false;
+
+  document.getElementById('pName').textContent = product.name;
+  document.getElementById('pDesc').textContent = product.desc;
+  document.title = `margo — ${product.name}`;
+  lightToggleBtn.innerHTML = ICON_OFF;
+  lightToggleBtn.classList.remove('on','show');
+  document.getElementById('svgOverlay').classList.remove('lit');
+
+  buildGallery(product.imgs);
+  showPhotos();
+  buildSwatches('swatchesPantalla', OPT_PANTALLA, 'pantalla', 'labelPantalla', refreshSVG, product.enabledPantalla);
+  buildSwatches('swatchesBase',     OPT_BASE,     'base',     'labelBase',     refreshSVG, product.enabledBase);
+  buildPills(   'pillsLampara',     OPT_LAMPARA,  'lampara',  'labelLampara',  product.enabledLampara);
+  buildSwatches('swatchesCable',    OPT_CABLE,    'cable',    'labelCable',    null,        product.enabledCable);
+  refreshSVG();
+  updatePrices();
+
+  document.getElementById('viewCatalog').classList.remove('active');
+  document.getElementById('viewProduct').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function goBack() {
+  document.getElementById('viewProduct').classList.remove('active');
+  document.getElementById('viewCatalog').classList.add('active');
+  document.title = 'margo — catálogo';
+  window.scrollTo(0,0);
+}
+document.getElementById('backBtn').addEventListener('click', goBack);
+document.getElementById('logoLink').addEventListener('click', goBack);
+
+// ── COPY ──────────────────────────────────────────────
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const product = PRODUCTS[state.productIdx];
+  const name = product ? product.name : '—';
+  const lines = [
+    `Hola, me gustaría hacer el siguiente pedido:`,
+    ``,
+    `Producto:        ${name}`,
+    `Color pantalla:  ${OPT_PANTALLA[state.pantalla].name}`,
+    `Color base:      ${OPT_BASE[state.base].name}`,
+    `Lámpara:         ${OPT_LAMPARA[state.lampara].name}`,
+    `Cable:           ${OPT_CABLE[state.cable].name}`,
+    ``,
+    `Precio total:    ${fmt(calcTotal())}`,
+  ];
+  //boton comun empieza----
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const el = document.getElementById('copyConfirm');
+    el.style.opacity = '1';
+    setTimeout(() => el.style.opacity = '0', 2500);
+  });
+  //boton comun fin----
+
+//wasap empieza-------------
+//const encoded = encodeURIComponent(lines.join('\n'));
+//window.open('https://wa.me/?text=' + encoded, '_blank');
+//const el = document.getElementById('copyConfirm');
+//el.style.opacity = '1';
+//setTimeout(() => el.style.opacity = '0', 2500);
+//wasap fin----------
+
+});
+</script>
 </body>
 </html>
