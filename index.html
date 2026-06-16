@@ -327,9 +327,9 @@
           <span>Total</span>
           <span id="totalPrice"></span>
         </div>
-        <p style="font-size:11px; color:var(--t3); text-align:center; margin-bottom:8px; letter-spacing:0.04em;">Usá el botón para copiar el pedido y envialo por WhatsApp o a <a href="mailto:pedidos@margo.com.ar">pedidos@margo.com.ar</a></p>
         <button class="cta-btn" id="copyBtn">Copiar pedido</button>
         <p class="copy-confirm" id="copyConfirm">✓ Copiado al portapapeles</p>
+        <p style="font-size:11px; color:var(--t3); text-align:center; margin-bottom:8px; letter-spacing:0.04em;">Usá el botón para copiar el pedido y envialo por WhatsApp o a <a href="mailto:pedidos@margo.com.ar">pedidos@margo.com.ar</a></p>
       </div>
     </div>
 
@@ -933,7 +933,7 @@ function updatePrices() {
     document.getElementById(id).textContent = extra ? '+'+fmt(extra) : '';
   });
 
-  const rows = [{ label:'Base', val: fmt(basePrice()) }];
+  const rows = [{ label:'Subtotal', val: fmt(basePrice()) }];
   if (OPT_PANTALLA[state.pantalla].extra) rows.push({ label:'Pantalla traslúcida', val:'+'+fmt(OPT_PANTALLA[state.pantalla].extra) });
   if (OPT_BASE[state.base].extra)         rows.push({ label:'Base '+OPT_BASE[state.base].name, val:'+'+fmt(OPT_BASE[state.base].extra) });
   if (OPT_LAMPARA[state.lampara].extra)   rows.push({ label:'Lámpara '+OPT_LAMPARA[state.lampara].name, val:'+'+fmt(OPT_LAMPARA[state.lampara].extra) });
