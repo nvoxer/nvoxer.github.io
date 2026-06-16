@@ -13,25 +13,25 @@
   }
   body { font-family:'Host Grotesk',sans-serif; background:var(--bg); color:var(--t1); -webkit-font-smoothing:antialiased; min-height:100vh; }
 
-  nav { background:var(--white); border-bottom:0.5px solid var(--border); height:60px; display:flex; align-items:center; justify-content:center; position:sticky; top:0; z-index:100; }
+  nav { background:var(--white); border-bottom:0.5px solid var(--border); height:100px; display:flex; align-items:center; justify-content:center; position:sticky; top:0; z-index:100; }
   .logo { display:flex; align-items:center; gap:10px; cursor:pointer; }
   .logomark { width:32px; height:32px; background:var(--g); border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .logomark span { color:#fff; font-size:9.5px; font-weight:600; letter-spacing:-.3px; line-height:1.15; text-align:center; pointer-events:none; }
   .brandname { font-size:16px; font-weight:500; letter-spacing:-.2px; color:var(--t1); }
-  .logo-svg { display: block; height: 40px; /* o el tamaño que necesites */ width: auto;}
+  .logo-svg { display: block; height: 60px; /* o el tamaño que necesites */ width: auto;}
 
   .view { display:none; }
   .view.active { display:block; }
 
   /* CATALOG */
-  .catalog-wrap { max-width:1100px; margin:0 auto; padding:0 40px; }
+  .catalog-wrap { max-width:1100px; margin:0 auto; padding:0px; }
   .page-header { padding:52px 0 36px; border-bottom:0.5px solid var(--border); background:var(--white); }
   .page-eyebrow { font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--t3); margin-bottom:10px; }
   .page-title { font-size:40px; font-weight:300; letter-spacing:-1px; line-height:1; }
   .page-title em { font-style:italic; color:var(--t3); }
   .catalog { padding:48px 0 80px; }
   .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; }
-  .card { background:var(--white); cursor:pointer; overflow:hidden; padding: 12px; margin: 6px; }
+  .card { background:var(--white); cursor:pointer; overflow:hidden; margin: 8px; }
   .card-img { aspect-ratio:3/4; overflow:hidden; background:#e0dbd5; }
   .card-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease; }
   .card:hover .card-img img { transform:scale(1.04); }
@@ -167,6 +167,20 @@
 
   .config-divider { height:0.5px; background:var(--border); margin:4px 0 20px; }
 
+  /* DETALLE */
+  .details-toggle { width:100%; display:flex; justify-content:space-between; align-items:center; background:none; border:none; border-top:0.5px solid var(--border); padding:14px 0; cursor:pointer; font-family:inherit; margin-top:4px; }
+  .details-toggle-label { font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--t3); }
+  .details-chevron { color:var(--t3); transition:transform .25s ease; flex-shrink:0; }
+  .details-toggle[aria-expanded="true"] .details-chevron { transform:rotate(180deg); }
+  .details-body { overflow:hidden; max-height:0; transition:max-height .3s ease; }
+  .details-body.open { max-height:500px; }
+  .details-table { width:100%; border-collapse:collapse; margin-bottom:4px; }
+  .details-table tr { border-bottom:0.5px solid var(--border); }
+  .details-table tr:last-child { border-bottom:none; }
+  .details-table td { padding:8px 0; font-size:12px; line-height:1.5; vertical-align:top; }
+  .details-table td:first-child { color:var(--t3); width:42%; padding-right:12px; }
+  .details-table td:last-child { color:var(--t1); font-weight:300; }
+
   .price-breakdown { margin-top:auto; padding-top:18px; border-top:0.5px solid var(--border); }
   .breakdown-row { display:flex; justify-content:space-between; font-size:12px; color:var(--t3); padding:4px 0; }
   .breakdown-row.total { font-size:14px; font-weight:500; color:var(--t1); border-top:0.5px solid var(--border); margin-top:6px; padding-top:10px; }
@@ -175,14 +189,16 @@
   .copy-confirm { font-size:11px; color:var(--g); letter-spacing:.06em; text-align:center; margin-top:8px; opacity:0; transition:opacity .3s; min-height:16px; }
 
   @media (max-width:900px) {
-    .catalog-wrap { padding-left:20px; padding-right:20px; }
-    .grid { grid-template-columns:repeat(2,1fr); }
-    .page-title { font-size:28px; }
+    .catalog-wrap { padding-left:0px; padding-right:0px; }
+    .grid { grid-template-columns:repeat(2,1fr);}
+    .page-title { font-size:28px; text-align: center; }
     .product-wrap { grid-template-columns:1fr; }
     .product-left { position:relative; top:0; height:150vw; }
     .product-panel { position:relative; top:0; height:auto; }
   }
-  @media (max-width:560px) { .grid { grid-template-columns:1fr; } }
+  @media (max-width:560px) { 
+    .grid { grid-template-columns:0,1fr; } 
+    }
 </style>
 </head>
 <body>
@@ -294,6 +310,17 @@
         <div class="swatches" id="swatchesCable"></div>
       </div>
 
+      <!-- DETALLE -->
+      <button class="details-toggle" id="detailsToggle" aria-expanded="false">
+        <span class="details-toggle-label">Detalle</span>
+        <svg class="details-chevron" width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="details-body" id="detailsBody">
+        <table class="details-table" id="detailsTable"></table>
+      </div>
+
       <div class="price-breakdown">
         <div id="breakdownRows"></div>
         <div class="breakdown-row total">
@@ -345,6 +372,12 @@ const PRODUCTS = [
     // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
     enabledCable:    [0, 1],
 
+    details: [
+      { label: 'Alto',          value: '22 cm' },
+      { label: 'Ancho',         value: '14 cm' },
+      { label: 'Largo del Cable',         value: '150 cm' },
+    ],
+
     svg: (sc, bsc, lit, W, H) => {
       const shadeColor = lit ? blendWithLight(sc) : sc;
       return `<svg width="${W}" height="${H}" viewBox="0 0 60 112" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -372,7 +405,8 @@ const PRODUCTS = [
     imgs: [ 'img/hon02.jpg',
             'img/hon03.jpg',
             'img/hon05.jpg',
-            'img/hon06.jpg',],
+            'img/hon06.jpg',
+            'img/hon08.jpg',  ],
 
     // índices habilitados de cada opción (0-based)
     // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
@@ -383,6 +417,12 @@ const PRODUCTS = [
     enabledLampara:  [0, 1],
     // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
     enabledCable:    [0, 1],
+
+    details: [
+      { label: 'Alto',          value: '18 cm' },
+      { label: 'Ancho',         value: '22 cm' },
+      { label: 'Largo del cable',         value: '150 cm' },
+    ],
 
 svg: (sc, bsc, lit, W, H) => {
   const shadeColor = lit ? blendWithLight(sc) : sc;
@@ -412,7 +452,8 @@ svg: (sc, bsc, lit, W, H) => {
             'img/cal03.jpg',
             'img/cal04.jpg',
             'img/cal05.jpg',
-            'img/cal07.jpg'],
+            'img/cal07.jpg',
+            'img/cal08.jpg',],
 
     // índices habilitados de cada opción (0-based)
     // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
@@ -423,6 +464,12 @@ svg: (sc, bsc, lit, W, H) => {
     enabledLampara:  [0, 1],
     // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
     enabledCable:    [0, 1],
+
+    details: [
+      { label: 'Alto',          value: '20 cm' },
+      { label: 'Ancho',         value: '16 cm' },
+      { label: 'Largo del cable',         value: '150 cm' },
+    ],
 
 svg: (sc, bsc, lit, W, H) => {
   const shadeColor = lit ? blendWithLight(sc) : sc;
@@ -475,7 +522,7 @@ svg: (sc, bsc, lit, W, H) => {
     name: 'LA-04',
     desc: 'Skirt',
     price: 34000,
-    imgs: [ 'img/skirt01.jpg', 'img/skirt02.jpg', 'img/skirt03.jpg'],
+    imgs: [ 'img/skirt01.jpg', 'img/skirt02.jpg', 'img/skirt03.jpg', 'img/skirt04.jpg'],
 
     // índices habilitados de cada opción (0-based)
     // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
@@ -486,6 +533,12 @@ svg: (sc, bsc, lit, W, H) => {
     enabledLampara:  [0, 1],
     // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
     enabledCable:    [0, 1],
+
+    details: [
+      { label: 'Alto',          value: '26 cm' },
+      { label: 'Ancho',         value: '22 cm' },
+      { label: 'Largo del cable',         value: '150 cm' },
+    ],
 
 svg: (sc, bsc, lit, W, H) => {
   const shadeColor = lit ? blendWithLight(sc) : sc;
@@ -531,6 +584,13 @@ svg: (sc, bsc, lit, W, H) => {
     enabledLampara:  [0, 1],
     // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
     enabledCable:    [0, 1],
+
+    details: [
+      { label: 'Alto',          value: '22 cm' },
+      { label: 'Ancho',         value: '15 cm' },
+      { label: 'Largo del cable',         value: '150 cm' },
+      { label: 'Terminación',   value: 'Difusor blanco y base mate' },
+    ],
 
 svg: (sc, bsc, lit, W, H) => {
   const shadeColor = lit ? blendWithLight(sc) : sc;
@@ -584,33 +644,32 @@ svg: (sc, bsc, lit, W, H) => {
     // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
     enabledCable:    [0, 1],
 
+    details: [
+      { label: 'Alto',          value: '22 cm' },
+      { label: 'Ancho',         value: '15 cm' },
+      { label: 'Largo del cable',         value: '150 cm' },
+    ],
+
 svg: (sc, bsc, lit, W, H) => {
   const shadeColor = lit ? blendWithLight(sc) : sc;
-  return `<svg width="${W}" height="${H}" viewBox="0 0 132 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return `<svg width="${W}" height="${H}" viewBox="0 0 150 171" fill="none" xmlns="http://www.w3.org/2000/svg">
   ${lit ? `<defs>
-    <radialGradient id="glow" cx="50%" cy="50%" r="55%">
+    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
       <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
       <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
     </radialGradient>
   </defs>` : ''}
   <!-- Base -->
-  <path d="M101 144C101 147.314 98.3137 150 95 150L39 150C35.134 150 32 146.866 32 143L32 124L101 124L101 144Z" fill="${bsc}"/>
-  <path d="M95 149.465L39 149.465C35.4295 149.465 32.5352 146.571 32.5352 143L32.5352 124.535L100.465 124.535L100.465 144C100.465 147.018 98.0182 149.465 95 149.465Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.4'}" stroke-width="1.07"/>
-  <!-- Segmento 1 -->
-  <path d="M7.04 0H124.96C129.528 13.6273 129.528 28.3727 124.96 42H7.04C2.4716 28.3727 2.4716 13.6273 7.04 0Z" fill="${shadeColor}"/>
-  ${lit ? `<path d="M7.04 0H124.96C129.528 13.6273 129.528 28.3727 124.96 42H7.04C2.4716 28.3727 2.4716 13.6273 7.04 0Z" fill="url(#glow)"/>` : ''}
-  <path d="M124.597 0.5C128.98 13.8156 128.98 28.1844 124.597 41.5H7.40332C3.02024 28.1844 3.02024 13.8156 7.40332 0.5H124.597Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
-  <!-- Segmento 2 -->
-  <path d="M7.04 41H124.96C129.528 54.6273 129.528 69.3727 124.96 83H7.04C2.4716 69.3727 2.4716 54.6273 7.04 41Z" fill="${shadeColor}"/>
-  ${lit ? `<path d="M7.04 41H124.96C129.528 54.6273 129.528 69.3727 124.96 83H7.04C2.4716 69.3727 2.4716 54.6273 7.04 41Z" fill="url(#glow)"/>` : ''}
-  <path d="M124.597 41.5C128.98 54.8156 128.98 69.1844 124.597 82.5H7.40332C3.02024 69.1844 3.02024 54.8156 7.40332 41.5H124.597Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
-  <!-- Segmento 3 -->
-  <path d="M7.04 82H124.96C129.528 95.6273 129.528 110.373 124.96 124H7.04C2.4716 110.373 2.4716 95.6273 7.04 82Z" fill="${shadeColor}"/>
-  ${lit ? `<path d="M7.04 82H124.96C129.528 95.6273 129.528 110.373 124.96 124H7.04C2.4716 110.373 2.4716 95.6273 7.04 82Z" fill="url(#glow)"/>` : ''}
-  <path d="M124.597 82.5C128.98 95.8156 128.98 110.184 124.597 123.5H7.40332C3.02024 110.184 3.02024 95.8156 7.40332 82.5H124.597Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
-  <!-- Líneas verticales -->
-  <line x1="46.5" y1="1" x2="46.5" y2="124" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
-  <line x1="86.5" y1="1" x2="86.5" y2="124" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <path d="M49.7687 73.008C50.1954 68.727 50.4088 66.5865 51.8374 65.2933C53.266 64 55.4171 64 59.7193 64H90.2806C94.5829 64 96.734 64 98.1626 65.2933C99.5912 66.5865 99.8046 68.727 100.231 73.008L108.904 160.008C109.416 165.143 109.672 167.711 108.184 169.356C106.695 171 104.114 171 98.9535 171H51.0465C45.8856 171 43.3051 171 41.8165 169.356C40.3279 167.711 40.5838 165.143 41.0958 160.008L49.7687 73.008Z" fill="${bsc}"/>
+  <path d="M59.7197 64.5H90.2803C92.4448 64.5 94.0206 64.5006 95.2354 64.6572C96.436 64.812 97.2177 65.1123 97.8271 65.6641C98.4365 66.2157 98.8129 66.9635 99.0859 68.1426C99.3622 69.3358 99.5187 70.9038 99.7334 73.0576L108.406 160.058C108.664 162.64 108.851 164.525 108.795 165.972C108.739 167.404 108.445 168.321 107.812 169.021C107.18 169.719 106.296 170.101 104.877 170.299C103.443 170.498 101.548 170.5 98.9531 170.5H51.0469C48.4516 170.5 46.5568 170.498 45.123 170.299C43.704 170.101 42.8204 169.719 42.1875 169.021C41.5545 168.321 41.261 167.404 41.2051 165.972C41.1487 164.525 41.3363 162.64 41.5938 160.058L50.2666 73.0576C50.4813 70.9038 50.6378 69.3358 50.9141 68.1426C51.1871 66.9635 51.5635 66.2157 52.1729 65.6641C52.7823 65.1123 53.564 64.812 54.7646 64.6572C55.9794 64.5006 57.5552 64.5 59.7197 64.5Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+  <!-- Pantalla -->
+  <path d="M43.5 6.52058e-06L106.5 0L150 121H0L43.5 6.52058e-06Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M43.5 6.52058e-06L106.5 0L150 121H0L43.5 6.52058e-06Z" fill="url(#glow)"/>` : ''}
+  <path d="M106.148 0.5L149.289 120.5H0.710938L43.8516 0.5H106.148Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
+  <path d="M101.089 0.5L137.327 120.5H12.6729L48.9111 0.5H101.089Z" stroke="black" stroke-opacity="${lit ? '0.08' : '0.36'}"/>
+  <path d="M95.1836 0.5L123.369 120.5H26.6309L54.8164 0.5H95.1836Z" stroke="black" stroke-opacity="${lit ? '0.08' : '0.36'}"/>
+  <path d="M87.167 0.5L104.423 120.5H45.5771L62.833 0.5H87.167Z" stroke="black" stroke-opacity="${lit ? '0.06' : '0.36'}"/>
+  <path d="M78.7227 0.5L84.4756 120.5H65.5244L71.2773 0.5H78.7227Z" stroke="black" stroke-opacity="${lit ? '0.06' : '0.36'}"/>
 </svg>`;
 },
   },  
@@ -618,13 +677,14 @@ svg: (sc, bsc, lit, W, H) => {
 
   {
     name: 'LA-07',
-    desc: 'Lampara colgante con varillas de madera natural barnizada',
+    desc: 'Lampara colgante con varillas de madera natural barnizada. Medidas: alto:18cm, ancho 25cm ',
     price: 60000,
     imgs: [ 'img/jau02.jpg',
             //'img/jau01.jpg',
             //'img/jau03.jpg',
             'img/jau04.jpg',
-          ],
+            'img/jau05.jpg',
+                    ],
 
     // índices habilitados de cada opción (0-based)
     // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
@@ -636,32 +696,49 @@ svg: (sc, bsc, lit, W, H) => {
     // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
     enabledCable:    [0, 1],
 
+    details: [
+      { label: 'Alto',          value: '18 cm' },
+      { label: 'Ancho',         value: '25 cm' },
+      { label: 'Largo del cable',         value: '150 cm' },
+      { label: 'Terminación',   value: '' },
+    ],
+
 svg: (sc, bsc, lit, W, H) => {
-  const shadeColor = lit ? blendWithLight(sc) : sc;
-  return `<svg width="${W}" height="${H}" viewBox="0 0 134 124" fill="none" xmlns="http://www.w3.org/2000/svg">
-  ${lit ? `<defs>
-    <radialGradient id="glow" cx="50%" cy="60%" r="55%">
-      <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
-    </radialGradient>
-  </defs>` : ''}
-  <!-- Base -->
-  <path d="M101 115C101 119.971 96.9706 124 92 124L41 124C36.0294 124 32 119.971 32 115L32 91L101 91L101 115Z" fill="${bsc}"/>
-  <path d="M92 123.465L41 123.465C36.3249 123.465 32.5352 119.675 32.5352 115L32.5352 91.5352L100.465 91.5352L100.465 115C100.465 119.675 96.6751 123.465 92 123.465Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
-  <!-- Pantalla -->
-  <path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="${shadeColor}"/>
-  ${lit ? `<path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="url(#glow)"/>` : ''}
-  <path d="M49.7773 0.535156H84.2227C90.1858 0.535284 95.782 3.41515 99.248 8.26758L130.025 51.3564C132.262 54.4881 133.465 58.2403 133.465 62.0889V73C133.465 83.1979 125.198 91.4648 115 91.4648H19C8.80206 91.4648 0.535157 83.1979 0.535156 73V62.0889C0.535156 58.2403 1.73771 54.4881 3.97461 51.3564L34.752 8.26758C38.218 3.41516 43.8142 0.535284 49.7773 0.535156Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.4'}" stroke-width="1.07"/>
+  return `<svg width="${W}" height="${H}" viewBox="0 0 183 163" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="91.5" cy="81.5" r="15.5" fill="white"/>
+  <circle cx="91.5" cy="81.5" r="14.965" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
+  <path d="M82.8889 45H100.111L107 82H76L82.8889 45Z" fill="white"/>
+  <path d="M99.666 45.5352L106.355 81.4648H76.6445L83.334 45.5352H99.666Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
+  <rect x="8" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="24" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="40" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="56" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="72" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="88" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="104" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="120" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="136" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="152" y="50" width="6" height="104" fill="#B67C26"/>
+  <rect x="168" y="50" width="6" height="104" fill="#B67C26"/>
+  <path d="M183 156.5C183 160.09 180.09 163 176.5 163L6.49999 163C2.91013 163 -1.95663e-05 160.09 -1.98802e-05 156.5C-2.0194e-05 152.91 2.91013 150 6.49999 150L176.5 150C180.09 150 183 152.91 183 156.5Z" fill="${bsc}"/>
+  <path d="M176.5 162.465L6.5 162.465C3.20562 162.465 0.535161 159.794 0.535156 156.5C0.535155 153.206 3.20561 150.535 6.5 150.535L176.5 150.535C179.794 150.535 182.465 153.206 182.465 156.5C182.465 159.794 179.794 162.465 176.5 162.465Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
+  <rect x="89" width="5" height="33" fill="white"/>
+  <rect x="89.535" y="0.535" width="3.93" height="31.93" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
+  <path d="M89 32H94L96 43H87L89 32Z" fill="white"/>
+  <path d="M93.5537 32.5352L95.3594 42.4648H87.6406L89.4463 32.5352H93.5537Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
+  <path d="M183 48.5C183 52.0898 180.09 55 176.5 55L6.49999 55C2.91013 55 -1.95663e-05 52.0899 -1.98802e-05 48.5C-2.0194e-05 44.9102 2.91013 42 6.49999 42L176.5 42C180.09 42 183 44.9101 183 48.5Z" fill="${bsc}"/>
+  <path d="M176.5 54.4648L6.5 54.4649C3.20562 54.4649 0.535161 51.7944 0.535156 48.5C0.535155 45.2056 3.20561 42.5352 6.5 42.5352L176.5 42.5352C179.794 42.5352 182.465 45.2056 182.465 48.5C182.465 51.7944 179.794 54.4648 176.5 54.4648Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
 </svg>`;
 },
   },  
 
   {
     name: 'LA-08',
-    desc: 'Toggle',
+    desc: 'Medidas: ',
     price: 28000,
     imgs: [ 'img/togle02.jpg',
             'img/togle01.jpg',
+            'img/togle03.jpg',
           ],
 
     // índices habilitados de cada opción (0-based)
@@ -674,22 +751,29 @@ svg: (sc, bsc, lit, W, H) => {
     // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
     enabledCable:    [0, 1],
 
+    details: [
+      { label: 'Alto',          value: '26 cm' },
+      { label: 'Ancho',         value: '13 cm' },
+      { label: 'Largo del cable',         value: '150 cm' },
+      { label: 'Terminación',   value: 'Pantalla traslúcida y base mate' },
+    ],
+
 svg: (sc, bsc, lit, W, H) => {
   const shadeColor = lit ? blendWithLight(sc) : sc;
-  return `<svg width="${W}" height="${H}" viewBox="0 0 134 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return `<svg width="${W}" height="${H}" viewBox="0 0 70 149" fill="none" xmlns="http://www.w3.org/2000/svg">
   ${lit ? `<defs>
-    <radialGradient id="glow" cx="50%" cy="60%" r="55%">
+    <radialGradient id="glow" cx="50%" cy="50%" r="55%">
       <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
       <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
     </radialGradient>
   </defs>` : ''}
   <!-- Base -->
-  <path d="M101 115C101 119.971 96.9706 124 92 124L41 124C36.0294 124 32 119.971 32 115L32 91L101 91L101 115Z" fill="${bsc}"/>
-  <path d="M92 123.465L41 123.465C36.3249 123.465 32.5352 119.675 32.5352 115L32.5352 91.5352L100.465 91.5352L100.465 115C100.465 119.675 96.6751 123.465 92 123.465Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
+  <rect x="62" y="149" width="53" height="48" transform="rotate(180 62 149)" fill="${bsc}"/>
+  <rect x="61.465" y="148.465" width="51.93" height="46.93" transform="rotate(180 61.465 148.465)" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
   <!-- Pantalla -->
-  <path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="${shadeColor}"/>
-  ${lit ? `<path d="M134 73C134 83.4934 125.493 92 115 92H19C8.50659 92 0 83.4934 0 73V62.0888C0 58.1288 1.23734 54.2677 3.53906 51.0453L34.3168 7.95647C37.8833 2.96335 43.6417 0 49.7777 0H84.2223C90.3583 0 96.1167 2.96335 99.6832 7.95647L130.461 51.0453C132.763 54.2677 134 58.1288 134 62.0888V73Z" fill="url(#glow)"/>` : ''}
-  <path d="M49.7773 0.535156H84.2227C90.1858 0.535284 95.782 3.41515 99.248 8.26758L130.025 51.3564C132.262 54.4881 133.465 58.2403 133.465 62.0889V73C133.465 83.1979 125.198 91.4648 115 91.4648H19C8.80206 91.4648 0.535157 83.1979 0.535156 73V62.0889C0.535156 58.2403 1.73771 54.4881 3.97461 51.3564L34.752 8.26758C38.218 3.41516 43.8142 0.535284 49.7773 0.535156Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.4'}" stroke-width="1.07"/>
+  <rect width="70" height="130" rx="35" fill="${shadeColor}"/>
+  ${lit ? `<rect width="70" height="130" rx="35" fill="url(#glow)"/>` : ''}
+  <rect x="0.535" y="0.535" width="68.93" height="128.93" rx="34.465" stroke="black" stroke-opacity="${lit ? '0.15' : '0.4'}" stroke-width="1.07"/>
 </svg>`;
 },
   },  
@@ -926,7 +1010,7 @@ PRODUCTS.forEach((p, i) => {
 
 
 // ── OPEN PRODUCT ──────────────────────────────────────
-function openProduct(i) {
+function openProduct(i, pushState = true) {
   const product = PRODUCTS[i];
   if (!product) return;
   state = { productIdx:i, pantalla:0, base:0, lampara:0, cable:0 };
@@ -948,20 +1032,74 @@ function openProduct(i) {
   buildSwatches('swatchesCable',    OPT_CABLE,    'cable',    'labelCable',    null,        product.enabledCable);
   refreshSVG();
   updatePrices();
+  buildDetails(product);
 
   document.getElementById('viewCatalog').classList.remove('active');
   document.getElementById('viewProduct').classList.add('active');
   window.scrollTo(0,0);
+
+  if (pushState) {
+    history.pushState({ view: 'product', productIdx: i }, document.title, `?producto=${i}`);
+  }
 }
 
-function goBack() {
+function goBack(pushState = true) {
   document.getElementById('viewProduct').classList.remove('active');
   document.getElementById('viewCatalog').classList.add('active');
   document.title = 'margo — catálogo';
   window.scrollTo(0,0);
+
+  if (pushState) {
+    history.pushState({ view: 'catalog' }, document.title, window.location.pathname);
+  }
 }
-document.getElementById('backBtn').addEventListener('click', goBack);
-document.getElementById('logoLink').addEventListener('click', goBack);
+document.getElementById('backBtn').addEventListener('click', () => goBack());
+
+// ── DETALLE ───────────────────────────────────────────
+const detailsToggle = document.getElementById('detailsToggle');
+const detailsBody   = document.getElementById('detailsBody');
+
+detailsToggle.addEventListener('click', () => {
+  const open = detailsBody.classList.toggle('open');
+  detailsToggle.setAttribute('aria-expanded', open);
+});
+
+function buildDetails(product) {
+  const table = document.getElementById('detailsTable');
+  if (!product.details || !product.details.length) {
+    detailsToggle.style.display = 'none';
+    return;
+  }
+  detailsToggle.style.display = '';
+  table.innerHTML = product.details.map(r =>
+    '<tr><td>' + r.label + '</td><td>' + r.value + '</td></tr>'
+  ).join('');
+  detailsBody.classList.remove('open');
+  detailsToggle.setAttribute('aria-expanded', 'false');
+}
+document.getElementById('logoLink').addEventListener('click', () => goBack());
+
+// ── HISTORY (botón atrás del navegador) ───────────────
+window.addEventListener('popstate', (e) => {
+  const s = e.state;
+  if (s && s.view === 'product') {
+    openProduct(s.productIdx, false);
+  } else {
+    goBack(false);
+  }
+});
+
+// Inicializar estado según URL al cargar
+(function initFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const idx = parseInt(params.get('producto'));
+  if (!isNaN(idx) && PRODUCTS[idx]) {
+    openProduct(idx, false);
+    history.replaceState({ view: 'product', productIdx: idx }, document.title, `?producto=${idx}`);
+  } else {
+    history.replaceState({ view: 'catalog' }, document.title, window.location.pathname);
+  }
+})();
 
 // ── COPY ──────────────────────────────────────────────
 document.getElementById('copyBtn').addEventListener('click', () => {
