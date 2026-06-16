@@ -51,7 +51,7 @@
 
   .gallery-area { flex:1; position:relative; overflow:hidden; }
   .gallery-photo { position:absolute; inset:0; opacity:1; transition:opacity .35s ease; background:#e0dbd5; display:flex; align-items:center; justify-content:center; }
-  .gallery-photo img {  width:100%; height:100%; object-fit:cover; display:block; }
+  .gallery-photo img {  width:100%; height:100%; object-fit:cover ; display:block; }
   .gallery-photo.hidden { opacity:0; pointer-events:none; }
 
   /* SVG overlay */
@@ -188,6 +188,13 @@
   .cta-btn { display:block; width:100%; padding:15px; background:var(--g); color:#fff; border:none; font-family:inherit; font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; margin-top:14px; transition:background .2s; }
   .cta-btn:hover { background:#0d3e36; }
   .copy-confirm { font-size:11px; color:var(--g); letter-spacing:.06em; text-align:center; margin-top:8px; opacity:0; transition:opacity .3s; min-height:16px; }
+
+@media (max-width: 1440px) {
+  .product-wrap {
+    max-width: 920px;
+  }
+}
+
 
   @media (max-width:900px) {
     .catalog-wrap { padding-left:0px; padding-right:0px; }
