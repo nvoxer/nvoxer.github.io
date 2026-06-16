@@ -354,14 +354,15 @@ function blendWithLight(hex) {
 const PRODUCTS = [
   {
     name: 'LA-01',
-    desc: 'Pantalla acanalada de inspiración clásica sobre base de acabado mate. La textura vertical de sus estrías distribuye la luz en patrones cálidos y rítmicos, transformando cualquier ambiente en un espacio con carácter propio.',
+    desc: '',
     price: 25000,
     imgs: [ 'img/flut01.jpg',
             'img/flut02.jpg',
             'img/flut03.jpg',
-            'img/flut04.jpg',
-            'img/flut05.jpg',
-            'img/flut06.jpg',],
+            //'img/flut04.jpg',
+            //'img/flut05.jpg',
+            'img/flut06.jpg',
+            'img/flut07.jpg',],
 
     // índices habilitados de cada opción (0-based)
     // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
@@ -401,7 +402,7 @@ const PRODUCTS = [
 
   {
     name: 'LA-02',
-    desc: 'Lampara de mesa. ',
+    desc: '',
     price: 32000,
     imgs: [ 'img/hon02.jpg',
             'img/hon03.jpg',
@@ -447,14 +448,14 @@ svg: (sc, bsc, lit, W, H) => {
 
   {
     name: 'LA-03',
-    desc: 'Calabaza',
+    desc: '',
     price: 30000,
     imgs: [ 'img/cal02.jpg',
             'img/cal03.jpg',
             'img/cal04.jpg',
-            'img/cal05.jpg',
             'img/cal07.jpg',
-            'img/cal08.jpg',],
+            'img/cal08.jpg',
+            'img/cal09.jpg',],
 
     // índices habilitados de cada opción (0-based)
     // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
@@ -521,9 +522,9 @@ svg: (sc, bsc, lit, W, H) => {
 
   {
     name: 'LA-04',
-    desc: 'Skirt',
+    desc: '',
     price: 34000,
-    imgs: [ 'img/skirt01.jpg', 'img/skirt02.jpg', 'img/skirt03.jpg', 'img/skirt04.jpg'],
+    imgs: [ 'img/skirt01.jpg', 'img/skirt02.jpg', 'img/skirt04.jpg'],
 
     // índices habilitados de cada opción (0-based)
     // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
@@ -567,13 +568,14 @@ svg: (sc, bsc, lit, W, H) => {
   
   {
     name: 'LA-05',
-    desc: 'Shoji',
+    desc: '',
     price: 45000,
     imgs: [ 'img/pon01.jpg',
             'img/pon03.jpg',
             'img/pon06.jpg',
             'img/pon07.jpg',
             'img/pon08.jpg',
+            'img/pon09.jpg',
           ],
 
     // índices habilitados de cada opción (0-based)
@@ -628,7 +630,7 @@ svg: (sc, bsc, lit, W, H) => {
 
   {
     name: 'LA-06',
-    desc: 'Puff',
+    desc: '',
     price: 32000,
     imgs: [ 'img/puf01.jpg',
             'img/puf02.jpg',
@@ -653,24 +655,28 @@ svg: (sc, bsc, lit, W, H) => {
 
 svg: (sc, bsc, lit, W, H) => {
   const shadeColor = lit ? blendWithLight(sc) : sc;
-  return `<svg width="${W}" height="${H}" viewBox="0 0 150 171" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return `<svg width="${W}" height="${H}" viewBox="0 0 132 150" fill="none" xmlns="http://www.w3.org/2000/svg">
   ${lit ? `<defs>
-    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%">
       <stop offset="0%" stop-color="#fff8dc" stop-opacity="0.85"/>
       <stop offset="100%" stop-color="#fff8dc" stop-opacity="0"/>
     </radialGradient>
   </defs>` : ''}
   <!-- Base -->
-  <path d="M49.7687 73.008C50.1954 68.727 50.4088 66.5865 51.8374 65.2933C53.266 64 55.4171 64 59.7193 64H90.2806C94.5829 64 96.734 64 98.1626 65.2933C99.5912 66.5865 99.8046 68.727 100.231 73.008L108.904 160.008C109.416 165.143 109.672 167.711 108.184 169.356C106.695 171 104.114 171 98.9535 171H51.0465C45.8856 171 43.3051 171 41.8165 169.356C40.3279 167.711 40.5838 165.143 41.0958 160.008L49.7687 73.008Z" fill="${bsc}"/>
-  <path d="M59.7197 64.5H90.2803C92.4448 64.5 94.0206 64.5006 95.2354 64.6572C96.436 64.812 97.2177 65.1123 97.8271 65.6641C98.4365 66.2157 98.8129 66.9635 99.0859 68.1426C99.3622 69.3358 99.5187 70.9038 99.7334 73.0576L108.406 160.058C108.664 162.64 108.851 164.525 108.795 165.972C108.739 167.404 108.445 168.321 107.812 169.021C107.18 169.719 106.296 170.101 104.877 170.299C103.443 170.498 101.548 170.5 98.9531 170.5H51.0469C48.4516 170.5 46.5568 170.498 45.123 170.299C43.704 170.101 42.8204 169.719 42.1875 169.021C41.5545 168.321 41.261 167.404 41.2051 165.972C41.1487 164.525 41.3363 162.64 41.5938 160.058L50.2666 73.0576C50.4813 70.9038 50.6378 69.3358 50.9141 68.1426C51.1871 66.9635 51.5635 66.2157 52.1729 65.6641C52.7823 65.1123 53.564 64.812 54.7646 64.6572C55.9794 64.5006 57.5552 64.5 59.7197 64.5Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+  <path d="M101 144C101 147.314 98.3137 150 95 150L39 150C35.134 150 32 146.866 32 143L32 124L101 124L101 144Z" fill="${bsc}"/>
+  <path d="M95 149.465L39 149.465C35.4295 149.465 32.5352 146.571 32.5352 143L32.5352 124.535L100.465 124.535L100.465 144C100.465 147.018 98.0182 149.465 95 149.465Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
   <!-- Pantalla -->
-  <path d="M43.5 6.52058e-06L106.5 0L150 121H0L43.5 6.52058e-06Z" fill="${shadeColor}"/>
-  ${lit ? `<path d="M43.5 6.52058e-06L106.5 0L150 121H0L43.5 6.52058e-06Z" fill="url(#glow)"/>` : ''}
-  <path d="M106.148 0.5L149.289 120.5H0.710938L43.8516 0.5H106.148Z" stroke="black" stroke-opacity="${lit ? '0.1' : '0.36'}"/>
-  <path d="M101.089 0.5L137.327 120.5H12.6729L48.9111 0.5H101.089Z" stroke="black" stroke-opacity="${lit ? '0.08' : '0.36'}"/>
-  <path d="M95.1836 0.5L123.369 120.5H26.6309L54.8164 0.5H95.1836Z" stroke="black" stroke-opacity="${lit ? '0.08' : '0.36'}"/>
-  <path d="M87.167 0.5L104.423 120.5H45.5771L62.833 0.5H87.167Z" stroke="black" stroke-opacity="${lit ? '0.06' : '0.36'}"/>
-  <path d="M78.7227 0.5L84.4756 120.5H65.5244L71.2773 0.5H78.7227Z" stroke="black" stroke-opacity="${lit ? '0.06' : '0.36'}"/>
+  <path d="M7.04 0H124.96C129.528 13.6273 129.528 28.3727 124.96 42H7.04C2.4716 28.3727 2.4716 13.6273 7.04 0Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M7.04 0H124.96C129.528 13.6273 129.528 28.3727 124.96 42H7.04C2.4716 28.3727 2.4716 13.6273 7.04 0Z" fill="url(#glow)"/>` : ''}
+  <path d="M124.597 0.5C128.98 13.8156 128.98 28.1844 124.597 41.5H7.40332C3.02024 28.1844 3.02024 13.8156 7.40332 0.5H124.597Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+  <path d="M7.04 41H124.96C129.528 54.6273 129.528 69.3727 124.96 83H7.04C2.4716 69.3727 2.4716 54.6273 7.04 41Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M7.04 41H124.96C129.528 54.6273 129.528 69.3727 124.96 83H7.04C2.4716 69.3727 2.4716 54.6273 7.04 41Z" fill="url(#glow)"/>` : ''}
+  <path d="M124.597 41.5C128.98 54.8156 128.98 69.1844 124.597 82.5H7.40332C3.02024 69.1844 3.02024 54.8156 7.40332 41.5H124.597Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+  <path d="M7.04 82H124.96C129.528 95.6273 129.528 110.373 124.96 124H7.04C2.4716 110.373 2.4716 95.6273 7.04 82Z" fill="${shadeColor}"/>
+  ${lit ? `<path d="M7.04 82H124.96C129.528 95.6273 129.528 110.373 124.96 124H7.04C2.4716 110.373 2.4716 95.6273 7.04 82Z" fill="url(#glow)"/>` : ''}
+  <path d="M124.597 82.5C128.98 95.8156 128.98 110.184 124.597 123.5H7.40332C3.02024 110.184 3.02024 95.8156 7.40332 82.5H124.597Z" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+  <line x1="46.5" y1="1" x2="46.5" y2="124" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
+  <line x1="86.5" y1="1" x2="86.5" y2="124" stroke="black" stroke-opacity="${lit ? '0.15' : '0.36'}"/>
 </svg>`;
 },
   },  
@@ -678,12 +684,12 @@ svg: (sc, bsc, lit, W, H) => {
 
   {
     name: 'LA-07',
-    desc: 'Lampara colgante con varillas de madera natural barnizada. Medidas: alto:18cm, ancho 25cm ',
+    desc: '',
     price: 60000,
     imgs: [ 'img/jau02.jpg',
             //'img/jau01.jpg',
             //'img/jau03.jpg',
-            'img/jau04.jpg',
+            //'img/jau04.jpg',
             'img/jau05.jpg',
                     ],
 
@@ -735,7 +741,7 @@ svg: (sc, bsc, lit, W, H) => {
 
   {
     name: 'LA-08',
-    desc: 'Medidas: ',
+    desc: '',
     price: 28000,
     imgs: [ 'img/togle02.jpg',
             'img/togle01.jpg',
