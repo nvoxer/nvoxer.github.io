@@ -1244,7 +1244,12 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 });
 
 // ── CARRITO ───────────────────────────────────────────
-let cart = [];
+let cart = (() => {
+  try { return JSON.parse(localStorage.getItem('margo_cart') || '[]'); }
+  catch { return []; }
+})();
+
+updateCartBadge();
 
 function cartItemText(item) {
   return [
@@ -1255,6 +1260,10 @@ function cartItemText(item) {
     `Cable:           ${item.cable}`,
     `Precio:          ${fmt(item.price)}`,
   ].join('\n');
+}
+
+function saveCart() {
+  try { localStorage.setItem('margo_cart', JSON.stringify(cart)); } catch {}
 }
 
 function updateCartBadge() {
@@ -1275,7 +1284,13 @@ function renderCart() {
 
   container.innerHTML = cart.map((item, idx) => `
     <div class="cart-item">
-      <div class="cart-item-svg">${item.svg}</div>
+      <div class="cart-item-svg">${(() => {
+        const p = PRODUCTS[item.productIdx];
+        if (!p || !p.svg) return '';
+        const sc  = OPT_PANTALLA[item.pantallaIdx]?.hex || '#fff';
+        const bsc = OPT_BASE[item.baseIdx]?.hex || '#fff';
+        return p.svg(sc, bsc, false, 48, 56);
+      })()}</div>
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-specs">
@@ -1308,6 +1323,7 @@ function renderCart() {
   container.querySelectorAll('.cart-item-remove').forEach(btn => {
     btn.addEventListener('click', () => {
       cart.splice(parseInt(btn.dataset.idx), 1);
+      saveCart();
       updateCartBadge();
       renderCart();
     });
@@ -1339,14 +1355,19 @@ document.getElementById('addToCartBtn').addEventListener('click', () => {
   const product = PRODUCTS[state.productIdx];
   if (!product) return;
   cart.push({
-    name:     product.name,
-    pantalla: OPT_PANTALLA[state.pantalla].name,
-    base:     OPT_BASE[state.base].name,
-    lampara:  OPT_LAMPARA[state.lampara].name,
-    cable:    OPT_CABLE[state.cable].name,
-    price:    calcTotal(),
-    svg:      buildLampSVG(true, false),
+    name:         product.name,
+    productIdx:   state.productIdx,
+    pantallaIdx:  state.pantalla,
+    baseIdx:      state.base,
+    lamparaIdx:   state.lampara,
+    cableIdx:     state.cable,
+    pantalla:     OPT_PANTALLA[state.pantalla].name,
+    base:         OPT_BASE[state.base].name,
+    lampara:      OPT_LAMPARA[state.lampara].name,
+    cable:        OPT_CABLE[state.cable].name,
+    price:        calcTotal(),
   });
+  saveCart();
   updateCartBadge();
   // feedback visual breve en el botón
   const btn = document.getElementById('addToCartBtn');
