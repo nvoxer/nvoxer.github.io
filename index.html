@@ -14,6 +14,36 @@
   body { font-family:'Host Grotesk',sans-serif; background:var(--bg); color:var(--t1); -webkit-font-smoothing:antialiased; min-height:100vh; }
 
   nav { background:var(--white); border-bottom:0.5px solid var(--border); height:100px; display:flex; align-items:center; justify-content:center; position:sticky; top:0; z-index:100; }
+  /* CARRITO NAV */
+  .nav-cart { position:absolute; right:28px; background:none; border:none; cursor:pointer; display:flex; align-items:center; gap:7px; font-family:inherit; font-size:11px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--t2); padding:8px; }
+  .nav-cart:hover { color:var(--t1); }
+  .cart-badge { background:var(--g); color:#fff; border-radius:50%; width:16px; height:16px; font-size:9px; display:none; align-items:center; justify-content:center; font-weight:600; }
+  .cart-badge.visible { display:flex; }
+
+  /* BOTONES PRODUCTO */
+  .cta-row { display:flex; gap:8px; margin-top:14px; align-items:stretch; }
+  .cta-btn-sec { flex:1; display:block; padding:15px; background:none; color:var(--g); border:1px solid var(--g); font-family:inherit; font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; transition:background .2s, color .2s; }
+  .cta-btn-sec:hover { background:var(--g); color:#fff; }
+  .cta-btn { flex:1; margin-top:0 !important; }
+
+  /* VISTA CARRITO */
+  .cart-wrap { max-width:640px; margin:0 auto; padding:40px 24px 80px; }
+  .cart-header { display:flex; align-items:center; gap:16px; margin-bottom:32px; border-bottom:0.5px solid var(--border); padding-bottom:20px; }
+  .cart-back { background:none; border:none; cursor:pointer; font-family:inherit; font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--t3); padding:0; }
+  .cart-back:hover { color:var(--t1); }
+  .cart-title { font-size:22px; font-weight:300; letter-spacing:-0.5px; text-align: center;}
+  .cart-empty { text-align:center; color:var(--t3); font-size:14px; padding:60px 0; }
+  .cart-item { display:flex; gap:16px; align-items:flex-start; padding:16px 0; border-bottom:0.5px solid var(--border); }
+  .cart-item-svg { width:48px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .cart-item-info { flex:1; }
+  .cart-item-name { font-size:14px; font-weight:500; margin-bottom:4px; }
+  .cart-item-specs { font-size:11px; color:var(--t3); line-height:1.8; }
+  .cart-item-price { font-size:13px; font-weight:500; white-space:nowrap; }
+  .cart-item-remove { background:none; border:none; cursor:pointer; color:var(--t3); font-size:16px; padding:0 0 0 12px; line-height:1; }
+  .cart-item-remove:hover { color:var(--t1); }
+  .cart-total-row { display:flex; justify-content:space-between; font-size:15px; font-weight:500; padding:20px 0 0; }
+  .cart-actions { margin-top:24px; display:flex; flex-direction:column; gap:10px; }
+  .cart-copy-confirm { text-align:center; font-size:11px; color:var(--g); opacity:0; transition:opacity .4s; margin-top:4px; }
   .logo { display:flex; align-items:center; gap:10px; cursor:pointer; }
   .logomark { width:32px; height:32px; background:var(--g); border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .logomark span { color:#fff; font-size:9.5px; font-weight:600; letter-spacing:-.3px; line-height:1.15; text-align:center; pointer-events:none; }
@@ -223,6 +253,11 @@
   <div class="logo" id="logoLink">
     <img src="logo-margo.svg" alt="Margo" class="logo-svg">
   </div>
+  <button class="nav-cart" id="navCartBtn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    Carrito
+    <span class="cart-badge" id="cartBadge">0</span>
+  </button>
 </nav>
 
 <!-- CATALOG -->
@@ -328,12 +363,9 @@
         </div>
         <div class="swatches" id="swatchesCable"></div>
       </div>
-      
-      
       <div class="banner-product" id="bannerProduct">
         <img src="img/banner-20off.png" alt="Banner" id="bannerProductImg">
       </div>
-
       <!-- DETALLE -->
       <button class="details-toggle" id="detailsToggle" aria-expanded="false">
         <span class="details-toggle-label">Detalle</span>
@@ -344,18 +376,61 @@
       <div class="details-body" id="detailsBody">
         <div><table class="details-table" id="detailsTable"></table></div>
       </div>
+
+
+
       <div class="price-breakdown">
         <div id="breakdownRows"></div>
         <div class="breakdown-row total">
           <span>Total</span>
           <span id="totalPrice"></span>
         </div>
-        <button class="cta-btn" id="copyBtn">Copiar pedido</button>
+        <div class="cta-row">
+          <button class="cta-btn-sec" id="copyBtn">Copiar pedido</button>
+          <button class="cta-btn" id="addToCartBtn">Agregar al carrito</button>
+        </div>
         <p class="copy-confirm" id="copyConfirm">✓ Copiado al portapapeles</p>
         <p style="font-size:11px; color:var(--t3); text-align:center; margin-bottom:8px; letter-spacing:0.04em;">Usá el botón para copiar el pedido y envialo por WhatsApp o a <a href="mailto:pedidos@margo.com.ar">pedidos@margo.com.ar</a></p>
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- CARRITO -->
+<div class="view" id="viewCart">
+  <div class="cart-wrap">
+    <div class="cart-header">
+      <button class="cart-back" id="cartBackBtn">← Catálogo</button>
+      <span class="cart-title">Carrito</span>
+    </div>
+    <div id="cartItems"></div>
+    <div id="cartFooter" style="display:none">
+      <div style="border-top:0.5px solid var(--border); padding-top:16px; display:flex; flex-direction:column; gap:6px;">
+        <div class="cart-total-row" style="font-size:13px; font-weight:400; color:var(--t3); padding:0;">
+          <span>Subtotal</span>
+          <span id="cartSubtotal"></span>
+        </div>
+        <div class="cart-total-row" id="cartDiscountRow" style="font-size:13px; font-weight:400; color:var(--g); padding:0; display:none;">
+          <span>Descuento (20%)</span>
+          <span id="cartDiscount"></span>
+        </div>
+        <div class="cart-total-row" style="font-size:13px; font-weight:400; color:var(--t3); padding:0;">
+          <span>Envío</span>
+          <span>Consultar</span>
+        </div>
+        <div class="cart-total-row" style="border-top:0.5px solid var(--border); margin-top:6px; padding-top:12px;">
+          <span>Total</span>
+          <span id="cartTotal"></span>
+        </div>
+      </div>
+      <div class="cart-actions">
+        <button class="cta-btn" id="cartCopyBtn">Copiar consulta</button>
+        <button class="cta-btn-sec" id="cartKeepBtn">Seguir comprando</button>
+        <p class="cart-copy-confirm" id="cartCopyConfirm">✓ Copiado al portapapeles</p>
+        <p style="font-size:11px; color:var(--t3); text-align:center; letter-spacing:0.04em;">Usá el botón para copiar el pedido y envialo por WhatsApp o a<a href="mailto:pedidos@margo.com.ar">pedidos@margo.com.ar</a></p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1113,8 +1188,13 @@ window.addEventListener('popstate', (e) => {
   const s = e.state;
   if (s && s.view === 'product') {
     openProduct(s.productIdx, false);
+  } else if (s && s.view === 'cart') {
+    openCart(false);
   } else {
-    goBack(false);
+    document.getElementById('viewProduct').classList.remove('active');
+    document.getElementById('viewCart').classList.remove('active');
+    document.getElementById('viewCatalog').classList.add('active');
+    document.title = 'margo — catálogo';
   }
 });
 
@@ -1162,6 +1242,139 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 //wasap fin----------
 
 });
+
+// ── CARRITO ───────────────────────────────────────────
+let cart = [];
+
+function cartItemText(item) {
+  return [
+    `Producto:        ${item.name}`,
+    `Color pantalla:  ${item.pantalla}`,
+    `Color base:      ${item.base}`,
+    `Lámpara:         ${item.lampara}`,
+    `Cable:           ${item.cable}`,
+    `Precio:          ${fmt(item.price)}`,
+  ].join('\n');
+}
+
+function updateCartBadge() {
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = cart.length;
+  badge.classList.toggle('visible', cart.length > 0);
+}
+
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  const footer    = document.getElementById('cartFooter');
+
+  if (cart.length === 0) {
+    container.innerHTML = '<p class="cart-empty">El carrito está vacío.</p>';
+    footer.style.display = 'none';
+    return;
+  }
+
+  container.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <div class="cart-item-svg">${item.svg}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-specs">
+          Pantalla: ${item.pantalla}<br>
+          Base: ${item.base}<br>
+          Lámpara: ${item.lampara}<br>
+          Cable: ${item.cable}
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+        <span class="cart-item-price">${fmt(item.price)}</span>
+        <button class="cart-item-remove" data-idx="${idx}" title="Eliminar">×</button>
+      </div>
+    </div>
+  `).join('');
+
+  // totales con descuento
+  const subtotal     = cart.reduce((s, i) => s + i.price, 0);
+  const hasDiscount  = cart.length >= 2;
+  const discountAmt  = hasDiscount ? Math.round(subtotal * 0.20) : 0;
+  const total        = subtotal - discountAmt;
+  document.getElementById('cartSubtotal').textContent = fmt(subtotal);
+  const discountRow  = document.getElementById('cartDiscountRow');
+  discountRow.style.display = hasDiscount ? 'flex' : 'none';
+  document.getElementById('cartDiscount').textContent = '- ' + fmt(discountAmt);
+  document.getElementById('cartTotal').textContent = fmt(total);
+  footer.style.display = 'block';
+
+  // remove handlers
+  container.querySelectorAll('.cart-item-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      cart.splice(parseInt(btn.dataset.idx), 1);
+      updateCartBadge();
+      renderCart();
+    });
+  });
+}
+
+function openCart(pushState = true) {
+  document.getElementById('viewCatalog').classList.remove('active');
+  document.getElementById('viewProduct').classList.remove('active');
+  document.getElementById('viewCart').classList.add('active');
+  document.title = 'margo — carrito';
+  window.scrollTo(0, 0);
+  renderCart();
+  if (pushState) history.pushState({ view: 'cart' }, document.title, '?carrito');
+}
+
+function goBackFromCart(pushState = true) {
+  document.getElementById('viewCart').classList.remove('active');
+  document.getElementById('viewCatalog').classList.add('active');
+  document.title = 'margo — catálogo';
+  window.scrollTo(0, 0);
+  if (pushState) history.pushState({ view: 'catalog' }, document.title, window.location.pathname);
+}
+
+document.getElementById('navCartBtn').addEventListener('click', () => openCart());
+document.getElementById('cartBackBtn').addEventListener('click', () => goBackFromCart());
+
+document.getElementById('addToCartBtn').addEventListener('click', () => {
+  const product = PRODUCTS[state.productIdx];
+  if (!product) return;
+  cart.push({
+    name:     product.name,
+    pantalla: OPT_PANTALLA[state.pantalla].name,
+    base:     OPT_BASE[state.base].name,
+    lampara:  OPT_LAMPARA[state.lampara].name,
+    cable:    OPT_CABLE[state.cable].name,
+    price:    calcTotal(),
+    svg:      buildLampSVG(true, false),
+  });
+  updateCartBadge();
+  // feedback visual breve en el botón
+  const btn = document.getElementById('addToCartBtn');
+  btn.textContent = '✓ Agregado';
+  setTimeout(() => btn.textContent = 'Agregar al carrito', 1800);
+});
+
+document.getElementById('cartKeepBtn').addEventListener('click', () => goBackFromCart());
+
+document.getElementById('cartCopyBtn').addEventListener('click', () => {
+  const lines = ['Hola, me gustaría hacer el siguiente pedido:', ''];
+  cart.forEach((item, i) => {
+    lines.push(`— Producto ${i + 1} —`);
+    lines.push(cartItemText(item));
+    lines.push('');
+  });
+  const subtotalC   = cart.reduce((s, i) => s + i.price, 0);
+  const discountC   = cart.length >= 2 ? Math.round(subtotalC * 0.20) : 0;
+  const totalC      = subtotalC - discountC;
+  if (discountC > 0) lines.push(`Descuento (20%): -${fmt(discountC)}`);
+  lines.push(`Total estimado:  ${fmt(totalC)}`);
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const el = document.getElementById('cartCopyConfirm');
+    el.style.opacity = '1';
+    setTimeout(() => el.style.opacity = '0', 2500);
+  });
+});
+
 </script>
 </body>
 </html>
