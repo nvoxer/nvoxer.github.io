@@ -1,0 +1,908 @@
+/* ==========================================================
+   MARGO LINKS
+   Mobile First
+========================================================== */
+
+:root{
+
+    --green:#135D52;
+    --green-dark:#0F4A42;
+
+    --background:#F8F8F5;
+    --surface:#FFFFFF;
+
+    --text:#222222;
+    --text-light:#727272;
+
+    --border:#ECECEC;
+
+    --radius:22px;
+
+    --shadow-sm:
+    0 6px 16px rgba(0,0,0,.05);
+
+    --shadow:
+    0 20px 60px rgba(0,0,0,.08);
+
+    --transition:
+    .25s cubic-bezier(.4,0,.2,1);
+
+}
+
+
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:"Host Grotesk",sans-serif;
+
+    background: 
+
+    radial-gradient(
+    circle at top,
+    #FFFFFF,
+    #FAFAF8 45%,
+    #F3F3F0 100%);
+
+    color:var(--text);
+
+    -webkit-font-smoothing:antialiased;
+
+    overflow-x:hidden;
+
+}
+
+
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+
+
+/* ==========================================================
+   HERO
+========================================================== */
+
+.hero{
+
+    position:relative;
+
+    width:100%;
+
+    min-height:330px;
+
+    overflow:hidden;
+
+}
+
+
+
+
+
+
+
+/* ==========================================================
+CARD
+========================================================== */
+
+.card{
+
+    position:relative;
+
+    width:min(430px,calc(100% - 32px));
+
+    margin:-90px auto 50px;
+
+    background:var(--surface);
+
+    border-radius:30px;
+
+    border:1px solid rgba(255,255,255,.4);
+
+    backdrop-filter:blur(16px);
+
+    box-shadow:var(--shadow);
+
+    padding:
+
+    0 28px 38px;
+
+}
+
+
+
+/* ==========================================================
+LOGO
+========================================================== */
+
+.logo{
+
+    width:96px;
+    height:96px;
+
+    margin:
+
+    -48px auto 24px;
+
+    border-radius:50%;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:1px solid var(--border);
+
+    box-shadow:
+
+    0 12px 30px rgba(0,0,0,.08);
+
+}
+
+.logo img{
+
+    width:58px;
+
+}
+
+
+
+/* ==========================================================
+TEXT
+========================================================== */
+
+h1{
+
+    text-align:center;
+
+    font-size:2.15rem;
+
+    font-weight:700;
+
+    letter-spacing:-.04em;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    margin-top:12px;
+
+    color:var(--text-light);
+
+    line-height:1.8;
+
+    font-size:15px;
+
+    margin-bottom:42px;
+
+}
+
+
+
+/* ==========================================================
+BUTTON LIST
+========================================================== */
+
+.links{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+.button{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    background:var(--surface);
+
+    border-radius:18px;
+
+    padding:18px 20px;
+
+    color:var(--text);
+
+    box-shadow:var(--shadow-sm);
+
+    transition:var(--transition);
+
+    border:1px solid rgba(0,0,0,.04);
+
+    animation:fadeUp .6s ease both;
+
+}
+
+.button:nth-child(1){
+
+    animation-delay:.10s;
+
+}
+
+.button:nth-child(2){
+
+    animation-delay:.20s;
+
+}
+
+.button:nth-child(3){
+
+    animation-delay:.30s;
+
+}
+
+.button:hover{
+
+    background:var(--green);
+
+    color:white;
+
+    transform:
+
+        translateY(-3px);
+
+    box-shadow:
+
+        0 18px 35px rgba(19,93,82,.18);
+
+}
+
+.button:active{
+
+    transform:translateY(0);
+
+}
+
+.left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.left span{
+
+    font-size:17px;
+
+    font-weight:600;
+
+    letter-spacing:-.01em;
+
+}
+
+
+
+/* ==========================================================
+   ICONS
+========================================================== */
+
+.left svg{
+
+    width:22px;
+
+    height:22px;
+
+
+
+
+
+
+    transition:var(--transition);
+
+    flex-shrink:0;
+
+}
+
+
+
+/* ==========================================================
+   ARROW
+========================================================== */
+
+.arrow{
+
+    width:36px;
+
+    height:36px;
+
+    border-radius:50%;
+
+    background:#F5F5F5;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    transition:var(--transition);
+
+}
+
+.button:hover .arrow{
+
+    background:rgba(255,255,255,.16);
+
+    color:white;
+
+    transform:translateX(6px);
+
+}
+
+
+
+/* ==========================================================
+   DIVIDER
+========================================================== */
+
+.divider{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    margin:34px 0 10px;
+
+    color:#A0A0A0;
+
+    font-size:13px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.18em;
+
+}
+
+.divider::before,
+
+.divider::after{
+
+    content:"";
+
+    height:1px;
+
+    flex:1;
+
+    background:#E5E5E5;
+
+}
+
+
+
+/* ==========================================================
+   PROMO
+========================================================== */
+
+.promo{
+
+    position:relative;
+
+    margin-top:38px;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    min-height:185px;
+
+    background:var(--green);
+
+    box-shadow:
+
+    0 18px 40px rgba(19,93,82,.18);
+
+}
+
+.promo img{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:2s ease;
+
+}
+
+.promo:hover img{
+
+    transform:scale(1.04);
+
+}
+
+.promo-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+        110deg,
+
+        rgba(19,93,82,.96),
+
+        rgba(19,93,82,.72),
+
+        rgba(19,93,82,.28)
+
+    );
+
+}
+
+.promo-content{
+
+    position:relative;
+
+    z-index:2;
+
+    padding:28px;
+
+    color:white;
+
+}
+
+.promo h2{
+
+    font-size:2.9rem;
+
+    line-height:.95;
+
+    font-weight:800;
+
+    letter-spacing:-.04em;
+
+}
+
+.promo p{
+
+    margin-top:12px;
+
+    font-size:16px;
+
+    font-weight:500;
+
+    opacity:.92;
+
+}
+
+
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+footer{
+
+    margin-top:42px;
+
+    text-align:center;
+
+    color:#9A9A9A;
+
+    font-size:13px;
+
+    letter-spacing:.04em;
+
+}
+
+footer::before{
+
+    content:"";
+
+    display:block;
+
+    width:48px;
+
+    height:1px;
+
+    background:#DDD;
+
+    margin:0 auto 18px;
+
+}
+
+
+/* ==========================================================
+   ANIMATIONS
+========================================================== */
+
+.fade{
+
+    animation:fade .8s ease both;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+        transform:translateY(24px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            translateY(0);
+
+    }
+
+}
+
+
+
+
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#F2F2F2;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#C8C8C8;
+
+    border-radius:50px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--green);
+
+}
+
+
+
+/* ==========================================================
+   FOCUS
+========================================================== */
+
+.button:focus-visible{
+
+    outline:none;
+
+    box-shadow:
+
+    0 0 0 4px rgba(19,93,82,.15),
+
+    0 15px 35px rgba(19,93,82,.18);
+
+}
+
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (min-width:768px){
+
+
+
+.card{
+
+    width:470px;
+
+    margin-top:-120px;
+
+    padding:0 38px 44px;
+
+}
+
+.logo{
+
+    width:110px;
+    height:110px;
+
+    margin-top:-55px;
+
+}
+
+.logo img{
+
+    width:64px;
+
+}
+
+h1{
+
+    font-size:2.4rem;
+
+}
+
+.subtitle{
+
+    font-size:16px;
+
+}
+
+.button{
+
+    padding:20px 24px;
+
+}
+
+.left span{
+
+    font-size:18px;
+
+}
+
+.promo{
+
+    min-height:210px;
+
+}
+
+.promo h2{
+
+    font-size:3.4rem;
+
+}
+
+}
+
+
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+
+@media (min-width:1200px){
+
+
+
+.card{
+
+    width:500px;
+
+}
+
+}
+
+
+
+/* ==========================================================
+   LARGE SCREENS
+========================================================== */
+
+
+
+
+/* ==========================================================
+   SMALL DEVICES
+========================================================== */
+
+@media (max-width:380px){
+
+.card{
+
+    width:calc(100% - 18px);
+
+    padding:0 18px 30px;
+
+}
+
+.button{
+
+    padding:16px;
+
+}
+
+.left{
+
+    gap:12px;
+
+}
+
+.left span{
+
+    font-size:16px;
+
+}
+
+.promo h2{
+
+    font-size:2.3rem;
+
+}
+
+}
+
+
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (prefers-reduced-motion:reduce){
+
+*{
+
+    animation:none!important;
+
+    transition:none!important;
+
+    scroll-behavior:auto!important;
+
+}
+
+}
+
+
+
+/* ==========================================================
+   DARK MODE (Opcional)
+========================================================== */
+
+@media (prefers-color-scheme:dark){
+
+body{
+
+    background:#FEF7F3;
+
+}
+
+}
+
+
+
+/* ==========================================================
+   SELECTION
+========================================================== */
+
+::selection{
+
+    background:var(--green);
+
+    color:white;
+
+}
+
+
+
+
+
+/* ==========================================================
+   HOVER ONLY DEVICES
+========================================================== */
+
+@media (hover:hover){
+
+.button:hover svg{
+
+    transform:scale(1.08);
+
+}
+
+}
+
+
+
+/* ==========================================================
+   TOUCH DEVICES
+========================================================== */
+
+@media (hover:none){
+
+.button:active{
+
+    background:var(--green);
+
+    color:white;
+
+}
+
+.button:active .arrow{
+
+    background:rgba(255,255,255,.16);
+
+}
+
+}
+
+
+
+/* ==========================================================
+   END
+========================================================== */
