@@ -1,22 +1,27 @@
 /* ==========================================================
-   MARGO LINKS
+   NIKIO LINKS
    Mobile First
 ========================================================== */
 
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=clash-grotesk@400,500,600&display=swap');
+
 :root{
 
-    --green:#135D52;
-    --green-dark:#0F4A42;
+    --accent:#FB5800;
+    --accent-dark:#1B1B1B;
 
-    --background:#F8F8F5;
+    --background:#F1F1E9;
     --surface:#FFFFFF;
 
-    --text:#222222;
-    --text-light:#727272;
+    --text:#1B1B1B;
+    --text-light:#726c62;
 
-    --border:#ECECEC;
+    --border:#E8E5DB;
 
     --radius:22px;
+
+    --f-display:'Clash Display','Host Grotesk',sans-serif;
+    --f-body:'Clash Grotesk','Host Grotesk',sans-serif;
 
     --shadow-sm:
     0 6px 16px rgba(0,0,0,.05);
@@ -47,15 +52,15 @@ html{
 
 body{
 
-    font-family:"Host Grotesk",sans-serif;
+    font-family:var(--f-body);
 
     background: 
 
     radial-gradient(
     circle at top,
-    #FFFFFF,
-    #FAFAF8 45%,
-    #F3F3F0 100%);
+    #FBFBF6,
+    #F5F4EC 45%,
+    var(--background) 100%);
 
     color:var(--text);
 
@@ -140,12 +145,12 @@ LOGO
 
 .logo{
 
-    width:78px;
+    width:auto;
     height:auto;
 
     margin:
 
-    -36px auto 24px;
+    -30px auto 24px;
 
     display:flex;
 
@@ -153,30 +158,27 @@ LOGO
 
     align-items:center;
 
-    /* fondo blanco propio: el logo sobresale de la card
-       y sin esto se ve el fondo de la pagina detras */
-
     background:#FFFFFF;
 
-    border-radius:2px;
+    padding:10px 22px;
+
+    border-radius:14px;
 
     position:relative;
 
     z-index:1;
 
-}
+    font-family:var(--f-display);
 
-.logo img{
+    font-weight:600;
 
-    width:100%;
+    font-size:22px;
 
-    height:100%;
+    letter-spacing:-.02em;
 
-    object-fit:contain;
+    text-transform:lowercase;
 
-    display:block;
-
-    border-radius:2px;
+    color:var(--text);
 
 }
 
@@ -188,11 +190,13 @@ TEXT
 
 h1{
 
+    font-family:var(--f-display);
+
     text-align:center;
 
     font-size:2.15rem;
 
-    font-weight:700;
+    font-weight:600;
 
     letter-spacing:-.04em;
 
@@ -281,7 +285,7 @@ BUTTON LIST
 
 .button:hover{
 
-    background:var(--green);
+    background:var(--accent);
 
     color:white;
 
@@ -291,7 +295,7 @@ BUTTON LIST
 
     box-shadow:
 
-        0 18px 35px rgba(19,93,82,.18);
+        0 18px 35px rgba(251,88,0,.18);
 
 }
 
@@ -313,11 +317,15 @@ BUTTON LIST
 
 .left span{
 
+    font-family:var(--f-display);
+
     font-size:17px;
 
     font-weight:600;
 
     letter-spacing:-.01em;
+
+    text-transform:lowercase;
 
 }
 
@@ -444,11 +452,11 @@ BUTTON LIST
 
     min-height:185px;
 
-    background:var(--green);
+    background:var(--accent);
 
     box-shadow:
 
-    0 18px 40px rgba(19,93,82,.18);
+    0 18px 40px rgba(251,88,0,.18);
 
 }
 
@@ -486,11 +494,11 @@ BUTTON LIST
 
         110deg,
 
-        rgba(19,93,82,.96),
+        rgba(251,88,0,.96),
 
-        rgba(19,93,82,.72),
+        rgba(251,88,0,.72),
 
-        rgba(19,93,82,.28)
+        rgba(251,88,0,.28)
 
     );
 
@@ -510,11 +518,13 @@ BUTTON LIST
 
 .promo h2{
 
+    font-family:var(--f-display);
+
     font-size:2.9rem;
 
     line-height:.95;
 
-    font-weight:800;
+    font-weight:700;
 
     letter-spacing:-.04em;
 
@@ -651,7 +661,7 @@ footer::before{
 
 ::-webkit-scrollbar-thumb:hover{
 
-    background:var(--green);
+    background:var(--accent);
 
 }
 
@@ -667,9 +677,9 @@ footer::before{
 
     box-shadow:
 
-    0 0 0 4px rgba(19,93,82,.15),
+    0 0 0 4px rgba(251,88,0,.15),
 
-    0 15px 35px rgba(19,93,82,.18);
+    0 15px 35px rgba(251,88,0,.18);
 
 }
 
@@ -851,7 +861,7 @@ body{
 
 ::selection{
 
-    background:var(--green);
+    background:var(--accent);
 
     color:white;
 
@@ -885,7 +895,7 @@ body{
 
 .button:active{
 
-    background:var(--green);
+    background:var(--accent);
 
     color:white;
 

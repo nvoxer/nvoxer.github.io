@@ -13,7 +13,7 @@ function blendWithLight(hex) {
 
 const PRODUCTS = [
   {
-    name: 'LA-01',
+    name: 'Flute',
     desc: '',
     price: 25000,
     imgs: [ 'img/flut01.jpg',
@@ -61,7 +61,7 @@ const PRODUCTS = [
   },
 
   {
-    name: 'LA-02',
+    name: 'Funghi',
     desc: '',
     price: 32000,
     imgs: [ 'img/hon02.jpg',
@@ -107,7 +107,7 @@ svg: (sc, bsc, lit, W, H) => {
   },
 
   {
-    name: 'LA-03',
+    name: 'Curbis',
     desc: '',
     price: 30000,
     imgs: [ 'img/cal02.jpg',
@@ -181,7 +181,7 @@ svg: (sc, bsc, lit, W, H) => {
 
 
   {
-    name: 'LA-04',
+    name: 'Kilt',
     desc: '',
     price: 34000,
     imgs: [ 'img/skirt01.jpg', 'img/skirt02.jpg', 'img/skirt04.jpg'],
@@ -227,7 +227,7 @@ svg: (sc, bsc, lit, W, H) => {
   },  
   
   {
-    name: 'LA-05',
+    name: 'Miko',
     desc: '',
     price: 45000,
     imgs: [ 'img/pon01.jpg',
@@ -289,7 +289,7 @@ svg: (sc, bsc, lit, W, H) => {
   },  
 
   {
-    name: 'LA-06',
+    name: 'Puff',
     desc: '',
     price: 32000,
     imgs: [ 'img/puf01.jpg',
@@ -343,7 +343,7 @@ svg: (sc, bsc, lit, W, H) => {
 
 
   {
-    name: 'LA-07',
+    name: 'Verga',
     desc: '',
     price: 60000,
     imgs: [ 'img/jau02.jpg',
@@ -400,7 +400,7 @@ svg: (sc, bsc, lit, W, H) => {
   },  
 
   {
-    name: 'LA-08',
+    name: 'Toggle',
     desc: '',
     price: 28000,
     imgs: [ 'img/togle02.jpg',
@@ -477,14 +477,14 @@ const OPT_CABLE = [
   { name:'Textil', hex:'#8B7355', extra:3000, disabled: true },
 ];
 
-let state = { productIdx:0, pantalla:0, base:0, lampara:0, cable:0 };
+let state = { productIdx:0, pantalla:0, base:0, lampara:0, cable:0, qty:1 };
 let showingSVG = false;
 let lampOn = false;
 let currentThumb = 0;
 let currentImgs = [];
 
 function fmt(n) { return '$ ' + n.toLocaleString('es-AR'); }
-function calcTotal() {
+function calcUnitTotal() {
   const p = PRODUCTS[state.productIdx];
   if (!p) return 0;
   return p.price
@@ -492,6 +492,9 @@ function calcTotal() {
     + OPT_BASE[state.base].extra
     + OPT_LAMPARA[state.lampara].extra
     + OPT_CABLE[state.cable].extra;
+}
+function calcTotal() {
+  return calcUnitTotal() * (state.qty || 1);
 }
 function basePrice() {
   const p = PRODUCTS[state.productIdx];
@@ -587,8 +590,9 @@ document.getElementById('arrowNext').addEventListener('click', () => { setPhoto(
 
 // ── PRICES ────────────────────────────────────────────
 function updatePrices() {
+  const unit = calcUnitTotal();
   const total = calcTotal();
-  document.getElementById('pPrice').textContent = fmt(total);
+  document.getElementById('pPrice').textContent = fmt(unit);
   document.getElementById('totalPrice').textContent = fmt(total);
 
   [
@@ -600,15 +604,27 @@ function updatePrices() {
     document.getElementById(id).textContent = extra ? '+'+fmt(extra) : '';
   });
 
-  const rows = [{ label:'Subtotal', val: fmt(basePrice()) }];
+  const rows = [{ label:'Precio unitario', val: fmt(unit) }];
   if (OPT_PANTALLA[state.pantalla].extra) rows.push({ label:'Pantalla traslúcida', val:'+'+fmt(OPT_PANTALLA[state.pantalla].extra) });
   if (OPT_BASE[state.base].extra)         rows.push({ label:'Base '+OPT_BASE[state.base].name, val:'+'+fmt(OPT_BASE[state.base].extra) });
   if (OPT_LAMPARA[state.lampara].extra)   rows.push({ label:'Lámpara '+OPT_LAMPARA[state.lampara].name, val:'+'+fmt(OPT_LAMPARA[state.lampara].extra) });
   if (OPT_CABLE[state.cable].extra)       rows.push({ label:'Cable textil', val:'+'+fmt(OPT_CABLE[state.cable].extra) });
+  rows.push({ label:'Cantidad', val:'x'+(state.qty||1) });
   document.getElementById('breakdownRows').innerHTML = rows.map(r =>
     `<div class="breakdown-row"><span>${r.label}</span><span>${r.val}</span></div>`
   ).join('');
 }
+
+// ── CANTIDAD ──────────────────────────────────────────
+function updateQtyUI() {
+  document.getElementById('qtyValue').textContent = state.qty;
+}
+document.getElementById('qtyMinus').addEventListener('click', () => {
+  if (state.qty > 1) { state.qty--; updateQtyUI(); updatePrices(); }
+});
+document.getElementById('qtyPlus').addEventListener('click', () => {
+  if (state.qty < 20) { state.qty++; updateQtyUI(); updatePrices(); }
+});
 
 // ── SWATCHES & PILLS ─────────────────────────────────
 function buildSwatches(cid, options, key, labelId, onChangeCb, enabledArr) {
@@ -657,6 +673,38 @@ function buildPills(cid, options, key, labelId, enabledArr) {
   render();
 }
 
+// ── DESCRIPCIÓN LARGA ─────────────────────────────────
+function getLongDescription(product) {
+  if (product.desc) return product.desc;
+  const dims = (product.details || []).map(d => d.label.toLowerCase() + ': ' + d.value).join(', ');
+  return `${product.name} es una lámpara de mesa de diseño minimalista, pensada para sumar luz cálida a cualquier ambiente. Elegí el color de pantalla, la base y el cable que mejor combinen con tu espacio: cada unidad se arma a pedido con la configuración que definas.${dims ? ' Medidas — ' + dims + '.' : ''}`;
+}
+
+// ── RELACIONADOS ──────────────────────────────────────
+function renderRelated(currentIdx) {
+  const container = document.getElementById('relatedGrid');
+  if (!container) return;
+  const others = PRODUCTS.map((p, i) => ({ p, i })).filter(o => o.i !== currentIdx).slice(0, 4);
+  container.innerHTML = others.map(({p, i}) => `
+    <div class="card" data-idx="${i}">
+      <div class="card-img"><img src="${imgSrc(p.imgs[0], 600)}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <span class="card-name">${p.name}</span>
+        <span class="card-price">${fmt(p.price)}</span>
+      </div>
+    </div>
+  `).join('');
+  container.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => openProduct(parseInt(card.dataset.idx)));
+  });
+}
+const heroCta = document.getElementById('heroCta');
+if (heroCta) {
+  heroCta.addEventListener('click', () => {
+    document.querySelector('.catalog').scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
 // ── CATALOG ───────────────────────────────────────────
 const grid = document.getElementById('grid');
 
@@ -680,13 +728,15 @@ PRODUCTS.forEach((p, i) => {
 function openProduct(i, pushState = true) {
   const product = PRODUCTS[i];
   if (!product) return;
-  state = { productIdx:i, pantalla:0, base:0, lampara:0, cable:0 };
+  state = { productIdx:i, pantalla:0, base:0, lampara:0, cable:0, qty:1 };
   lampOn = false;
   showingSVG = false;
 
   document.getElementById('pName').textContent = product.name;
   document.getElementById('pDesc').textContent = product.desc;
-  document.title = `margo — ${product.name}`;
+  document.getElementById('pDescLong').textContent = getLongDescription(product);
+  updateQtyUI();
+  document.title = `nikio — ${product.name}`;
   lightToggleBtn.innerHTML = ICON_OFF;
   lightToggleBtn.classList.remove('on','show');
   document.getElementById('svgOverlay').classList.remove('lit');
@@ -700,6 +750,7 @@ function openProduct(i, pushState = true) {
   refreshSVG();
   updatePrices();
   buildDetails(product);
+  renderRelated(i);
 
   document.getElementById('viewCatalog').classList.remove('active');
   document.getElementById('viewProduct').classList.add('active');
@@ -713,7 +764,7 @@ function openProduct(i, pushState = true) {
 function goBack(pushState = true) {
   document.getElementById('viewProduct').classList.remove('active');
   document.getElementById('viewCatalog').classList.add('active');
-  document.title = 'margo — catálogo';
+  document.title = 'nikio — catálogo';
   window.scrollTo(0,0);
 
   if (pushState) {
@@ -723,28 +774,26 @@ function goBack(pushState = true) {
 document.getElementById('backBtn').addEventListener('click', () => goBack());
 
 // ── DETALLE ───────────────────────────────────────────
-const detailsToggle = document.getElementById('detailsToggle');
-const detailsBody   = document.getElementById('detailsBody');
-
-detailsToggle.addEventListener('click', () => {
-  const open = detailsBody.classList.toggle('open');
-  detailsToggle.setAttribute('aria-expanded', open);
-});
-
 function buildDetails(product) {
-  const table = document.getElementById('detailsTable');
+  const section = document.querySelector('.product-details-section');
+  const table = document.getElementById('detailsTableFull');
   if (!product.details || !product.details.length) {
-    detailsToggle.style.display = 'none';
+    if (section) section.style.display = 'none';
     return;
   }
-  detailsToggle.style.display = '';
+  if (section) section.style.display = '';
   table.innerHTML = product.details.map(r =>
     '<tr><td>' + r.label + '</td><td>' + r.value + '</td></tr>'
   ).join('');
-  detailsBody.classList.remove('open');
-  detailsToggle.setAttribute('aria-expanded', 'false');
 }
 document.getElementById('logoLink').addEventListener('click', () => goBack());
+
+// ── ACORDEÓN (envíos / cuidado / faq) ─────────────────
+document.querySelectorAll('.accordion-head').forEach(head => {
+  head.addEventListener('click', () => {
+    head.parentElement.classList.toggle('open');
+  });
+});
 
 // ── HISTORY (botón atrás del navegador) ───────────────
 window.addEventListener('popstate', (e) => {
@@ -757,7 +806,7 @@ window.addEventListener('popstate', (e) => {
     document.getElementById('viewProduct').classList.remove('active');
     document.getElementById('viewCart').classList.remove('active');
     document.getElementById('viewCatalog').classList.add('active');
-    document.title = 'margo — catálogo';
+    document.title = 'nikio — catálogo';
   }
 });
 
@@ -785,6 +834,7 @@ document.getElementById('copyBtn').addEventListener('click', () => {
     `Color base:      ${OPT_BASE[state.base].name}`,
     `Lámpara:         ${OPT_LAMPARA[state.lampara].name}`,
     `Cable:           ${OPT_CABLE[state.cable].name}`,
+    `Cantidad:        ${state.qty}`,
     ``,
     `Precio total:    ${fmt(calcTotal())}`,
   ];
@@ -808,7 +858,7 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 
 // ── CARRITO ───────────────────────────────────────────
 let cart = (() => {
-  try { return JSON.parse(localStorage.getItem('margo_cart') || '[]'); }
+  try { return JSON.parse(localStorage.getItem('nikio_cart') || '[]'); }
   catch { return []; }
 })();
 
@@ -821,12 +871,13 @@ function cartItemText(item) {
     `Color base:      ${item.base}`,
     `Lámpara:         ${item.lampara}`,
     `Cable:           ${item.cable}`,
+    `Cantidad:        ${item.qty || 1}`,
     `Precio:          ${fmt(item.price)}`,
   ].join('\n');
 }
 
 function saveCart() {
-  try { localStorage.setItem('margo_cart', JSON.stringify(cart)); } catch {}
+  try { localStorage.setItem('nikio_cart', JSON.stringify(cart)); } catch {}
 }
 
 function updateCartBadge() {
@@ -860,7 +911,8 @@ function renderCart() {
           Pantalla: ${item.pantalla}<br>
           Base: ${item.base}<br>
           Lámpara: ${item.lampara}<br>
-          Cable: ${item.cable}
+          Cable: ${item.cable}<br>
+          Cantidad: ${item.qty || 1}
         </div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
@@ -897,7 +949,7 @@ function openCart(pushState = true) {
   document.getElementById('viewCatalog').classList.remove('active');
   document.getElementById('viewProduct').classList.remove('active');
   document.getElementById('viewCart').classList.add('active');
-  document.title = 'margo — carrito';
+  document.title = 'nikio — carrito';
   window.scrollTo(0, 0);
   renderCart();
   if (pushState) history.pushState({ view: 'cart' }, document.title, '?carrito');
@@ -906,7 +958,7 @@ function openCart(pushState = true) {
 function goBackFromCart(pushState = true) {
   document.getElementById('viewCart').classList.remove('active');
   document.getElementById('viewCatalog').classList.add('active');
-  document.title = 'margo — catálogo';
+  document.title = 'nikio — catálogo';
   window.scrollTo(0, 0);
   if (pushState) history.pushState({ view: 'catalog' }, document.title, window.location.pathname);
 }
@@ -928,6 +980,7 @@ document.getElementById('addToCartBtn').addEventListener('click', () => {
     base:         OPT_BASE[state.base].name,
     lampara:      OPT_LAMPARA[state.lampara].name,
     cable:        OPT_CABLE[state.cable].name,
+    qty:          state.qty,
     price:        calcTotal(),
   });
   saveCart();
@@ -958,3 +1011,38 @@ document.getElementById('cartCopyBtn').addEventListener('click', () => {
     setTimeout(() => el.style.opacity = '0', 2500);
   });
 });
+
+
+// ── NAV: ocultar al bajar, mostrar al subir ───────────
+(() => {
+  const navEl = document.querySelector('nav');
+  let lastY = window.scrollY;
+  let ticking = false;
+  const THRESHOLD = 8; // px mínimos de scroll para reaccionar (evita "jitter")
+
+  function onScroll() {
+    const y = window.scrollY;
+
+    if (y < 80) {
+      // cerca del top: nav visible y transparente, sobre el hero
+      navEl.classList.remove('nav-hidden', 'nav-solid');
+    } else if (y > lastY + THRESHOLD) {
+      // bajando
+      navEl.classList.add('nav-hidden');
+    } else if (y < lastY - THRESHOLD) {
+      // subiendo
+      navEl.classList.remove('nav-hidden');
+      navEl.classList.add('nav-solid');
+    }
+
+    lastY = y;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+})();
