@@ -342,8 +342,6 @@ svg: (sc, bsc, lit, W, H) => {
   },  
 
 
-
-
   {
     name: 'Toggle',
     desc: '',
@@ -701,6 +699,7 @@ function openProduct(i, pushState = true) {
   renderRelated(i);
 
   document.getElementById('viewCatalog').classList.remove('active');
+  document.getElementById('viewCart').classList.remove('active');
   document.getElementById('viewProduct').classList.add('active');
   window.scrollTo(0,0);
 
@@ -711,6 +710,7 @@ function openProduct(i, pushState = true) {
 
 function goBack(pushState = true) {
   document.getElementById('viewProduct').classList.remove('active');
+  document.getElementById('viewCart').classList.remove('active');
   document.getElementById('viewCatalog').classList.add('active');
   document.title = 'nikio — catálogo';
   window.scrollTo(0,0);
@@ -774,7 +774,12 @@ window.addEventListener('popstate', (e) => {
 const WHATSAPP_NUMBER = '541134121993'; // +54 11 3412-1993, sin '+' ni espacios
 
 function sendToWhatsapp(text, confirmElId) {
-  navigator.clipboard.writeText(text).catch(() => {});
+  try {
+    navigator.clipboard.writeText(text).catch(() => {});
+  } catch (e) {
+    // navigator.clipboard puede no existir (contexto no seguro, navegador
+    // viejo, webview de una app, etc.) — no debe frenar el envío a WhatsApp
+  }
   const encoded = encodeURIComponent(text);
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
   const el = document.getElementById(confirmElId);
@@ -885,6 +890,7 @@ function openCart(pushState = true) {
 
 function goBackFromCart(pushState = true) {
   document.getElementById('viewCart').classList.remove('active');
+  document.getElementById('viewProduct').classList.remove('active');
   document.getElementById('viewCatalog').classList.add('active');
   document.title = 'nikio — catálogo';
   window.scrollTo(0, 0);
