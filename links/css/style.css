@@ -3,80 +3,80 @@
    Mobile First
 ========================================================== */
 
-:root{
+:root {
 
-    --orange:#FB5800;
-    --orange-dark:#d24a00;
+    --orange: #FB5800;
+    --orange-dark: #d24a00;
 
-    --background:#F8F8F5;
-    --surface:#FFFFFF;
+    --background: #F8F8F5;
+    --surface: #FFFFFF;
 
-    --text:#222222;
-    --text-light:#727272;
+    --text: #222222;
+    --text-light: #727272;
 
-    --border:#ECECEC;
+    --border: #ECECEC;
 
-    --radius:22px;
+    --radius: 22px;
 
     --shadow-sm:
-    0 6px 16px rgba(0,0,0,.05);
+        0 6px 16px rgba(0, 0, 0, .05);
 
     --shadow:
-    0 20px 60px rgba(0,0,0,.08);
+        0 20px 60px rgba(0, 0, 0, .08);
 
     --transition:
-    .25s cubic-bezier(.4,0,.2,1);
+        .25s cubic-bezier(.4, 0, .2, 1);
 
 }
 
 
 
-*{
+* {
 
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-
-}
-
-html{
-
-    scroll-behavior:smooth;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 
 }
 
-body{
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+body {
 
     font-family: 'Clash Grotesk', sans-serif;
 
-    background:  #FFFFFF,
-;
+    background: #FFFFFF,
+    ;
 
-    color:var(--text);
+    color: var(--text);
 
-    -webkit-font-smoothing:antialiased;
+    -webkit-font-smoothing: antialiased;
 
-    overflow-x:hidden;
-
-}
-
-
-
-img{
-
-    display:block;
-
-    max-width:100%;
+    overflow-x: hidden;
 
 }
 
 
 
-a{
+img {
 
-    text-decoration:none;
+    display: block;
 
-    color:inherit;
+    max-width: 100%;
+
+}
+
+
+
+a {
+
+    text-decoration: none;
+
+    color: inherit;
 
 }
 
@@ -86,15 +86,15 @@ a{
    HERO
 ========================================================== */
 
-.hero{
+.hero {
 
-    position:relative;
+    position: relative;
 
-    width:100%;
+    width: 100%;
 
-    min-height:330px;
+    min-height: 330px;
 
-    overflow:hidden;
+    overflow: hidden;
 
 }
 
@@ -108,27 +108,24 @@ a{
 CARD
 ========================================================== */
 
-.card{
+.card {
 
-    position:relative;
+    position: relative;
 
-    width:min(430px,calc(100% - 32px));
+    width: min(430px, calc(100% - 32px));
 
-    margin:-90px auto 50px;
 
-    background:var(--surface);
+    margin: 20vh auto;
 
-    border-radius:30px;
+    background: var(--surface);
 
-    border:1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
 
-    backdrop-filter:blur(16px);
+    border: 1px solid rgba(255, 255, 255, .4);
 
-    box-shadow:var(--shadow);
+    box-shadow: var(--shadow);
 
-    padding:
-
-    0 28px 38px;
+    padding: 0 28px 38px;
 
 }
 
@@ -138,36 +135,36 @@ CARD
 LOGO
 ========================================================== */
 
-.logo{
+.logo {
 
-    width:96px;
-    height:96px;
+    width: 96px;
+    height: 96px;
 
     margin:
 
-    -48px auto 24px;
+        -48px auto 24px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:#FB5800;
+    background: #FB5800;
 
-    display:flex;
+    display: flex;
 
-    justify-content:center;
+    justify-content: center;
 
-    align-items:center;
+    align-items: center;
 
-    border:1px solid var(--border);
+    border: 1px solid var(--border);
 
     box-shadow:
 
-    0 12px 30px rgba(0,0,0,.08);
+        0 12px 30px rgba(0, 0, 0, .08);
 
 }
 
-.logo img{
+.logo img {
 
-    width:58px;
+    width: 58px;
 
 }
 
@@ -177,31 +174,31 @@ LOGO
 TEXT
 ========================================================== */
 
-h1{
+h1 {
 
-    text-align:center;
+    text-align: center;
 
-    font-size:2.15rem;
+    font-size: 2.15rem;
 
-    font-weight:700;
+    font-weight: 700;
 
-    letter-spacing:-.04em;
+    letter-spacing: -.04em;
 
 }
 
-.subtitle{
+.subtitle {
 
-    text-align:center;
+    text-align: center;
 
-    margin-top:12px;
+    margin-top: 12px;
 
-    color:var(--text-light);
+    color: var(--text-light);
 
-    line-height:1.8;
+    line-height: 1.8;
 
-    font-size:15px;
+    font-size: 15px;
 
-    margin-bottom:42px;
+    margin-bottom: 42px;
 
 }
 
@@ -211,13 +208,13 @@ h1{
 BUTTON LIST
 ========================================================== */
 
-.links{
+.links {
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    gap:16px;
+    gap: 16px;
 
 }
 
@@ -226,55 +223,55 @@ BUTTON LIST
    BUTTONS
 ========================================================== */
 
-.button{
+.button {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:space-between;
+    justify-content: space-between;
 
-    background:var(--surface);
+    background: var(--surface);
 
-    border-radius:18px;
+    border-radius: 18px;
 
-    padding:18px 20px;
+    padding: 18px 20px;
 
-    color:var(--text);
+    color: var(--text);
 
-    box-shadow:var(--shadow-sm);
+    box-shadow: var(--shadow-sm);
 
-    transition:var(--transition);
+    transition: var(--transition);
 
-    border:1px solid rgba(0,0,0,.04);
+    border: 1px solid rgba(0, 0, 0, .04);
 
-    animation:fadeUp .6s ease both;
-
-}
-
-.button:nth-child(1){
-
-    animation-delay:.10s;
+    animation: fadeUp .6s ease both;
 
 }
 
-.button:nth-child(2){
+.button:nth-child(1) {
 
-    animation-delay:.20s;
-
-}
-
-.button:nth-child(3){
-
-    animation-delay:.30s;
+    animation-delay: .10s;
 
 }
 
-.button:hover{
+.button:nth-child(2) {
 
-    background:var(--orange);
+    animation-delay: .20s;
 
-    color:white;
+}
+
+.button:nth-child(3) {
+
+    animation-delay: .30s;
+
+}
+
+.button:hover {
+
+    background: var(--orange);
+
+    color: white;
 
     transform:
 
@@ -282,33 +279,33 @@ BUTTON LIST
 
     box-shadow:
 
-        0 18px 35px rgba(19,93,82,.18);
+        0 18px 35px rgba(19, 93, 82, .18);
 
 }
 
-.button:active{
+.button:active {
 
-    transform:translateY(0);
-
-}
-
-.left{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:16px;
+    transform: translateY(0);
 
 }
 
-.left span{
+.left {
 
-    font-size:17px;
+    display: flex;
 
-    font-weight:600;
+    align-items: center;
 
-    letter-spacing:-.01em;
+    gap: 16px;
+
+}
+
+.left span {
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    letter-spacing: -.01em;
 
 }
 
@@ -318,20 +315,20 @@ BUTTON LIST
    ICONS
 ========================================================== */
 
-.left svg{
+.left svg {
 
-    width:22px;
+    width: 22px;
 
-    height:22px;
-
-
+    height: 22px;
 
 
 
 
-    transition:var(--transition);
 
-    flex-shrink:0;
+
+    transition: var(--transition);
+
+    flex-shrink: 0;
 
 }
 
@@ -341,37 +338,37 @@ BUTTON LIST
    ARROW
 ========================================================== */
 
-.arrow{
+.arrow {
 
-    width:36px;
+    width: 36px;
 
-    height:36px;
+    height: 36px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:#F5F5F5;
+    background: #F5F5F5;
 
-    display:flex;
+    display: flex;
 
-    justify-content:center;
+    justify-content: center;
 
-    align-items:center;
+    align-items: center;
 
-    font-size:17px;
+    font-size: 17px;
 
-    font-weight:700;
+    font-weight: 700;
 
-    transition:var(--transition);
+    transition: var(--transition);
 
 }
 
-.button:hover .arrow{
+.button:hover .arrow {
 
-    background:rgba(255,255,255,.16);
+    background: rgba(255, 255, 255, .16);
 
-    color:white;
+    color: white;
 
-    transform:translateX(6px);
+    transform: translateX(6px);
 
 }
 
@@ -381,39 +378,39 @@ BUTTON LIST
    DIVIDER
 ========================================================== */
 
-.divider{
+.divider {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:center;
+    justify-content: center;
 
-    gap:12px;
+    gap: 12px;
 
-    margin:34px 0 10px;
+    margin: 34px 0 10px;
 
-    color:#A0A0A0;
+    color: #A0A0A0;
 
-    font-size:13px;
+    font-size: 13px;
 
-    text-transform:uppercase;
+    text-transform: uppercase;
 
-    letter-spacing:.18em;
+    letter-spacing: .18em;
 
 }
 
 .divider::before,
 
-.divider::after{
+.divider::after {
 
-    content:"";
+    content: "";
 
-    height:1px;
+    height: 1px;
 
-    flex:1;
+    flex: 1;
 
-    background:#E5E5E5;
+    background: #E5E5E5;
 
 }
 
@@ -423,87 +420,87 @@ BUTTON LIST
    PROMO
 ========================================================== */
 
-.promo{
+.promo {
 
-    position:relative;
+    position: relative;
 
-    margin-top:38px;
+    margin-top: 38px;
 
-    border-radius:24px;
+    border-radius: 24px;
 
-    overflow:hidden;
+    overflow: hidden;
 
 
-    box-shadow:    0 18px 40px rgba(19,93,82,.18);
-
-}
-
-.promo img{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-    transition:2s ease;
+    box-shadow: 0 18px 40px rgba(19, 93, 82, .18);
 
 }
 
-.promo:hover img{
+.promo img {
 
-    transform:scale(1.09);
+    position: absolute;
 
-}
+    inset: 0;
 
-.promo-overlay{
+    width: 100%;
 
-    position:absolute;
+    height: 100%;
 
-    inset:0;
+    object-fit: cover;
 
-
-}
-
-.promo-content{
-
-    position:relative;
-
-    z-index:2;
-
-    padding:28px;
-
-    color:rgb(255, 255, 255);
+    transition: 2s ease;
 
 }
 
-.promo h2{
+.promo:hover img {
+
+    transform: scale(1.09);
+
+}
+
+.promo-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+
+}
+
+.promo-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    padding: 28px;
+
+    color: rgb(255, 255, 255);
+
+}
+
+.promo h2 {
 
     font-family: 'Clash Display', sans-serif;
 
-    font-size:2.9rem;
+    font-size: 2.9rem;
 
-    line-height:.45;
+    line-height: .45;
 
-    font-weight:800;
+    font-weight: 800;
 
-    letter-spacing:-.04em;
+    letter-spacing: -.04em;
 
 }
 
-.promo p{
+.promo p {
 
-    margin-top:12px;
+    margin-top: 12px;
 
-    font-size:16px;
+    font-size: 16px;
 
-    font-weight:500;
+    font-weight: 500;
 
-    opacity:.92;
+    opacity: .92;
 
 }
 
@@ -513,33 +510,33 @@ BUTTON LIST
    FOOTER
 ========================================================== */
 
-footer{
+footer {
 
-    margin-top:42px;
+    margin-top: 42px;
 
-    text-align:center;
+    text-align: center;
 
-    color:#9A9A9A;
+    color: #9A9A9A;
 
-    font-size:13px;
+    font-size: 13px;
 
-    letter-spacing:.04em;
+    letter-spacing: .04em;
 
 }
 
-footer::before{
+footer::before {
 
-    content:"";
+    content: "";
 
-    display:block;
+    display: block;
 
-    width:48px;
+    width: 48px;
 
-    height:1px;
+    height: 1px;
 
-    background:#DDD;
+    background: #DDD;
 
-    margin:0 auto 18px;
+    margin: 0 auto 18px;
 
 }
 
@@ -548,35 +545,35 @@ footer::before{
    ANIMATIONS
 ========================================================== */
 
-.fade{
+.fade {
 
-    animation:fade .8s ease both;
-
-}
-
-@keyframes fade{
-
-    from{
-
-        opacity:0;
-        transform:translateY(24px);
-
-    }
-
-    to{
-
-        opacity:1;
-        transform:translateY(0);
-
-    }
+    animation: fade .8s ease both;
 
 }
 
-@keyframes fadeUp{
+@keyframes fade {
 
-    from{
+    from {
 
-        opacity:0;
+        opacity: 0;
+        transform: translateY(24px);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform: translateY(0);
+
+    }
+
+}
+
+@keyframes fadeUp {
+
+    from {
+
+        opacity: 0;
 
         transform:
 
@@ -584,9 +581,9 @@ footer::before{
 
     }
 
-    to{
+    to {
 
-        opacity:1;
+        opacity: 1;
 
         transform:
 
@@ -604,29 +601,29 @@ footer::before{
    SCROLLBAR
 ========================================================== */
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
 
-    width:8px;
-
-}
-
-::-webkit-scrollbar-track{
-
-    background:#F2F2F2;
+    width: 8px;
 
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-track {
 
-    background:#C8C8C8;
-
-    border-radius:50px;
+    background: #F2F2F2;
 
 }
 
-::-webkit-scrollbar-thumb:hover{
+::-webkit-scrollbar-thumb {
 
-    background:var(--orange);
+    background: #C8C8C8;
+
+    border-radius: 50px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+    background: var(--orange);
 
 }
 
@@ -636,15 +633,15 @@ footer::before{
    FOCUS
 ========================================================== */
 
-.button:focus-visible{
+.button:focus-visible {
 
-    outline:none;
+    outline: none;
 
     box-shadow:
 
-    0 0 0 4px rgba(19,93,82,.15),
+        0 0 0 4px rgba(19, 93, 82, .15),
 
-    0 15px 35px rgba(19,93,82,.18);
+        0 15px 35px rgba(19, 93, 82, .18);
 
 }
 
@@ -654,65 +651,65 @@ footer::before{
    TABLET
 ========================================================== */
 
-@media (min-width:768px){
+@media (min-width:768px) {
 
 
 
-.card{
+    .card {
 
-    width:470px;
+        width: 470px;
 
-    margin-top:-120px;
+        margin-top: -120px;
 
-    padding:0 38px 44px;
+        padding: 0 38px 44px;
 
-}
+    }
 
-.logo{
+    .logo {
 
-    width:110px;
-    height:110px;
+        width: 110px;
+        height: 110px;
 
-    margin-top:-55px;
+        margin-top: -55px;
 
-}
+    }
 
-.logo img{
+    .logo img {
 
-    width:74px;
+        width: 74px;
 
-}
+    }
 
-h1{
+    h1 {
 
-    font-size:2.4rem;
+        font-size: 2.4rem;
 
-}
+    }
 
-.subtitle{
+    .subtitle {
 
-    font-size:16px;
+        font-size: 16px;
 
-}
+    }
 
-.button{
+    .button {
 
-    padding:20px 24px;
+        padding: 20px 24px;
 
-}
+    }
 
-.left span{
+    .left span {
 
-    font-size:18px;
+        font-size: 18px;
 
-}
+    }
 
 
-.promo h2{
+    .promo h2 {
 
-    font-size:3.4rem;
+        font-size: 3.4rem;
 
-}
+    }
 
 }
 
@@ -722,15 +719,15 @@ h1{
    DESKTOP
 ========================================================== */
 
-@media (min-width:1200px){
+@media (min-width:1200px) {
 
 
 
-.card{
+    .card {
 
-    width:500px;
+        width: 500px;
 
-}
+    }
 
 }
 
@@ -747,39 +744,39 @@ h1{
    SMALL DEVICES
 ========================================================== */
 
-@media (max-width:380px){
+@media (max-width:380px) {
 
-.card{
+    .card {
 
-    width:calc(100% - 18px);
+        width: calc(100% - 18px);
 
-    padding:0 18px 30px;
+        padding: 0 18px 30px;
 
-}
+    }
 
-.button{
+    .button {
 
-    padding:16px;
+        padding: 16px;
 
-}
+    }
 
-.left{
+    .left {
 
-    gap:12px;
+        gap: 12px;
 
-}
+    }
 
-.left span{
+    .left span {
 
-    font-size:16px;
+        font-size: 16px;
 
-}
+    }
 
-.promo h2{
+    .promo h2 {
 
-    font-size:2.3rem;
+        font-size: 2.3rem;
 
-}
+    }
 
 }
 
@@ -789,17 +786,17 @@ h1{
    REDUCED MOTION
 ========================================================== */
 
-@media (prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion:reduce) {
 
-*{
+    * {
 
-    animation:none!important;
+        animation: none !important;
 
-    transition:none!important;
+        transition: none !important;
 
-    scroll-behavior:auto!important;
+        scroll-behavior: auto !important;
 
-}
+    }
 
 }
 
@@ -809,13 +806,13 @@ h1{
    DARK MODE (Opcional)
 ========================================================== */
 
-@media (prefers-color-scheme:dark){
+@media (prefers-color-scheme:dark) {
 
-body{
+    body {
 
-    background:#FEF7F3;
+        background: #FEF7F3;
 
-}
+    }
 
 }
 
@@ -825,11 +822,11 @@ body{
    SELECTION
 ========================================================== */
 
-::selection{
+::selection {
 
-    background:var(--orange);
+    background: var(--orange);
 
-    color:white;
+    color: white;
 
 }
 
@@ -841,13 +838,13 @@ body{
    HOVER ONLY DEVICES
 ========================================================== */
 
-@media (hover:hover){
+@media (hover:hover) {
 
-.button:hover svg{
+    .button:hover svg {
 
-    transform:scale(1.08);
+        transform: scale(1.08);
 
-}
+    }
 
 }
 
@@ -857,21 +854,21 @@ body{
    TOUCH DEVICES
 ========================================================== */
 
-@media (hover:none){
+@media (hover:none) {
 
-.button:active{
+    .button:active {
 
-    background:var(--orange);
+        background: var(--orange);
 
-    color:white;
+        color: white;
 
-}
+    }
 
-.button:active .arrow{
+    .button:active .arrow {
 
-    background:rgba(255,255,255,.16);
+        background: rgba(255, 255, 255, .16);
 
-}
+    }
 
 }
 
