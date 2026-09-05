@@ -1,4 +1,4 @@
-  @import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=clash-grotesk@400,500,600&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=clash-grotesk@400,500,600&display=swap');
 
   *,
   *::before,
@@ -19,6 +19,10 @@
     --border: rgba(27, 27, 27, 0.10);
     --f-display: 'Clash Display', 'Host Grotesk', sans-serif;
     --f-body: 'Clash Grotesk', 'Host Grotesk', sans-serif;
+    --catalog-max-width: 1400px;
+    /* debe coincidir con el max-width de .catalog-wrap */
+    --catalog-inset: max(24px, calc((100vw - var(--catalog-max-width)) / 2));
+    /* antes: 54px fijo — ahora "abraza" el ancho real de los productos */
   }
 
   body {
@@ -284,7 +288,8 @@
 
   /* CATALOG */
   .catalog-wrap {
-    max-width: 1400px;
+    max-width: var(--catalog-max-width);
+    /* antes: 1400px fijo — ahora sale de la misma variable que --catalog-inset */
     margin: 0 auto;
     padding: 0;
   }
@@ -305,8 +310,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 64px 24px;
+    justify-content: flex-start;
+    /* antes: center — así el contenido arranca arriba, no en el medio */
+    padding: 130px 24px 24px;
+    /* antes: 64px 24px — el top ahora libera el nav fixed (110px) */
     gap: 28px;
     text-align: center;
   }
@@ -372,11 +379,14 @@
   .catalog {
     margin-top: calc(78vh - 24px);
     /* antes: -24px */
-    padding: 56px 32px 100px;
+    margin-left: var(--catalog-inset);
+    margin-right: var(--catalog-inset);
+    /* antes: 24px fijo — ahora sale de --catalog-inset, misma fuente que usa el JS */
+    padding: 32px 32px 100px;
     background: var(--white);
     /* ya lo tenía — clave para tapar el hero */
-    border-radius: 32px 32px 0 0;
-    /* ya lo tenía — le da el borde redondeado al "subir" */
+    border-radius: 32px;
+    /* antes: 32px 32px 0 0 — arranca redondeado en las 4 esquinas */
     position: relative;
     /* ya lo tenía */
     z-index: 2;
@@ -475,7 +485,8 @@
   @media (max-width:900px) {
     .hero {
       position: relative;
-      padding: 48px 24px;
+      padding: 48px 0;
+      /* antes: 48px 24px — sin margen lateral, la imagen llega al borde */
       min-height: auto;
     }
 
@@ -485,6 +496,12 @@
 
     .hero img {
       max-width: 100%;
+      height: 75vh;
+      /* antes: heredaba 70vh del base — la subimos para mobile */
+      object-fit: cover;
+      /* antes: contain — así recorta a lo ancho en vez de hacer letterbox */
+      object-position: center;
+      /* nuevo — centra el foco de recorte */
     }
   }
 
@@ -511,8 +528,6 @@
   }
 
   .product-left {
-    position: sticky;
-    top: 130px;
     background: var(--white);
     overflow: visible;
     display: flex;
@@ -714,24 +729,10 @@
 
   /* RIGHT panel */
   .product-panel {
-    position: sticky;
-    top: 130px;
-    height: auto;
-    max-height: calc(100vh - 160px);
-    overflow-y: auto;
-    overflow-x: visible;
     background: var(--white);
     padding: 8px 6px 20px;
     display: flex;
     flex-direction: column;
-  }
-
-  .product-panel::-webkit-scrollbar {
-    width: 3px;
-  }
-
-  .product-panel::-webkit-scrollbar-thumb {
-    background: var(--border);
   }
 
   .back-btn {
@@ -1000,18 +1001,6 @@
     border-top: 0.5px solid var(--border);
   }
 
-  .p-fineprint {
-    font-size: 11px;
-    color: var(--t3);
-    text-align: center;
-    margin-bottom: 8px;
-    letter-spacing: 0.04em;
-  }
-
-  .p-fineprint a {
-    color: var(--g);
-  }
-
   /* BANNERS */
   .banner-home {
     display: block;
@@ -1079,17 +1068,6 @@
 
   .cta-btn-sec {
     border-radius: 6px;
-  }
-
-  .copy-confirm {
-    font-size: 11px;
-    color: var(--g);
-    letter-spacing: .06em;
-    text-align: center;
-    margin-top: 8px;
-    opacity: 0;
-    transition: opacity .3s;
-    min-height: 16px;
   }
 
   /* ── SECCIONES DEBAJO DEL PRODUCTO ─────────────────── */
@@ -1167,6 +1145,7 @@
   .details-table-full td:last-child {
     color: var(--t1);
     font-weight: 500;
+    text-align: right;
   }
 
   .banner-product-full {
@@ -1322,7 +1301,8 @@
     .product-wrap {
       grid-template-columns: 1fr minmax(340px, 380px);
       gap: 48px;
-      padding: 40px 28px 70px;
+      padding: 150px 28px 70px;
+      /* antes: 40px 28px 70px — top compensa el nav fixed (110px) */
     }
   }
 
@@ -1348,13 +1328,9 @@
 
     .product-wrap {
       grid-template-columns: 1fr;
-      padding: 28px 20px 60px;
+      padding: 130px 20px 60px;
+      /* antes: 28px 20px 60px — top compensa el nav fixed (110px) */
       gap: 28px;
-    }
-
-    .product-left {
-      position: relative;
-      top: 0;
     }
 
     .gallery-area {
@@ -1363,10 +1339,6 @@
     }
 
     .product-panel {
-      position: relative;
-      top: 0;
-      height: auto;
-      max-height: none;
       border-top: 0.5px solid var(--border);
       padding-top: 24px;
     }

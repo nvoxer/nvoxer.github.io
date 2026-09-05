@@ -342,62 +342,7 @@ svg: (sc, bsc, lit, W, H) => {
   },  
 
 
-  {
-    name: 'Verga',
-    desc: '',
-    price: 60000,
-    imgs: [ 'img/jau02.jpg',
-            //'img/jau01.jpg',
-            //'img/jau03.jpg',
-            //'img/jau04.jpg',
-            'img/jau05.jpg',
-                    ],
 
-    // índices habilitados de cada opción (0-based)
-    // OPT_PANTALLA: 0=Blanco, 1=Traslúcido
-    enabledPantalla: [0,],
-    // OPT_BASE: 0=Blanco, 1=Beige, 2=Marrón, 3=Azul oscuro, 4=Verde, 5=Negro, 6=Madera
-    enabledBase:     [0, 1, 2, 3, 4, 5],
-    // OPT_LAMPARA: 0=No, 1=Sí, 2=Smart
-    enabledLampara:  [0, 1],
-    // OPT_CABLE: 0=Blanco, 1=Negro, 2=Textil
-    enabledCable:    [0, 1],
-
-    details: [
-      { label: 'Alto',          value: '18 cm' },
-      { label: 'Ancho',         value: '25 cm' },
-      { label: 'Largo del cable',         value: '150 cm' },
-      { label: 'Terminación',   value: 'Varillas de madera barnizada y base color mate' },
-    ],
-
-svg: (sc, bsc, lit, W, H) => {
-  return `<svg width="${W}" height="${H}" viewBox="0 0 183 163" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="91.5" cy="81.5" r="15.5" fill="white"/>
-  <circle cx="91.5" cy="81.5" r="14.965" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
-  <path d="M82.8889 45H100.111L107 82H76L82.8889 45Z" fill="white"/>
-  <path d="M99.666 45.5352L106.355 81.4648H76.6445L83.334 45.5352H99.666Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
-  <rect x="8" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="24" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="40" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="56" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="72" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="88" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="104" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="120" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="136" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="152" y="50" width="6" height="104" fill="#B67C26"/>
-  <rect x="168" y="50" width="6" height="104" fill="#B67C26"/>
-  <path d="M183 156.5C183 160.09 180.09 163 176.5 163L6.49999 163C2.91013 163 -1.95663e-05 160.09 -1.98802e-05 156.5C-2.0194e-05 152.91 2.91013 150 6.49999 150L176.5 150C180.09 150 183 152.91 183 156.5Z" fill="${bsc}"/>
-  <path d="M176.5 162.465L6.5 162.465C3.20562 162.465 0.535161 159.794 0.535156 156.5C0.535155 153.206 3.20561 150.535 6.5 150.535L176.5 150.535C179.794 150.535 182.465 153.206 182.465 156.5C182.465 159.794 179.794 162.465 176.5 162.465Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
-  <rect x="89" width="5" height="33" fill="white"/>
-  <rect x="89.535" y="0.535" width="3.93" height="31.93" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
-  <path d="M89 32H94L96 43H87L89 32Z" fill="white"/>
-  <path d="M93.5537 32.5352L95.3594 42.4648H87.6406L89.4463 32.5352H93.5537Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
-  <path d="M183 48.5C183 52.0898 180.09 55 176.5 55L6.49999 55C2.91013 55 -1.95663e-05 52.0899 -1.98802e-05 48.5C-2.0194e-05 44.9102 2.91013 42 6.49999 42L176.5 42C180.09 42 183 44.9101 183 48.5Z" fill="${bsc}"/>
-  <path d="M176.5 54.4648L6.5 54.4649C3.20562 54.4649 0.535161 51.7944 0.535156 48.5C0.535155 45.2056 3.20561 42.5352 6.5 42.5352L176.5 42.5352C179.794 42.5352 182.465 45.2056 182.465 48.5C182.465 51.7944 179.794 54.4648 176.5 54.4648Z" stroke="black" stroke-opacity="0.4" stroke-width="1.07"/>
-</svg>`;
-},
-  },  
 
   {
     name: 'Toggle',
@@ -737,6 +682,9 @@ function openProduct(i, pushState = true) {
   document.getElementById('pDescLong').textContent = getLongDescription(product);
   updateQtyUI();
   document.title = `nikio — ${product.name}`;
+  const addToCartBtn = document.getElementById('addToCartBtn');
+  addToCartBtn.textContent = 'Agregar al carrito';
+  delete addToCartBtn.dataset.added;
   lightToggleBtn.innerHTML = ICON_OFF;
   lightToggleBtn.classList.remove('on','show');
   document.getElementById('svgOverlay').classList.remove('lit');
@@ -822,39 +770,19 @@ window.addEventListener('popstate', (e) => {
   }
 })();
 
-// ── COPY ──────────────────────────────────────────────
-document.getElementById('copyBtn').addEventListener('click', () => {
-  const product = PRODUCTS[state.productIdx];
-  const name = product ? product.name : '—';
-  const lines = [
-    `Hola, me gustaría hacer el siguiente pedido:`,
-    ``,
-    `Producto:        ${name}`,
-    `Color pantalla:  ${OPT_PANTALLA[state.pantalla].name}`,
-    `Color base:      ${OPT_BASE[state.base].name}`,
-    `Lámpara:         ${OPT_LAMPARA[state.lampara].name}`,
-    `Cable:           ${OPT_CABLE[state.cable].name}`,
-    `Cantidad:        ${state.qty}`,
-    ``,
-    `Precio total:    ${fmt(calcTotal())}`,
-  ];
-  //boton comun empieza----
-  navigator.clipboard.writeText(lines.join('\n')).then(() => {
-    const el = document.getElementById('copyConfirm');
+// ── WHATSAPP ──────────────────────────────────────────
+const WHATSAPP_NUMBER = '541134121993'; // +54 11 3412-1993, sin '+' ni espacios
+
+function sendToWhatsapp(text, confirmElId) {
+  navigator.clipboard.writeText(text).catch(() => {});
+  const encoded = encodeURIComponent(text);
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
+  const el = document.getElementById(confirmElId);
+  if (el) {
     el.style.opacity = '1';
     setTimeout(() => el.style.opacity = '0', 2500);
-  });
-  //boton comun fin----
-
-//wasap empieza-------------
-//const encoded = encodeURIComponent(lines.join('\n'));
-//window.open('https://wa.me/?text=' + encoded, '_blank');
-//const el = document.getElementById('copyConfirm');
-//el.style.opacity = '1';
-//setTimeout(() => el.style.opacity = '0', 2500);
-//wasap fin----------
-
-});
+  }
+}
 
 // ── CARRITO ───────────────────────────────────────────
 let cart = (() => {
@@ -967,6 +895,11 @@ document.getElementById('navCartBtn').addEventListener('click', () => openCart()
 document.getElementById('cartBackBtn').addEventListener('click', () => goBackFromCart());
 
 document.getElementById('addToCartBtn').addEventListener('click', () => {
+  const btn = document.getElementById('addToCartBtn');
+  if (btn.dataset.added === 'true') {
+    openCart();
+    return;
+  }
   const product = PRODUCTS[state.productIdx];
   if (!product) return;
   cart.push({
@@ -985,10 +918,9 @@ document.getElementById('addToCartBtn').addEventListener('click', () => {
   });
   saveCart();
   updateCartBadge();
-  // feedback visual breve en el botón
-  const btn = document.getElementById('addToCartBtn');
-  btn.textContent = '✓ Agregado';
-  setTimeout(() => btn.textContent = 'Agregar al carrito', 1800);
+  // el botón pasa a funcionar como acceso directo al carrito
+  btn.textContent = 'Ver carrito';
+  btn.dataset.added = 'true';
 });
 
 document.getElementById('cartKeepBtn').addEventListener('click', () => goBackFromCart());
@@ -1005,20 +937,39 @@ document.getElementById('cartCopyBtn').addEventListener('click', () => {
   const totalC      = subtotalC - discountC;
   if (discountC > 0) lines.push(`Descuento (20%): -${fmt(discountC)}`);
   lines.push(`Total estimado:  ${fmt(totalC)}`);
-  navigator.clipboard.writeText(lines.join('\n')).then(() => {
-    const el = document.getElementById('cartCopyConfirm');
-    el.style.opacity = '1';
-    setTimeout(() => el.style.opacity = '0', 2500);
-  });
+  sendToWhatsapp(lines.join('\n'), 'cartCopyConfirm');
 });
 
 
-// ── NAV: ocultar al bajar, mostrar al subir ───────────
+// ── NAV + CATÁLOGO: reaccionan al scroll ──────────────
 (() => {
   const navEl = document.querySelector('nav');
+  const catalogEl = document.querySelector('.catalog');
   let lastY = window.scrollY;
   let ticking = false;
   const THRESHOLD = 8; // px mínimos de scroll para reaccionar (evita "jitter")
+
+  const INSET_RANGE = 220;       // px de scroll en los que el catálogo pasa de angosto a 100%
+  const CONTENT_MAX_WIDTH = 1400; // debe coincidir con --catalog-max-width en index.css
+  const MIN_INSET = 24;           // piso para pantallas angostas — debe coincidir con el max(24px, ...) del CSS
+  const MAX_RADIUS = 32;          // px de border-radius en scroll 0
+
+  function getMaxInset() {
+    // misma fórmula que --catalog-inset en CSS: abraza el ancho real de .catalog-wrap
+    return Math.max(MIN_INSET, (window.innerWidth - CONTENT_MAX_WIDTH) / 2);
+  }
+
+  function updateCatalogWidth(y) {
+    if (!catalogEl) return;
+    const maxInset = getMaxInset();
+    const progress = Math.min(y / INSET_RANGE, 1); // 0 → 1
+    const inset = maxInset * (1 - progress);        // maxInset → 0px
+    catalogEl.style.marginLeft = inset + 'px';
+    catalogEl.style.marginRight = inset + 'px';
+    // las esquinas de abajo se cierran primero; las de arriba quedan redondeadas siempre
+    const bottomRadius = MAX_RADIUS * (1 - progress);
+    catalogEl.style.borderRadius = `${MAX_RADIUS}px ${MAX_RADIUS}px ${bottomRadius}px ${bottomRadius}px`;
+  }
 
   function onScroll() {
     const y = window.scrollY;
@@ -1035,6 +986,8 @@ document.getElementById('cartCopyBtn').addEventListener('click', () => {
       navEl.classList.add('nav-solid');
     }
 
+    updateCatalogWidth(y);
+
     lastY = y;
     ticking = false;
   }
@@ -1045,4 +998,10 @@ document.getElementById('cartCopyBtn').addEventListener('click', () => {
       ticking = true;
     }
   }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    updateCatalogWidth(window.scrollY);
+  }, { passive: true });
+
+  updateCatalogWidth(window.scrollY); // estado inicial correcto si la página carga scrolleada
 })();
