@@ -771,7 +771,7 @@ window.addEventListener('popstate', (e) => {
 })();
 
 // ── WHATSAPP ──────────────────────────────────────────
-const WHATSAPP_NUMBER = '541134121993'; // +54 11 3412-1993, sin '+' ni espacios
+const WHATSAPP_NUMBER = '541178129317'; // +54 11 78129317, sin '+' ni espacios
 
 function sendToWhatsapp(text, confirmElId) {
   try {
